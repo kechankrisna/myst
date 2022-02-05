@@ -20,6 +20,7 @@ class DirectoryCreator extends DirectoryCreatorInterface {
       } else {
         printGreen("☑ $exactPath");
       }
+
       /// create inner files
       for (var file in inners) {
         file.run();
