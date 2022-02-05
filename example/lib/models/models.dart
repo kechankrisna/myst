@@ -1,2 +1,2 @@
-/// Application data models 
+/// Application data models
 library models;

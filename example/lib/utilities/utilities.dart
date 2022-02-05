@@ -1,2 +1,2 @@
-/// Application utilities 
+/// Application utilities
 library utilities;

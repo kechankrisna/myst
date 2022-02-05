@@ -1,2 +1,2 @@
-/// For base class or abstraction 
+/// For base class or abstraction
 library interfaces;

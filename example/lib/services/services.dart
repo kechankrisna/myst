@@ -1,2 +1,2 @@
-/// Application services for handle data or background 
+/// Application services for handle data or background
 library services;

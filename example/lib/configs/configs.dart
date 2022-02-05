@@ -1,2 +1,2 @@
-/// Application configuration 
+/// Application configuration
 library configs;
