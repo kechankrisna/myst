@@ -4,3 +4,16 @@
 
 # Conventional directory for build output.
 build/
+
+
+# Ignoring native folders of the example as they can be re-generated easily
+**/example/android/
+**/example/ios/
+**/example/web/
+**/example/macos/
+**/example/windows/
+examples/**/android/
+examples/**/ios/
+examples/**/web/
+examples/**/macos/
+examples/**/windows/
