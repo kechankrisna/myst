@@ -1,39 +1,86 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+PrintX will allow you to print any object in colorize
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+![screenshot](./screenshots/printx.png)
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+function to print the object in different color
+
+```dart
+printBlue(Object? object)
+
+printRed(Object? object)
+
+printGreen(Object? object)
+
+printCyan(Object? object)
+
+printYellow(Object? object)
+
+printBlack(Object? object)
+
+printWhite(Object? object)
+```
+
+or
+
+```dart
+PrintX.warn(object);
+
+PrintX.error(object);
+
+PrintX.cool(object);
+
+PrintX.sucess(object);
+
+PrintX.info(object);
+
+PrintX.fatal(object);
+
+PrintX.hide(object);
+
+PrintX.debug(object);
+```
+
+or shortcut
+
+```dart
+PrintX.w(object);
+
+PrintX.e(object);
+
+PrintX.c(object);
+
+PrintX.s(object);
+
+PrintX.i(object);
+
+PrintX.f(object);
+
+PrintX.h(object);
+
+PrintX.d(object);
+```
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
-
-```dart
-const like = 'sample';
+run in dart app
+```
+dart pub add printx
+```
+or in flutter app
+```
+flutter pub add printx
 ```
 
-## Additional information
+* pubspec.yaml
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+```yaml
+dependencies:
+    printx: any
+```
+
+* import
+```
+import 'package:printx/printx.dart';
+```

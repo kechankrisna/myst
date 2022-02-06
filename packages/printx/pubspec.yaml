@@ -1,7 +1,7 @@
 name: printx
 description: printx will allow to print object in colorize
-version: 1.0.0
-# homepage: https://www.example.com
+version: 0.0.1
+homepage: https://github.com/kechankrisna/myst/tree/main/packages/printx
 
 environment:
   sdk: '>=2.15.1 <3.0.0'
