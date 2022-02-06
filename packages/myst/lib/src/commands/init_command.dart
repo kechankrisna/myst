@@ -3,6 +3,7 @@ import 'package:args/command_runner.dart';
 import 'package:myst/myst.dart';
 import 'dart:io' as io;
 import 'package:path/path.dart' as path;
+import 'package:printx/printx.dart';
 import 'package:yaml/yaml.dart';
 
 class InitCommand extends Command {

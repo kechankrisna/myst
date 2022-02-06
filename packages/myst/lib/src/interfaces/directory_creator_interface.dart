@@ -1,4 +1,6 @@
-import 'package:myst/interfaces/interfaces.dart';
+
+
+import 'file_creator_interface.dart';
 
 abstract class DirectoryCreatorInterface {
   /// a must
