@@ -1,9 +1,6 @@
-import 'dart:io' as io;
-
 import 'package:args/command_runner.dart';
 import 'package:myst/myst.dart';
 import 'package:path/path.dart' as path;
-import 'package:process_run/process_run.dart';
 import 'package:printx/printx.dart';
 import 'package:process_run/shell.dart';
 
@@ -104,12 +101,18 @@ class InitCommand extends Command with YamlInformation {
     }
 
     String _integrationTestsPath = path.join(currentPath, 'integration_tests');
-    final _created = DirectoryCreator(_integrationTestsPath).run();
-    if (_created) {
+    String _testDrivePath = path.join(currentPath, 'test_driver');
+    if (DirectoryCreator(_integrationTestsPath).run()) {
       var _appIntegrationTestsPath =
           path.join(_integrationTestsPath, 'app_test.dart');
       final contents = integationTestTemplate;
       FileCreator(_appIntegrationTestsPath, contents: contents, replace: true)
+          .run();
+    }
+    if (DirectoryCreator(_testDrivePath).run()) {
+      var _driveTestsPath = path.join(_testDrivePath, 'integration_test.dart');
+      final contents = """import 'package:integration_test/integration_test_driver.dart'; \n\nFuture<void> main() => integrationDriver();""";
+      FileCreator(_driveTestsPath, contents: contents, replace: true)
           .run();
     }
   }
