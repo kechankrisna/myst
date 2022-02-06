@@ -2,6 +2,9 @@ import 'package:args/command_runner.dart';
 import 'package:recase/recase.dart';
 import 'package:myst/myst.dart';
 import 'package:printx/printx.dart';
+import 'dart:io' as io;
+import 'package:path/path.dart' as path;
+import 'package:yaml/yaml.dart';
 
 class ModelCommand extends Command
     with YamlInformation
@@ -62,12 +65,43 @@ class ModelCommand extends Command
   }
 
   @override
-  void generateLib() {
-    // TODO: implement generateLib
+  void generateLib() async {
+    var contents = modelTemplate.replaceAll(RegExp(r"className"), className!);
+    printCyan(contents);
+
+    /// current new file path
+    final _filePath = path.join(libraryPath, "models", "$fileName.dart");
+
+    /// write content
+    io.File(_filePath).writeAsStringSync(contents);
+
+    /// printBlack(content);
   }
 
   @override
   void generateTest() {
-    // TODO: implement generateTest
+    /// load content and repllace
+    var contents = modelTestTemplate
+        .replaceAll(RegExp(r"className"), className!)
+
+        ///
+        .replaceAll(RegExp(r"objectName"), className!.camelCase);
+
+    if (flutter) {
+      contents = contents.replaceAll(RegExp(r'package:test/test.dart'),
+          'package:flutter_test/flutter_test.dart');
+    }
+
+    /// add import
+    contents = contents.replaceAll(RegExp(r"_test.dart';"),
+        "_test.dart';\nimport 'package:$projectName/models/$fileName.dart';");
+
+    printCyan(contents);
+
+    /// current new file path
+    final _filePath = path.join(testPath, "models", "$fileName\_test.dart");
+
+    /// write content
+    io.File(_filePath).writeAsStringSync(contents);
   }
 }

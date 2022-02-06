@@ -1,7 +1,11 @@
+import 'dart:io' as io;
+
 import 'package:args/command_runner.dart';
 import 'package:myst/myst.dart';
 import 'package:path/path.dart' as path;
+import 'package:process_run/process_run.dart';
 import 'package:printx/printx.dart';
+import 'package:process_run/shell.dart';
 
 class InitCommand extends Command with YamlInformation {
   @override
@@ -17,7 +21,7 @@ class InitCommand extends Command with YamlInformation {
 
   InitCommand() {
     ensureYamlInitialized();
-    
+
     /// get replace flag
     argParser.addFlag("replace",
         callback: (value) => replace = value, defaultsTo: false);
@@ -38,6 +42,9 @@ class InitCommand extends Command with YamlInformation {
 
     /// generate lib directory and test
     generateLibDirectory();
+
+    /// if flutter then add integration_test
+    generateIntegrateTestDirectory();
   }
 
   /// generate asset directory
@@ -54,38 +61,57 @@ class InitCommand extends Command with YamlInformation {
     }
   }
 
-  /// keys will present directory
-  /// values will present description
-  final Map<String, String> libDirectories = {
-    "configs": "Application configuration",
-    "controllers": "Data featching controller",
-    "extensions": "Extra more extesion on dart code",
-    "interfaces": "For base class or abstraction",
-    "layouts": "Application overlay or layouts",
-    "models": "Application data models",
-    "screens": "Application screens or pages",
-    "services": "Application services for handle data or background",
-    "utilities": "Application utilities",
-    "widgets": "application widgets and shared ui"
-  };
-
   /// generate asset directory
   void generateLibDirectory() {
-
-    libDirectories.forEach((key, value) {
-      String _keylibPath = path.join(libraryPath, key);
-      String _keytestPath = path.join(testablePath, key);
-
-      if (DirectoryCreator(_keylibPath).run()) {
+    for (var directory in ApplicationConfig.skeleton) {
+      final _innerLibPath = path.join(libraryPath, directory.path);
+      final _innerTestPath = path.join(testPath, directory.path);
+      var createdDir = DirectoryCreator(_innerLibPath).run();
+      if (createdDir) {
         /// create its tests
-        DirectoryCreator(_keytestPath).run();
+        DirectoryCreator(_innerTestPath).run();
 
-        ///  lib
-        FileCreator(path.join(_keylibPath, "$key.dart"),
-                contents: "/// $value \nlibrary $key;", replace: true)
-            .run();
+        /// lib file
+        /// and test file
+        for (var innerFile in directory.inners) {
+          final _currentLibFilePath = path.join(_innerLibPath, innerFile.path);
+          var createdFile = FileCreator(_currentLibFilePath,
+                  contents: innerFile.contents, replace: true)
+              .run();
+          if (createdFile) {
+            final _testFileName =
+                innerFile.path.replaceAll(RegExp(r'.dart'), '_test.dart');
+            final _currentTestFilePath =
+                path.join(_innerTestPath, _testFileName);
+            var contents = flutter
+                ? testTemplate.replaceAll(RegExp(r'package:test/test.dart'),
+                    'package:flutter_test/flutter_test.dart')
+                : testTemplate;
+            FileCreator(_currentTestFilePath, contents: contents, replace: true)
+                .run();
+          }
+        }
       }
-    });
+    }
+  }
+
+  /// generate integrate test directory
+  void generateIntegrateTestDirectory() {
+    /// if current project is flutter and not yet add integration_test to dev
+    bool isIntegrationTest = dev_dependencies.containsKey("integration_test");
+    if (flutter && !isIntegrationTest) {
+      Shell().run("flutter pub add integration_test --dev --sdk=flutter");
+    }
+
+    String _integrationTestsPath = path.join(currentPath, 'integration_tests');
+    final _created = DirectoryCreator(_integrationTestsPath).run();
+    if (_created) {
+      var _appIntegrationTestsPath =
+          path.join(_integrationTestsPath, 'app_test.dart');
+      final contents = integationTestTemplate;
+      FileCreator(_appIntegrationTestsPath, contents: contents, replace: true)
+          .run();
+    }
   }
 
   void printWelcome() {

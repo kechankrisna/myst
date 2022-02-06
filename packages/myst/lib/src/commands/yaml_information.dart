@@ -23,7 +23,7 @@ mixin YamlInformation {
 
   late String libraryPath;
 
-  late String testablePath;
+  late String testPath;
 
   late YamlMap dependencies;
 
@@ -61,6 +61,6 @@ mixin YamlInformation {
     /// its lib path
     libraryPath = path.join(currentPath, 'lib');
 
-    testablePath = path.join(currentPath, 'test');
+    testPath = path.join(currentPath, 'test');
   }
 }
