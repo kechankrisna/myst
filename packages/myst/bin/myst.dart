@@ -5,7 +5,8 @@ import 'package:myst/myst.dart' as myst;
 
 void main(List<String> arguments) {
   var parser = ArgParser()
-    ..addOption("name")
+    ..addOption("name", abbr: 'n', help: "class name")
+    ..addOption("file", abbr: 'f', help: "file name")
     ..addFlag("replace", defaultsTo: false)
     ..addOption('help', abbr: 'h', help: 'increase logging');
 
@@ -16,8 +17,9 @@ void main(List<String> arguments) {
 
   /// add generate command to generate structure
   runner.addCommand(myst.InitCommand());
+  runner.addCommand(myst.ModelCommand());
 
-  runner.run(results.arguments).catchError((error) {
+  runner.run(arguments).catchError((error) {
     if (error is! UsageException) throw error;
     print(error);
     io.exit(64); // Exit code 64 indicates a usage error.

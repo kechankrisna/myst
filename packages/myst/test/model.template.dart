@@ -1,15 +1,4 @@
-/// ### `modelTemplate`
-///
-/// will be used when create a new model
-/// and its test file
-const String modelTemplate = """
-class ModelName{
-  
-}
-""";
-
-const String modelTestTemplate =
-    """/// import 'package:flutter_test/flutter_test.dart';
+/// import 'package:flutter_test/flutter_test.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -37,4 +26,4 @@ void main() {
       expect(true, true);
     });
   });
-}""";
+}

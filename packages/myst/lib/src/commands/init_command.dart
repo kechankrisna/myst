@@ -1,12 +1,9 @@
-import 'dart:convert';
 import 'package:args/command_runner.dart';
 import 'package:myst/myst.dart';
-import 'dart:io' as io;
 import 'package:path/path.dart' as path;
 import 'package:printx/printx.dart';
-import 'package:yaml/yaml.dart';
 
-class InitCommand extends Command {
+class InitCommand extends Command with YamlInformation {
   @override
   String get description => "generate structure of flutter application";
 
@@ -16,39 +13,16 @@ class InitCommand extends Command {
   @override
   List<String> get aliases => ['i'];
 
-  /// current project pubspec
-  late io.File pubspec;
-
-  /// current project pubspecEntries
-  late dynamic pubspecEntries;
-
-  /// current project name
-  late String? projectName;
-
-  /// current project verison
-  late String? projectVersion;
-
-  /// current path
-  late String currentPath;
-
   late bool replace;
 
   InitCommand() {
+    ensureYamlInitialized();
+    
     /// get replace flag
     argParser.addFlag("replace",
         callback: (value) => replace = value, defaultsTo: false);
 
-    pubspec = io.File('pubspec.yaml');
-    if (!pubspec.existsSync()) {
-      throw StateError('Pubspec cannot be located.');
-    }
-    pubspecEntries = loadYaml(pubspec.readAsStringSync(encoding: utf8));
-
-    projectName = '${pubspecEntries['name']}';
-
-    projectVersion = '${pubspecEntries['version']}';
-
-    currentPath = io.Directory.current.path;
+    /// ensure yaml load correctly
   }
 
   @override
@@ -97,12 +71,10 @@ class InitCommand extends Command {
 
   /// generate asset directory
   void generateLibDirectory() {
-    String _libPath = path.join(currentPath, 'lib');
-    String _testPath = path.join(currentPath, 'test');
 
     libDirectories.forEach((key, value) {
-      String _keylibPath = path.join(_libPath, key);
-      String _keytestPath = path.join(_testPath, key);
+      String _keylibPath = path.join(libraryPath, key);
+      String _keytestPath = path.join(testablePath, key);
 
       if (DirectoryCreator(_keylibPath).run()) {
         /// create its tests
