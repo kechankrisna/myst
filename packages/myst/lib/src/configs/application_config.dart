@@ -5,7 +5,7 @@ class ApplicationConfig {
   static DirectoryCreator get configs => DirectoryCreator(
         "configs",
         inners: [
-          FileCreator("configs.dart", contents: "/// Application configuration \n\nlibrary configs;")
+          FileCreator("configs.dart", contents: "/// Application configuration \n\nlibrary configs;\n")
         ],
       );
 
@@ -14,7 +14,7 @@ class ApplicationConfig {
         "controllers",
         inners: [
           FileCreator("controllers.dart",
-              contents: "/// Data featching controller \n\nlibrary controllers;")
+              contents: "/// Data featching controller \n\nlibrary controllers;\n")
         ],
       );
 
@@ -23,7 +23,7 @@ class ApplicationConfig {
         "extensions",
         inners: [
           FileCreator("extensions.dart",
-              contents: "/// Extra more extesion on dart code \n\nlibrary extensions;")
+              contents: "/// Extra more extesion on dart code \n\nlibrary extensions;\n")
         ],
       );
 
@@ -32,7 +32,7 @@ class ApplicationConfig {
         "interfaces",
         inners: [
           FileCreator("interfaces.dart",
-              contents: "/// For base class or abstraction \n\nlibrary interfaces;")
+              contents: "/// For base class or abstraction \n\nlibrary interfaces;\n")
         ],
       );
 
@@ -41,7 +41,7 @@ class ApplicationConfig {
         "layouts",
         inners: [
           FileCreator("layouts.dart",
-              contents: "/// Application overlay or layouts \n\nlibrary layouts;")
+              contents: "/// Application overlay or layouts \n\nlibrary layouts;\n")
         ],
       );
 
@@ -49,7 +49,7 @@ class ApplicationConfig {
   static DirectoryCreator get models => DirectoryCreator(
         "models",
         inners: [
-          FileCreator("models.dart", contents: "/// Application data models \n\nlibrary models;")
+          FileCreator("models.dart", contents: "/// Application data models \n\nlibrary models;\n")
         ],
       );
 
@@ -58,7 +58,7 @@ class ApplicationConfig {
         "screens",
         inners: [
           FileCreator("screens.dart",
-              contents: "/// Application screens or pages \n\nlibrary screens;")
+              contents: "/// Application screens or pages \n\nlibrary screens;\n")
         ],
       );
 
@@ -68,7 +68,7 @@ class ApplicationConfig {
         inners: [
           FileCreator("services.dart",
               contents:
-                  "/// Application services for handle background or as helper \n\nlibrary services;")
+                  "/// Application services for handle background or as helper \n\nlibrary services;\n")
         ],
       );
 
@@ -77,7 +77,7 @@ class ApplicationConfig {
         "utilities",
         inners: [
           FileCreator("utilities.dart",
-              contents: "/// Application utilities which mix the function \n\nlibrary utilities;")
+              contents: "/// Application utilities which mix the function \n\nlibrary utilities;\n")
         ],
       );
 
@@ -86,7 +86,7 @@ class ApplicationConfig {
         "widgets",
         inners: [
           FileCreator("widgets.dart",
-              contents: "/// Application utilities which mix the function \n\nlibrary widgets;")
+              contents: "/// Application utilities which mix the function \n\nlibrary widgets;\n")
         ],
       );
 

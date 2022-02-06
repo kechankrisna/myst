@@ -17,17 +17,19 @@ class InitCommand extends Command with YamlInformation {
   late bool replace;
 
   InitCommand() {
+    /// ensure yaml load correctly
     ensureYamlInitialized();
 
     /// get replace flag
     argParser.addFlag("replace",
         callback: (value) => replace = value, defaultsTo: false);
-
-    /// ensure yaml load correctly
   }
 
   @override
   run() {
+    final watch = Stopwatch()..start();
+    PrintX.cool("init start");
+
     /// welcome message
     printWelcome();
     if (projectName == null) {
@@ -42,6 +44,9 @@ class InitCommand extends Command with YamlInformation {
 
     /// if flutter then add integration_test
     generateIntegrateTestDirectory();
+
+    PrintX.cool("init finished in (${watch.elapsedMilliseconds} ms)");
+    watch.stop();
   }
 
   /// generate asset directory
@@ -111,9 +116,9 @@ class InitCommand extends Command with YamlInformation {
     }
     if (DirectoryCreator(_testDrivePath).run()) {
       var _driveTestsPath = path.join(_testDrivePath, 'integration_test.dart');
-      final contents = """import 'package:integration_test/integration_test_driver.dart'; \n\nFuture<void> main() => integrationDriver();""";
-      FileCreator(_driveTestsPath, contents: contents, replace: true)
-          .run();
+      final contents =
+          """import 'package:integration_test/integration_test_driver.dart'; \n\nFuture<void> main() => integrationDriver();""";
+      FileCreator(_driveTestsPath, contents: contents, replace: true).run();
     }
   }
 

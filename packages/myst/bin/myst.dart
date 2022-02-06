@@ -8,7 +8,7 @@ void main(List<String> arguments) {
     ..addOption("name", abbr: 'n', help: "class name")
     ..addOption("file", abbr: 'f', help: "file name")
     ..addFlag("replace", defaultsTo: false)
-    ..addOption('help', abbr: 'h', help: 'increase logging');
+    ..addFlag('help', abbr: 'h', help: 'increase logging', hide: true, defaultsTo: false);
 
   var results = parser.parse(arguments);
 

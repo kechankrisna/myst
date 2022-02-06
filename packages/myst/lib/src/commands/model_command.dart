@@ -4,7 +4,6 @@ import 'package:myst/myst.dart';
 import 'package:printx/printx.dart';
 import 'dart:io' as io;
 import 'package:path/path.dart' as path;
-import 'package:yaml/yaml.dart';
 
 class ModelCommand extends Command
     with YamlInformation
@@ -28,6 +27,7 @@ class ModelCommand extends Command
   List<String> get aliases => ['m'];
 
   ModelCommand() {
+    /// ensure yaml load correctly
     ensureYamlInitialized();
 
     argParser.addOption("name",
@@ -37,12 +37,13 @@ class ModelCommand extends Command
     argParser.addOption("file",
         callback: (v) => fileName = v,
         help: "please enter the file name correctly");
-
-    PrintX.sucess("generate model success");
   }
 
   @override
   run() {
+    final watch = Stopwatch()..start();
+    PrintX.cool("model start");
+
     /// in case user don't want to type --name then take the first input instead
     if (argResults!.arguments.isNotEmpty) {
       inputName ??= argResults!.arguments.first;
@@ -62,6 +63,9 @@ class ModelCommand extends Command
     } else {
       printCyan(usage);
     }
+
+    PrintX.cool("model finished in (${watch.elapsedMilliseconds} ms)");
+    watch.stop();
   }
 
   @override
@@ -69,13 +73,28 @@ class ModelCommand extends Command
     var contents = modelTemplate.replaceAll(RegExp(r"className"), className!);
     printCyan(contents);
 
+    final _parent = "models";
+
+    /// current file parent path
+    final _parentLibPath = path.join(libraryPath, _parent, "$_parent.dart");
+
     /// current new file path
-    final _filePath = path.join(libraryPath, "models", "$fileName.dart");
+    final _filePath = path.join(libraryPath, _parent, "$fileName.dart");
 
     /// write content
     io.File(_filePath).writeAsStringSync(contents);
 
     /// printBlack(content);
+    ///
+    /// add to its parent lib if none exist
+
+    var content = io.File(_parentLibPath).readAsStringSync();
+    var exist = content.contains(RegExp("$fileName.dart"));
+    if (!exist) {
+      content += "\nexport './$fileName.dart';";
+      io.File(_parentLibPath).writeAsStringSync(content);
+    }
+    printGreen("exist $exist");
   }
 
   @override
