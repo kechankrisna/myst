@@ -14,19 +14,17 @@ class InitCommand extends Command with YamlInformation {
   @override
   List<String> get aliases => ['i'];
 
-  late bool replace;
-
   InitCommand() {
-    /// ensure yaml load correctly
-    ensureYamlInitialized();
-
-    /// get replace flag
-    argParser.addFlag("replace",
-        callback: (value) => replace = value, defaultsTo: false);
+    /// get rewrite flag
+    argParser.addFlag("rewrite",
+        callback: (value) => rewrite = value, defaultsTo: false);
   }
 
   @override
   run() {
+    /// ensure yaml load correctly
+    ensureYamlInitialized();
+
     final watch = Stopwatch()..start();
     PrintX.cool("init start");
 
@@ -78,7 +76,7 @@ class InitCommand extends Command with YamlInformation {
         for (var innerFile in directory.inners) {
           final _currentLibFilePath = path.join(_innerLibPath, innerFile.path);
           var createdFile = FileCreator(_currentLibFilePath,
-                  contents: innerFile.contents, replace: true)
+                  contents: innerFile.contents, rewrite: rewrite)
               .run();
           if (createdFile) {
             final _testFileName =
@@ -89,7 +87,7 @@ class InitCommand extends Command with YamlInformation {
                 ? testTemplate.replaceAll(RegExp(r'package:test/test.dart'),
                     'package:flutter_test/flutter_test.dart')
                 : testTemplate;
-            FileCreator(_currentTestFilePath, contents: contents, replace: true)
+            FileCreator(_currentTestFilePath, contents: contents, rewrite: rewrite)
                 .run();
           }
         }
@@ -111,14 +109,14 @@ class InitCommand extends Command with YamlInformation {
       var _appIntegrationTestsPath =
           path.join(_integrationTestsPath, 'app_test.dart');
       final contents = integationTestTemplate;
-      FileCreator(_appIntegrationTestsPath, contents: contents, replace: true)
+      FileCreator(_appIntegrationTestsPath, contents: contents, rewrite: rewrite)
           .run();
     }
     if (DirectoryCreator(_testDrivePath).run()) {
       var _driveTestsPath = path.join(_testDrivePath, 'integration_test.dart');
       final contents =
           """import 'package:integration_test/integration_test_driver.dart'; \n\nFuture<void> main() => integrationDriver();""";
-      FileCreator(_driveTestsPath, contents: contents, replace: true).run();
+      FileCreator(_driveTestsPath, contents: contents, rewrite: rewrite).run();
     }
   }
 

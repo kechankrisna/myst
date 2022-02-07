@@ -27,9 +27,6 @@ class ModelCommand extends Command
   List<String> get aliases => ['m'];
 
   ModelCommand() {
-    /// ensure yaml load correctly
-    ensureYamlInitialized();
-
     argParser.addOption("name",
         callback: (v) => inputName = className = v,
         help: "please enter the class name correctly");
@@ -41,6 +38,9 @@ class ModelCommand extends Command
 
   @override
   run() {
+    /// ensure yaml load correctly
+    ensureYamlInitialized();
+
     final watch = Stopwatch()..start();
     PrintX.cool("model start");
 

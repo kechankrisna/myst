@@ -5,16 +5,16 @@ import 'package:myst/myst.dart';
 import 'package:printx/printx.dart';
 
 class FileCreator extends FileCreatorInterface {
-  late bool replace;
+  late bool rewrite;
 
   FileCreator(
     String path, {
     String? contents,
-    bool? replace,
+    bool? rewrite,
   }) {
     this.path = path;
     this.contents = contents;
-    this.replace = replace ?? false;
+    this.rewrite = rewrite ?? false;
   }
 
   @override
@@ -31,7 +31,7 @@ class FileCreator extends FileCreatorInterface {
       }
 
       /// if content not empty then insert
-      if (contents != null && replace == true) {
+      if (contents != null && rewrite == true) {
         file.writeAsStringSync(contents!);
       }
 

@@ -2,13 +2,15 @@ import 'dart:io' as io;
 import 'package:args/args.dart';
 import 'package:args/command_runner.dart';
 import 'package:myst/myst.dart' as myst;
+import 'package:printx/printx.dart';
 
 void main(List<String> arguments) {
   var parser = ArgParser()
     ..addOption("name", abbr: 'n', help: "class name")
     ..addOption("file", abbr: 'f', help: "file name")
-    ..addFlag("replace", defaultsTo: false)
-    ..addFlag('help', abbr: 'h', help: 'increase logging', hide: true, defaultsTo: false);
+    ..addFlag("rewrite", defaultsTo: false)
+    ..addFlag('help',
+        abbr: 'h', help: 'increase logging', hide: true, defaultsTo: false);
 
   var results = parser.parse(arguments);
 
@@ -17,6 +19,8 @@ void main(List<String> arguments) {
 
   /// add generate command to generate structure
   runner.addCommand(myst.InitCommand());
+
+  /// add model command to generate model and its test
   runner.addCommand(myst.ModelCommand());
 
   runner.run(arguments).catchError((error) {
