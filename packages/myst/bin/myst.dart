@@ -12,7 +12,10 @@ void main(List<String> arguments) {
         abbr: 'f', help: "file name will be use instead of class name")
     ..addFlag("rewrite", defaultsTo: false)
     ..addFlag("version",
-        defaultsTo: false, abbr: 'v', help: 'Display the current myst version')
+        defaultsTo: false,
+        abbr: 'v',
+        aliases: ['v'],
+        help: 'Display the current myst version')
     ..addFlag('help',
         abbr: 'h',
         help: 'Display the usage information',
