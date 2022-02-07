@@ -18,7 +18,7 @@ class DirectoryCreator extends DirectoryCreatorInterface {
         dir.createSync();
         printGreen("✓ $exactPath");
       } else {
-        printGreen("☑ $exactPath");
+        printYellow("✓ $exactPath");
       }
 
       /// create inner files

@@ -27,7 +27,7 @@ class FileCreator extends FileCreatorInterface {
         file.createSync();
         printGreen("✓ $exactPath");
       } else {
-        printGreen("☑ $exactPath");
+        printYellow("✓ $exactPath (${rewrite ? 'rewrite' : 'exist'})");
       }
 
       /// if content not empty then insert

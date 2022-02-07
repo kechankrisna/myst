@@ -25,7 +25,7 @@ void main(List<String> arguments) {
 
   runner.run(arguments).catchError((error) {
     if (error is! UsageException) throw error;
-    print(error);
+    printRed(error);
     io.exit(64); // Exit code 64 indicates a usage error.
   });
 }

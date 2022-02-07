@@ -52,8 +52,8 @@ class ModelCommand extends Command
 
       fileName ??= inputName!.snakeCase;
 
-      printBlue("${argResults!.options}");
-      printGreen([inputName, className, fileName]);
+      /// printBlue("${argResults!.options}");
+      /// printGreen([inputName, className, fileName]);
 
       /// generate model class in lib/models
       generateLib();
@@ -71,7 +71,6 @@ class ModelCommand extends Command
   @override
   void generateLib() async {
     var contents = modelTemplate.replaceAll(RegExp(r"className"), className!);
-    printCyan(contents);
 
     final _parent = "models";
 
@@ -81,20 +80,22 @@ class ModelCommand extends Command
     /// current new file path
     final _filePath = path.join(libraryPath, _parent, "$fileName.dart");
 
+    FileCreator(_filePath, contents: contents, rewrite: rewrite);
+
     /// write content
-    io.File(_filePath).writeAsStringSync(contents);
+    FileCreator(_filePath, contents: contents, rewrite: rewrite).run();
 
-    /// printBlack(content);
-    ///
+    /// printCyan(content);
+
     /// add to its parent lib if none exist
-
     var content = io.File(_parentLibPath).readAsStringSync();
     var exist = content.contains(RegExp("$fileName.dart"));
     if (!exist) {
       content += "\nexport './$fileName.dart';";
-      io.File(_parentLibPath).writeAsStringSync(content);
+
+      /// force to rewrite
+      FileCreator(_parentLibPath, contents: content, rewrite: true).run();
     }
-    printGreen("exist $exist");
   }
 
   @override
@@ -115,12 +116,12 @@ class ModelCommand extends Command
     contents = contents.replaceAll(RegExp(r"_test.dart';"),
         "_test.dart';\nimport 'package:$projectName/models/$fileName.dart';");
 
-    printCyan(contents);
+    /// printCyan(contents);
 
     /// current new file path
     final _filePath = path.join(testPath, "models", "$fileName\_test.dart");
 
     /// write content
-    io.File(_filePath).writeAsStringSync(contents);
+    FileCreator(_filePath, contents: contents, rewrite: rewrite).run();
   }
 }
