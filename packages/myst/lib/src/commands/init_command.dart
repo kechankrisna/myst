@@ -63,7 +63,11 @@ class InitCommand extends Command with YamlInformation {
 
   /// generate asset directory
   void generateLibDirectory() {
-    for (var directory in ApplicationConfig.skeleton) {
+    final skelentons = [
+      ...ApplicationConfig.skeleton,
+      if (flutter) ...[ApplicationConfig.widgets, ApplicationConfig.providers]
+    ];
+    for (var directory in skelentons) {
       final _innerLibPath = path.join(libraryPath, directory.path);
       final _innerTestPath = path.join(testPath, directory.path);
       var createdDir = DirectoryCreator(_innerLibPath).run();
@@ -87,7 +91,8 @@ class InitCommand extends Command with YamlInformation {
                 ? testTemplate.replaceAll(RegExp(r'package:test/test.dart'),
                     'package:flutter_test/flutter_test.dart')
                 : testTemplate;
-            FileCreator(_currentTestFilePath, contents: contents, rewrite: rewrite)
+            FileCreator(_currentTestFilePath,
+                    contents: contents, rewrite: rewrite)
                 .run();
           }
         }
@@ -109,7 +114,8 @@ class InitCommand extends Command with YamlInformation {
       var _appIntegrationTestsPath =
           path.join(_integrationTestsPath, 'app_test.dart');
       final contents = integationTestTemplate;
-      FileCreator(_appIntegrationTestsPath, contents: contents, rewrite: rewrite)
+      FileCreator(_appIntegrationTestsPath,
+              contents: contents, rewrite: rewrite)
           .run();
     }
     if (DirectoryCreator(_testDrivePath).run()) {

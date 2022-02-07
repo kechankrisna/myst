@@ -53,6 +53,14 @@ class ApplicationConfig {
         ],
       );
 
+  /// providers directory
+  static DirectoryCreator get providers => DirectoryCreator(
+        "providers",
+        inners: [
+          FileCreator("providers.dart", contents: "/// Application state management \n\nlibrary providers;\n")
+        ],
+      );    
+
   /// screens directory
   static DirectoryCreator get screens => DirectoryCreator(
         "screens",
@@ -99,10 +107,10 @@ class ApplicationConfig {
       interfaces,
       layouts,
       models,
+      providers,
       screens,
       services,
       utilities,
-      widgets
     ];
   }
 }
