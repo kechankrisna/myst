@@ -165,7 +165,7 @@ packages:
       path: "../../packages/myst"
       relative: true
     source: path
-    version: "0.0.1+3"
+    version: "0.0.1+1"
   os_detect:
     dependency: transitive
     description:
