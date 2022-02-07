@@ -2,20 +2,34 @@ import 'dart:io' as io;
 import 'package:args/args.dart';
 import 'package:args/command_runner.dart';
 import 'package:myst/myst.dart' as myst;
+import "package:os_detect/os_detect.dart" as os;
 import 'package:printx/printx.dart';
 
 void main(List<String> arguments) {
   var parser = ArgParser()
     ..addOption("name", abbr: 'n', help: "class name")
-    ..addOption("file", abbr: 'f', help: "file name")
+    ..addOption("file",
+        abbr: 'f', help: "file name will be use instead of class name")
     ..addFlag("rewrite", defaultsTo: false)
+    ..addFlag("version",
+        defaultsTo: false, abbr: 'v', help: 'Display the current myst version')
     ..addFlag('help',
-        abbr: 'h', help: 'increase logging', hide: true, defaultsTo: false);
+        abbr: 'h',
+        help: 'Display the usage information',
+        hide: true,
+        defaultsTo: false);
 
   var results = parser.parse(arguments);
 
   final runner =
       CommandRunner("myst", "dart package to generate nice flutter structure");
+
+  /// display version
+  if (results.arguments.contains("--version")) {
+    printCyan(
+        "myst: ${myst.version} (${DateTime.now().toLocal()}) on ${os.operatingSystem}");
+    return;
+  }
 
   /// add generate command to generate structure
   runner.addCommand(myst.InitCommand());
