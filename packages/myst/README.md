@@ -5,16 +5,16 @@ please check out the packages directory to see the available dart package in mys
 ### screenshots
 
 * lib directory
-  * ![lib directory](./screenshots/lib.png)
+  * ![./screenshots/lib.png](https://github.com/kechankrisna/myst/blob/main/packages/myst/screenshots/lib.png?raw=true)
 
 * asset directory
-  * ![asset directory](./screenshots/asset.png)
+  * ![./screenshots/asset.png](https://github.com/kechankrisna/myst/blob/main/packages/myst/screenshots/asset.png?raw=true)
 
 * test directory
-  * ![test directory](./screenshots/test.png)
+  * ![./screenshots/test.png](https://github.com/kechankrisna/myst/blob/main/packages/myst/screenshots/test.png?raw=true)
 
 * integration_test directory
-  * ![integration_test directory](./screenshots/integration_test.png)
+  * ![./screenshots/integration_test.png](https://github.com/kechankrisna/myst/blob/main/packages/myst/screenshots/integration_test.png?raw=true)
 
 please make sure you have dart installed your marchine correctly
 
@@ -38,8 +38,8 @@ flutter pub add myst
 
 | commands  | alias | description |
 | ------------- | ------------- | ------------- |
-| `myst init`  | `i`| <font color="green">✔</font> generate a structure of flutter application   |
-| `myst model`  | `m`| <font color="green">✔</font> create a file in lib/models and test/models   |
+| `myst init`  | `i`| ✔ generate a structure of flutter application   |
+| `myst model`  | `m`| ✔ create a file in lib/models and test/models   |
 | `myst controller`  | `c`| ❌ create a file in lib/controllers and test/controllers   |
 | `myst provider`  | `p`| ❌ create a file in lib/providers and test/providers   |
 | `myst extension`  | `e`| ❌ create a file in lib/extensions and test/extensions   |
