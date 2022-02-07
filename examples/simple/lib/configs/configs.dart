@@ -1,3 +1,1 @@
 /// Application configuration 
-
-library configs;
