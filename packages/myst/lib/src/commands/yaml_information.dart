@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'dart:io' as io;
+import 'package:myst/myst.dart';
 import 'package:path/path.dart' as path;
 import 'package:printx/printx.dart';
 import 'package:yaml/yaml.dart';
@@ -53,9 +54,11 @@ mixin YamlInformation {
       throw StateError('Pubspec cannot be located.');
     }
 
-    myst = io.File('myst.yaml');
+    final mystYamlPath = path.join("myst.yaml");
+    myst = io.File(mystYamlPath);
     if (!myst.existsSync()) {
-      PrintX.f("no myst.yaml were config");
+      FileCreator(mystYamlPath, contents: mystYamlTemplate, rewrite: true)
+          .run();
     } else {
       mystEntries = loadYaml(myst.readAsStringSync(encoding: utf8));
       if (mystEntries.containsKey('configs') &&

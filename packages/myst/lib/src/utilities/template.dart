@@ -1,3 +1,10 @@
+const String mystYamlTemplate = """configs:
+  model:
+    rewrite: false""";
+
+/// ###`testTemplate`
+///
+/// default test template which can be load into file in test directory
 const String testTemplate = """import 'package:test/test.dart';
 
 void main() {
@@ -8,6 +15,9 @@ void main() {
 }
 """;
 
+/// ### `integationTestTemplate`
+///
+/// default test template which can be load into file in integration_test directory
 const String integationTestTemplate =
     """import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';

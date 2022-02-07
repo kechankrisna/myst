@@ -60,7 +60,7 @@ flutter pub add myst
 | arguments  | alias | description |
 | ------------- | ------------- | ------------- |
 | --help  | -h | show the usage information |
-| --name  | -name | set the new file name (optional) |
+| --name  | -n | set the new file name (optional) |
 
 
 
