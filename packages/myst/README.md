@@ -5,16 +5,16 @@ please check out the packages directory to see the available dart package in mys
 ### screenshots
 
 * lib directory
-![lib directory](./screenshots/lib.png)
+  * ![lib directory](./screenshots/lib.png)
 
 * asset directory
-![asset directory](./screenshots/asset.png)
+  * ![asset directory](./screenshots/asset.png)
 
 * test directory
-![test directory](./screenshots/test.png)
+  * ![test directory](./screenshots/test.png)
 
 * integration_test directory
-![integration_test directory](./screenshots/integration_test.png)
+  * ![integration_test directory](./screenshots/integration_test.png)
 
 please make sure you have dart installed your marchine correctly
 
