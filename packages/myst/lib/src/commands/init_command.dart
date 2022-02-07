@@ -43,6 +43,8 @@ class InitCommand extends Command with YamlInformation {
     /// if flutter then add integration_test
     generateIntegrateTestDirectory();
 
+    generateRouteLib();
+
     PrintX.cool("init finished in (${watch.elapsedMilliseconds} ms)");
     watch.stop();
   }
@@ -123,6 +125,24 @@ class InitCommand extends Command with YamlInformation {
       final contents =
           """import 'package:integration_test/integration_test_driver.dart'; \n\nFuture<void> main() => integrationDriver();""";
       FileCreator(_driveTestsPath, contents: contents, rewrite: rewrite).run();
+    }
+  }
+
+  generateRouteLib() {
+    final _routePath = path.join(libraryPath, ApplicationConfig.routes.path);
+    final _testFileName = ApplicationConfig.routes.path
+        .replaceAll(RegExp(r'.dart'), '_test.dart');
+    final _routeTestFilePath = path.join(testPath, _testFileName);
+    var created = FileCreator(_routePath,
+            contents: ApplicationConfig.routes.contents, rewrite: rewrite)
+        .run();
+    if (created) {
+      var contents = flutter
+          ? testTemplate.replaceAll(RegExp(r'package:test/test.dart'),
+              'package:flutter_test/flutter_test.dart')
+          : testTemplate;
+      FileCreator(_routeTestFilePath, contents: contents, rewrite: rewrite)
+          .run();
     }
   }
 

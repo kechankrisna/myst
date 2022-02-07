@@ -1,11 +1,16 @@
 import 'package:myst/myst.dart';
 
 class ApplicationConfig {
+  /// routes handler
+  static FileCreator get routes => FileCreator("routes.dart",
+      contents: "/// Application route handler \n\nlibrary routes;\n");
+
   /// configs directory
   static DirectoryCreator get configs => DirectoryCreator(
         "configs",
         inners: [
-          FileCreator("configs.dart", contents: "/// Application configuration \n\nlibrary configs;\n")
+          FileCreator("configs.dart",
+              contents: "/// Application configuration \n\nlibrary configs;\n")
         ],
       );
 
@@ -14,7 +19,8 @@ class ApplicationConfig {
         "controllers",
         inners: [
           FileCreator("controllers.dart",
-              contents: "/// Data featching controller \n\nlibrary controllers;\n")
+              contents:
+                  "/// Data featching controller \n\nlibrary controllers;\n")
         ],
       );
 
@@ -23,7 +29,8 @@ class ApplicationConfig {
         "extensions",
         inners: [
           FileCreator("extensions.dart",
-              contents: "/// Extra more extesion on dart code \n\nlibrary extensions;\n")
+              contents:
+                  "/// Extra more extesion on dart code \n\nlibrary extensions;\n")
         ],
       );
 
@@ -32,7 +39,8 @@ class ApplicationConfig {
         "interfaces",
         inners: [
           FileCreator("interfaces.dart",
-              contents: "/// For base class or abstraction \n\nlibrary interfaces;\n")
+              contents:
+                  "/// For base class or abstraction \n\nlibrary interfaces;\n")
         ],
       );
 
@@ -41,7 +49,8 @@ class ApplicationConfig {
         "layouts",
         inners: [
           FileCreator("layouts.dart",
-              contents: "/// Application overlay or layouts \n\nlibrary layouts;\n")
+              contents:
+                  "/// Application overlay or layouts \n\nlibrary layouts;\n")
         ],
       );
 
@@ -49,7 +58,8 @@ class ApplicationConfig {
   static DirectoryCreator get models => DirectoryCreator(
         "models",
         inners: [
-          FileCreator("models.dart", contents: "/// Application data models \n\nlibrary models;\n")
+          FileCreator("models.dart",
+              contents: "/// Application data models \n\nlibrary models;\n")
         ],
       );
 
@@ -57,16 +67,19 @@ class ApplicationConfig {
   static DirectoryCreator get providers => DirectoryCreator(
         "providers",
         inners: [
-          FileCreator("providers.dart", contents: "/// Application state management \n\nlibrary providers;\n")
+          FileCreator("providers.dart",
+              contents:
+                  "/// Application state management \n\nlibrary providers;\n")
         ],
-      );    
+      );
 
   /// screens directory
   static DirectoryCreator get screens => DirectoryCreator(
         "screens",
         inners: [
           FileCreator("screens.dart",
-              contents: "/// Application screens or pages \n\nlibrary screens;\n")
+              contents:
+                  "/// Application screens or pages \n\nlibrary screens;\n")
         ],
       );
 
@@ -85,7 +98,8 @@ class ApplicationConfig {
         "utilities",
         inners: [
           FileCreator("utilities.dart",
-              contents: "/// Application utilities which mix the function \n\nlibrary utilities;\n")
+              contents:
+                  "/// Application utilities which mix the function \n\nlibrary utilities;\n")
         ],
       );
 
@@ -94,7 +108,8 @@ class ApplicationConfig {
         "widgets",
         inners: [
           FileCreator("widgets.dart",
-              contents: "/// Application utilities which mix the function \n\nlibrary widgets;\n")
+              contents:
+                  "/// Application utilities which mix the function \n\nlibrary widgets;\n")
         ],
       );
 
