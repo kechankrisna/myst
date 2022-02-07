@@ -1,6 +1,6 @@
-import 'package:myst/myst.dart';
-import 'package:printx/printx.dart';
-import 'package:string_scanner/string_scanner.dart';
+/// import 'package:myst/myst.dart';
+/// import 'package:printx/printx.dart';
+/// import 'package:string_scanner/string_scanner.dart';
 import 'package:recase/recase.dart';
 import 'package:test/test.dart';
 
@@ -12,11 +12,11 @@ void main() {
     final result = source.replaceAll(RegExp(r'className'), "model");
     expect(shouldBe, result);
   });
-  
+
   test("camal case", () {
     String source = "MyCamelCase";
     var shouldBe = "my_camel_case";
-    var result ="MyCamelCase".snakeCase;
+    var result = "MyCamelCase".snakeCase;
 
     expect(shouldBe, result);
   });

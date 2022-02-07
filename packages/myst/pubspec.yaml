@@ -1,6 +1,6 @@
 name: myst
 description: The simple flutter structure cli which can help you to be more productive
-version: 0.0.1+1
+version: 0.0.1+2
 homepage: https://github.com/kechankrisna/myst
 
 environment:
@@ -13,7 +13,6 @@ dependencies:
   os_detect: ^2.0.0
   path: ^1.8.0
   printx: ^0.0.1
-  process: ^4.2.4
   process_run: ^0.12.3+2
   recase: ^4.0.0
   yaml: ^3.1.0

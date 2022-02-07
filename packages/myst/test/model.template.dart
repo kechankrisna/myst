@@ -9,6 +9,7 @@ void main() {
     setUp(() {
       /// initialize json data for testing
       json = {};
+
       /// objectName = className.fromJson(json);
       /// data = name.toJson();
     });
