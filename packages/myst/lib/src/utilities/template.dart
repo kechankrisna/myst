@@ -36,6 +36,12 @@ void main() {
 /// will be used when create a new model
 /// and its test file
 const String modelTemplate = """
+/// ### `className`
+/// 
+/// `Description`:
+/// 
+/// `Example`:
+// TODO: Implement model
 class className{
   
 }

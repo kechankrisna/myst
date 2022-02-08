@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'dart:io' as io;
 import 'package:myst/myst.dart';
 import 'package:path/path.dart' as path;
-import 'package:printx/printx.dart';
 import 'package:yaml/yaml.dart';
 
 mixin YamlInformation {
@@ -20,8 +19,11 @@ mixin YamlInformation {
   /// current project myst entries
   late YamlMap mystEntries;
 
+  /// current project myst entries
+  late YamlMap? mystConfig;
+
   /// current project models config
-  late YamlMap? modelConfig;
+  YamlMap? modelConfig;
 
   /// current project name
   late String? projectName;
@@ -44,7 +46,14 @@ mixin YamlInformation {
   /// dev_dependencies yaml as map
   late YamlMap dev_dependencies;
 
+  // if current project is flutter app
   late bool flutter;
+
+  // if current project using go_router
+  late bool go_router;
+
+  // if current project using provider
+  late bool provider;
 
   late bool rewrite;
 
@@ -63,9 +72,13 @@ mixin YamlInformation {
       mystEntries = loadYaml(myst.readAsStringSync(encoding: utf8));
       if (mystEntries.containsKey('configs') &&
           mystEntries['configs'] != null) {
-        modelConfig = mystEntries['configs']['model'];
-        if (modelConfig?.containsKey("rewrite") == true) {
-          rewrite = modelConfig!['rewrite'];
+        mystConfig = mystEntries['configs'];
+        if (mystConfig != null) {
+          if (mystConfig!.containsKey('rewrite')) {
+            rewrite = mystConfig!['rewrite'];
+          }
+
+          modelConfig = mystConfig!['model'];
         }
       }
     }
@@ -87,6 +100,12 @@ mixin YamlInformation {
 
     /// check if current project is flutter application
     flutter = dependencies.nodes.containsKey("flutter");
+
+    /// check if current project using go_router
+    go_router = dependencies.nodes.containsKey("go_router");
+
+    /// check if current project using provider
+    provider = dependencies.nodes.containsKey("provider");
 
     /// current project path
     currentPath = io.Directory.current.path;

@@ -34,12 +34,22 @@ class ModelCommand extends Command
     argParser.addOption("file",
         callback: (v) => fileName = v,
         help: "please enter the file name correctly");
+
+    argParser.addFlag("rewrite",
+        callback: (value) => rewrite = value, defaultsTo: false);
   }
 
   @override
   run() {
     /// ensure yaml load correctly
     ensureYamlInitialized();
+
+    /// split rewrite config if exist in myst.yaml
+    if (modelConfig != null) {
+      if (modelConfig!.containsKey("rewrite") == true) {
+        rewrite = modelConfig!['rewrite'];
+      }
+    }
 
     final watch = Stopwatch()..start();
     PrintX.cool("model start");

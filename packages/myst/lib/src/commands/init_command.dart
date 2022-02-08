@@ -172,9 +172,17 @@ class InitCommand extends Command with YamlInformation {
   /// generate the core in lib directory
   generateCoreLib() {
     final _corePath = path.join(libraryPath, ApplicationConfig.core.path);
-    FileCreator(_corePath,
-            contents: ApplicationConfig.core.contents, rewrite: rewrite)
-        .run();
+    var contents = ApplicationConfig.core.contents!;
+    if (flutter) {
+      contents += "\nexport 'package:flutter/material.dart';";
+    }
+    if (go_router) {
+      contents += "\nexport 'package:go_router/go_router.dart';";
+    }
+    if (provider) {
+      contents += "\nexport 'package:provider/provider.dart';";
+    }
+    FileCreator(_corePath, contents: contents, rewrite: rewrite).run();
   }
 
   void printWelcome() {
