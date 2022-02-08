@@ -3,6 +3,7 @@ import 'package:myst/myst.dart';
 import 'package:path/path.dart' as path;
 import 'package:printx/printx.dart';
 import 'package:process_run/shell.dart';
+import 'dart:io' as io;
 
 class InitCommand extends Command with YamlInformation {
   @override
@@ -37,13 +38,17 @@ class InitCommand extends Command with YamlInformation {
     /// generate assets directory
     generateAssetsDirectory();
 
-    /// generate lib directory and test
-    generateLibDirectory();
-
     /// if flutter then add integration_test
     generateIntegrateTestDirectory();
 
-    generateRouteLib();
+    /// generate lib directory and test
+    generateLibDirectory();
+
+    /// generate the route
+    generateRoutesLib();
+
+    /// generate the core
+    generateCoreLib();
 
     PrintX.cool("init finished in (${watch.elapsedMilliseconds} ms)");
     watch.stop();
@@ -126,9 +131,13 @@ class InitCommand extends Command with YamlInformation {
           """import 'package:integration_test/integration_test_driver.dart'; \n\nFuture<void> main() => integrationDriver();""";
       FileCreator(_driveTestsPath, contents: contents, rewrite: rewrite).run();
     }
+
+    /// ensure the test folder must be exist
+    DirectoryCreator(testPath).run();
   }
 
-  generateRouteLib() {
+  /// generate the routes.dart in lib and routes_test.dart in test
+  generateRoutesLib() {
     final _routePath = path.join(libraryPath, ApplicationConfig.routes.path);
     final _testFileName = ApplicationConfig.routes.path
         .replaceAll(RegExp(r'.dart'), '_test.dart');
@@ -146,8 +155,16 @@ class InitCommand extends Command with YamlInformation {
     }
   }
 
+  /// generate the core in lib directory
+  generateCoreLib() {
+    final _corePath = path.join(libraryPath, ApplicationConfig.core.path);
+    FileCreator(_corePath,
+            contents: ApplicationConfig.core.contents, rewrite: rewrite)
+        .run();
+  }
+
   void printWelcome() {
-    var border = List.generate(100, (i) => "=").toList().join();
+    var border = List.generate(50, (i) => "=").toList().join();
     printCyan("""
 $border
 ||

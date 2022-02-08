@@ -114,7 +114,7 @@ class ModelCommand extends Command
 
     /// add import
     contents = contents.replaceAll(RegExp(r"_test.dart';"),
-        "_test.dart';\nimport 'package:$projectName/models/$fileName.dart';");
+        "_test.dart'; \nimport 'package:$projectName/core.dart';\n");
 
     /// printCyan(contents);
 

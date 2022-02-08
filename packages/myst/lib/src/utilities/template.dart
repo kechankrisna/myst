@@ -50,7 +50,7 @@ void main() {
     late Map<String, dynamic> data;
 
     setUp(() {
-      /// initialize json data for testing
+      // TODO: initialize json data for testing
       json = {};
       /// objectName = className.fromJson(json);
       /// data = objectName.toJson();
