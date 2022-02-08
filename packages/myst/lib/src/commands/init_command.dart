@@ -79,6 +79,15 @@ class InitCommand extends Command with YamlInformation {
       final _innerTestPath = path.join(testPath, directory.path);
       var createdDir = DirectoryCreator(_innerLibPath).run();
       if (createdDir) {
+        /// check if any exist file then add these file to its plural name .dart
+        var files = io.Directory(_innerLibPath).listSync();
+        var missExports = <String>[];
+        var existDarts = files
+            .where((f) => !f.path.contains(RegExp("${directory.path}.dart")));
+        missExports = existDarts
+            .map((f) => f.path.split(RegExp("$_innerLibPath/")).last)
+            .toList();
+
         /// create its tests
         DirectoryCreator(_innerTestPath).run();
 
@@ -86,8 +95,13 @@ class InitCommand extends Command with YamlInformation {
         /// and test file
         for (var innerFile in directory.inners) {
           final _currentLibFilePath = path.join(_innerLibPath, innerFile.path);
+          var innerFileContent = innerFile.contents!;
+          if (missExports.isNotEmpty) {
+            innerFileContent +=
+                missExports.map((f) => "\nexport '$f';").join('');
+          }
           var createdFile = FileCreator(_currentLibFilePath,
-                  contents: innerFile.contents, rewrite: rewrite)
+                  contents: innerFileContent, rewrite: rewrite)
               .run();
           if (createdFile) {
             final _testFileName =

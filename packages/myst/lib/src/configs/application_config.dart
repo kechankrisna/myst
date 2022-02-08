@@ -7,7 +7,7 @@ class ApplicationConfig {
 
   /// application core
   static FileCreator get core =>
-      FileCreator("core.dart", contents: """/// Application core file \n///
+      FileCreator("core.dart", contents: """/// Application core file \n
 export 'routes.dart';
 export 'configs/configs.dart';
 export 'controllers/controllers.dart';

@@ -91,7 +91,7 @@ class ModelCommand extends Command
     var content = io.File(_parentLibPath).readAsStringSync();
     var exist = content.contains(RegExp("$fileName.dart"));
     if (!exist) {
-      content += "\nexport './$fileName.dart';";
+      content += "\nexport '$fileName.dart';";
 
       /// force to rewrite
       FileCreator(_parentLibPath, contents: content, rewrite: true).run();
