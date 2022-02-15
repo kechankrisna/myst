@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 ///
 /// this widget will render base on context size width
 ///
-/// Example: 
+/// Example:
 /// ```dart
 /// Scaffold(
 ///   appBar: AppBar(

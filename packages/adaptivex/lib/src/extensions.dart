@@ -209,17 +209,3 @@ extension AdaptiveXBuildContextParsing on BuildContext {
   /// ```
   MediaQueryData get mediaQueryData => MediaQuery.of(this);
 }
-
-/// `DeviceType`
-///
-/// refer to the type of device, this will
-enum DeviceType { smartphone, miniTablet, tablet, desktop, unknown }
-
-/// refer to the device width
-enum DeviceSize { xs, sm, md, lg, xl }
-
-/// refer to the screen width
-enum ScreenSize { xs, sm, md, lg, xl }
-
-/// refer to the box width
-enum BoxSize { xs, sm, md, lg, xl }
