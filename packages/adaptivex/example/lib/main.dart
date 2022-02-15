@@ -1,22 +1,19 @@
-import 'package:example/adptive_builder_screen.dart';
+import 'package:adaptivex/adaptivex.dart';
+import 'package:example/my_cupertino_app.dart';
+import 'package:example/my_macos_app.dart';
+import 'package:example/my_material_app.dart';
+import 'package:example/my_web_app.dart';
+import 'package:example/my_window_app.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    const AdaptivePlatformWidget(
+      child: MyMaterialApp(),
+      ios: MyCupertinoApp(),
+      macos: MyMacosApp(),
+      web: MyWebApp(),
+      window: MyWindowApp(),
+    ),
+  );
 }
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const AdaptiveBuilderScreen(),
-    );
-  }
-}
-
