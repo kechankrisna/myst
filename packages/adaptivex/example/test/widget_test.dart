@@ -26,30 +26,29 @@ void main() {
       (WidgetTester tester) async {
         await tester.pumpWidget(const MyApp());
 
-        await tester.pumpAndSettle();
+        await tester.pump(const Duration(seconds: 1));
 
         if (defaultTargetPlatform == TargetPlatform.iOS) {
           expect(find.byType(MyCupertinoApp), findsOneWidget);
-          await tester.pumpAndSettle();
+          await tester.pump(const Duration(seconds: 1));
         } else if (defaultTargetPlatform == TargetPlatform.android) {
           expect(find.byType(MyMaterialApp), findsOneWidget);
-          await tester.pumpAndSettle();
+          await tester.pump(const Duration(seconds: 1));
         } else if (defaultTargetPlatform == TargetPlatform.windows) {
           expect(find.byType(MyWindowApp), findsOneWidget);
-          await tester.pumpAndSettle();
+          await tester.pump(const Duration(seconds: 1));
         } else if (defaultTargetPlatform == TargetPlatform.macOS) {
           expect(find.byType(MyMacosApp), findsOneWidget);
-          await tester.pumpAndSettle();
+          await tester.pump(const Duration(seconds: 1));
         } else if (defaultTargetPlatform == TargetPlatform.linux) {
           expect(find.byType(MyLinuxApp), findsOneWidget);
-          await tester.pumpAndSettle();
+          await tester.pump(const Duration(seconds: 1));
         } else {
           expect(find.byType(MyFusionApp), findsOneWidget);
-          await tester.pumpAndSettle();
+          await tester.pump(const Duration(seconds: 1));
         }
       },
       variant: TargetPlatformVariant.all(),
-      skip: true,
     );
 
     tearDownAll(() {});

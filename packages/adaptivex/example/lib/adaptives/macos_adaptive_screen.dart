@@ -58,7 +58,7 @@ class _MacosAdaptiveScreenState extends State<MacosAdaptiveScreen> {
             ],
           );
         },
-        minWidth: 200,
+        minWidth: 400,
         bottom: const Padding(
           padding: EdgeInsets.all(16.0),
           child: MacosListTile(
