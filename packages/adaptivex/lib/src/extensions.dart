@@ -1,5 +1,7 @@
 import 'package:adaptivex/adaptivex.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'dart:io' as io;
 
 extension AdaptiveXBoxConstraintsParsing on BoxConstraints {
   /// `boxSize`
@@ -50,7 +52,7 @@ extension AdaptiveXBuildContextParsing on BuildContext {
   /// `boxWidth`
   ///
   /// its box size width
-  /// 
+  ///
   /// Example:
   /// ```dart
   /// class Example extends StatelessWidget {
@@ -84,35 +86,44 @@ extension AdaptiveXBuildContextParsing on BuildContext {
   ///
   /// represent the device height, check if current display in landscape
   /// mode then return its height as total width instead of its size width
-  /// 
-  /// 
+  ///
+  ///
   double get deviceWidth {
     // (io.Platform.isIOS || io.Platform.isAndroid) &&
     final Size size = mediaQueryData.size;
-    return mediaQueryData.orientation == Orientation.landscape
-        ? size.height
-        : size.width;
+    if (!kIsWeb) {
+      if ((io.Platform.isIOS || io.Platform.isAndroid)) {
+        return mediaQueryData.orientation == Orientation.landscape
+            ? size.height
+            : size.width;
+      }
+    }
+    return size.width;
   }
 
   /// `deviceHeight`
   ///
   /// represent the device height, check if current display in landscape
   /// mode then return its width as total height instead of its size height
-  /// 
-  /// 
+  ///
+  ///
   double get deviceHeight {
-    // (io.Platform.isIOS || io.Platform.isAndroid) &&
     final Size size = mediaQueryData.size;
-    return mediaQueryData.orientation == Orientation.landscape
-        ? size.width
-        : size.height;
+    if (!kIsWeb) {
+      if ((io.Platform.isIOS || io.Platform.isAndroid)) {
+        return mediaQueryData.orientation == Orientation.landscape
+            ? size.width
+            : size.height;
+      }
+    }
+    return size.height;
   }
 
   /// `deviceType`
   ///
   /// represent the current device type based on its frame width
-  /// 
-  /// 
+  ///
+  ///
   DeviceType get deviceType {
     /// if device with less than kXsBreakPoint
     if (deviceWidth > 0 && deviceWidth < kXsBreakPoint) {
@@ -143,8 +154,8 @@ extension AdaptiveXBuildContextParsing on BuildContext {
   /// `deviceSize`
   ///
   /// represent the device size enumeration while it based on device width
-  /// 
-  /// 
+  ///
+  ///
   DeviceSize get deviceSize {
     if (deviceWidth < kXsBreakPoint) {
       return DeviceSize.xs;
@@ -163,8 +174,8 @@ extension AdaptiveXBuildContextParsing on BuildContext {
   ///
   /// represent the screen size enumeration while it based on screen width rather than device with
   /// sometime user rotate the device, then its screen width will be changed too
-  /// 
-  /// 
+  ///
+  ///
   ScreenSize get screenSize {
     final double width = screenWidth;
     if (width < kXsBreakPoint) {

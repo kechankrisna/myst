@@ -1,7 +1,29 @@
 import 'package:adaptivex/adaptivex.dart';
 import 'package:flutter/material.dart';
 
-class AdaptiveContext extends StatelessWidget {
+/// `AdaptiveBuilder`
+///
+/// this widget will render base on context size width
+///
+/// Example: 
+/// ```dart
+/// Scaffold(
+///   appBar: AppBar(
+///     title: const Text("using adaptive builder"),
+///   ),
+///   body: Center(
+///     child: AdaptiveBuilder(
+///       xlBuilder: (_) => const Text("xlBuilder"),
+///       lgBuilder: (_) => const Text("lgBuilder"),
+///       mdBuilder: (_) => const Text("mdBuilder"),
+///       smBuilder: (_) => const Text("smBuilder"),
+///       // xsBuilder: (_) => const Text("xsBuilder"),
+///       builder: (_) => const Text("xsBuilder"),
+///     ),
+///   ),
+/// )
+/// ```
+class AdaptiveBuilder extends StatelessWidget {
   /// `xlBuilder`
   ///
   /// this widget will render on xlarge width
@@ -32,7 +54,7 @@ class AdaptiveContext extends StatelessWidget {
   /// this is required as the default rendering
   final Widget Function(BuildContext context) builder;
 
-  const AdaptiveContext({
+  const AdaptiveBuilder({
     Key? key,
     this.xlBuilder,
     this.lgBuilder,
@@ -44,7 +66,6 @@ class AdaptiveContext extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     switch (context.deviceSize) {
       case DeviceSize.xl:
         return xlBuilder?.call(context) ?? builder.call(context);
