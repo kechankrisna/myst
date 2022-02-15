@@ -1,0 +1,15 @@
+name: adaptivex
+description: This package allow you to build the widget based on width (screen) size or platform
+version: 0.0.1
+homepage: https://github.com/kechankrisna/myst/tree/main/packages/resx
+
+environment:
+  sdk: '>=2.15.1 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  lints: ^1.0.0
+  test: ^1.16.0
