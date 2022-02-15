@@ -11,7 +11,7 @@ class AndroidAdaptiveScreen extends StatefulWidget {
 class _AndroidAdaptiveScreenState extends State<AndroidAdaptiveScreen> {
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
+    return Scaffold(
       appBar: AppBar(
         title: const Text("adaptive builder on android"),
         leading: IconButton(

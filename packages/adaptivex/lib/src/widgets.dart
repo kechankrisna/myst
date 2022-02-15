@@ -91,7 +91,16 @@ class AdaptiveBuilder extends StatelessWidget {
 ///
 /// This widget will render based on the current running platform
 ///
-///
+/// Example:
+/// ```dart
+/// AdaptivePlatformWidget(
+///   child: MyMaterialApp(),
+///   ios: MyCupertinoApp(),
+///   macos: MyMacosApp(),
+///   web: MyWebApp(),
+///   window: MyWindowApp(),
+/// )
+/// ```
 class AdaptivePlatformWidget extends StatelessWidget {
   final Widget child;
   final Widget? web;
@@ -114,7 +123,6 @@ class AdaptivePlatformWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     /// if brower and web widget is not null
     if (kIsWeb && web != null) {
       return web!;
