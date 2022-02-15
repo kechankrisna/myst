@@ -1,3 +1,5 @@
+library extensions;
+
 import 'package:adaptivex/adaptivex.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
@@ -25,20 +27,23 @@ extension AdaptiveXBoxConstraintsParsing on BoxConstraints {
   BoxSize get boxSize {
     final double width = maxWidth;
 
-    /// if current maxWidth less than kXsBreakPoint
-    if (width < kXsBreakPoint) {
+    /// if current maxWidth less than LayoutBreakPoint.kXsBreakPoint
+    if (width < LayoutBreakPoint.kXsBreakPoint) {
       return BoxSize.xs;
 
-      /// if current maxWidth between kXsBreakPoint and kSmBreakPoint
-    } else if (kXsBreakPoint <= width && width < kSmBreakPoint) {
+      /// if current maxWidth between LayoutBreakPoint.kXsBreakPoint and LayoutBreakPoint.kSmBreakPoint
+    } else if (LayoutBreakPoint.kXsBreakPoint <= width &&
+        width < LayoutBreakPoint.kSmBreakPoint) {
       return BoxSize.sm;
 
-      /// if current maxWidth between kSmBreakPoint and kMdBreakPoint
-    } else if (kSmBreakPoint <= width && width < kMdBreakPoint) {
+      /// if current maxWidth between LayoutBreakPoint.kSmBreakPoint and LayoutBreakPoint.kMdBreakPoint
+    } else if (LayoutBreakPoint.kSmBreakPoint <= width &&
+        width < LayoutBreakPoint.kMdBreakPoint) {
       return BoxSize.md;
 
-      /// if current maxWidth between kMdBreakPoint and kLgBreakPoint
-    } else if (kMdBreakPoint <= width && width < kLgBreakPoint) {
+      /// if current maxWidth between LayoutBreakPoint.kMdBreakPoint and LayoutBreakPoint.kLgBreakPoint
+    } else if (LayoutBreakPoint.kMdBreakPoint <= width &&
+        width < LayoutBreakPoint.kLgBreakPoint) {
       return BoxSize.lg;
 
       /// else the size must be extremly large
@@ -125,24 +130,26 @@ extension AdaptiveXBuildContextParsing on BuildContext {
   ///
   ///
   DeviceType get deviceType {
-    /// if device with less than kXsBreakPoint
-    if (deviceWidth > 0 && deviceWidth < kXsBreakPoint) {
+    /// if device with less than LayoutBreakPoint.kXsBreakPoint
+    if (deviceWidth > 0 && deviceWidth < LayoutBreakPoint.kXsBreakPoint) {
       return DeviceType.smartphone;
 
-      /// if device with less than kSmBreakPoint
-    } else if (deviceWidth >= kXsBreakPoint && deviceWidth < kSmBreakPoint) {
+      /// if device with less than LayoutBreakPoint.kSmBreakPoint
+    } else if (deviceWidth >= LayoutBreakPoint.kXsBreakPoint &&
+        deviceWidth < LayoutBreakPoint.kSmBreakPoint) {
       return DeviceType.miniTablet;
 
-      /// if device with less than kMdBreakPoint
-    } else if (deviceWidth >= kSmBreakPoint && deviceWidth < kMdBreakPoint) {
+      /// if device with less than LayoutBreakPoint.kMdBreakPoint
+    } else if (deviceWidth >= LayoutBreakPoint.kSmBreakPoint &&
+        deviceWidth < LayoutBreakPoint.kMdBreakPoint) {
       return DeviceType.tablet;
 
-      /// if device with larger than kMdBreakPoint
-    } else if (deviceWidth >= kMdBreakPoint) {
+      /// if device with larger than LayoutBreakPoint.kMdBreakPoint
+    } else if (deviceWidth >= LayoutBreakPoint.kMdBreakPoint) {
       return DeviceType.desktop;
 
-      /// if device with larger than kLgBreakPoint
-    } else if (deviceWidth >= kLgBreakPoint) {
+      /// if device with larger than LayoutBreakPoint.kLgBreakPoint
+    } else if (deviceWidth >= LayoutBreakPoint.kLgBreakPoint) {
       return DeviceType.desktop;
 
       /// can be negative number
@@ -157,13 +164,16 @@ extension AdaptiveXBuildContextParsing on BuildContext {
   ///
   ///
   DeviceSize get deviceSize {
-    if (deviceWidth < kXsBreakPoint) {
+    if (deviceWidth < LayoutBreakPoint.kXsBreakPoint) {
       return DeviceSize.xs;
-    } else if (kXsBreakPoint <= deviceWidth && deviceWidth < kSmBreakPoint) {
+    } else if (LayoutBreakPoint.kXsBreakPoint <= deviceWidth &&
+        deviceWidth < LayoutBreakPoint.kSmBreakPoint) {
       return DeviceSize.sm;
-    } else if (kSmBreakPoint <= deviceWidth && deviceWidth < kMdBreakPoint) {
+    } else if (LayoutBreakPoint.kSmBreakPoint <= deviceWidth &&
+        deviceWidth < LayoutBreakPoint.kMdBreakPoint) {
       return DeviceSize.md;
-    } else if (kMdBreakPoint <= deviceWidth && deviceWidth < kLgBreakPoint) {
+    } else if (LayoutBreakPoint.kMdBreakPoint <= deviceWidth &&
+        deviceWidth < LayoutBreakPoint.kLgBreakPoint) {
       return DeviceSize.lg;
     } else {
       return DeviceSize.xl;
@@ -178,13 +188,16 @@ extension AdaptiveXBuildContextParsing on BuildContext {
   ///
   ScreenSize get screenSize {
     final double width = screenWidth;
-    if (width < kXsBreakPoint) {
+    if (width < LayoutBreakPoint.kXsBreakPoint) {
       return ScreenSize.xs;
-    } else if (kXsBreakPoint <= width && width < kSmBreakPoint) {
+    } else if (LayoutBreakPoint.kXsBreakPoint <= width &&
+        width < LayoutBreakPoint.kSmBreakPoint) {
       return ScreenSize.sm;
-    } else if (kSmBreakPoint <= width && width < kMdBreakPoint) {
+    } else if (LayoutBreakPoint.kSmBreakPoint <= width &&
+        width < LayoutBreakPoint.kMdBreakPoint) {
       return ScreenSize.md;
-    } else if (kMdBreakPoint <= width && width < kLgBreakPoint) {
+    } else if (LayoutBreakPoint.kMdBreakPoint <= width &&
+        width < LayoutBreakPoint.kLgBreakPoint) {
       return ScreenSize.lg;
     } else {
       return ScreenSize.xl;

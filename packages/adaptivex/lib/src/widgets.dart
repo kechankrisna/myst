@@ -1,9 +1,13 @@
-import 'package:adaptivex/adaptivex.dart';
-import 'package:flutter/material.dart';
+library widgets;
 
-/// `AdaptiveBuilder`
+import 'package:adaptivex/adaptivex.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'dart:io' as io;
+
+/// ### `AdaptiveBuilder`
 ///
-/// this widget will render base on context size width
+/// This widget will render base on context size width
 ///
 /// Example:
 /// ```dart
@@ -80,5 +84,62 @@ class AdaptiveBuilder extends StatelessWidget {
       default:
         return builder.call(context);
     }
+  }
+}
+
+/// ### `AdaptivePlatformWidget`
+///
+/// This widget will render based on the current running platform
+///
+///
+class AdaptivePlatformWidget extends StatelessWidget {
+  final Widget child;
+  final Widget? web;
+  final Widget? ios;
+  final Widget? android;
+  final Widget? macos;
+  final Widget? window;
+  final Widget? linux;
+
+  const AdaptivePlatformWidget({
+    Key? key,
+    required this.child,
+    this.web,
+    this.ios,
+    this.android,
+    this.macos,
+    this.window,
+    this.linux,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+
+    /// if brower and web widget is not null
+    if (kIsWeb && web != null) {
+      return web!;
+    } else {
+      /// if android and android widget is not null
+      if (io.Platform.isAndroid && android != null) {
+        return android!;
+
+        /// if ios and ios widget is not null
+      } else if (io.Platform.isIOS && ios != null) {
+        return ios!;
+
+        /// if macos and macos widget is not null
+      } else if (io.Platform.isMacOS && macos != null) {
+        return macos!;
+
+        /// if window and window widget is not null
+      } else if (io.Platform.isWindows && window != null) {
+        return window!;
+
+        /// if linux and linux widget is not null
+      } else if (io.Platform.isLinux && linux != null) {
+        return linux!;
+      }
+    }
+    return child;
   }
 }
