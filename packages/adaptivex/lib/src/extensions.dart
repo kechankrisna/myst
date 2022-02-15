@@ -1,9 +1,7 @@
 library extensions;
 
 import 'package:adaptivex/adaptivex.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'dart:io' as io;
 
 extension AdaptiveXBoxConstraintsParsing on BoxConstraints {
   /// `boxSize`
@@ -96,12 +94,10 @@ extension AdaptiveXBuildContextParsing on BuildContext {
   double get deviceWidth {
     // (io.Platform.isIOS || io.Platform.isAndroid) &&
     final Size size = mediaQueryData.size;
-    if (!kIsWeb) {
-      if ((io.Platform.isIOS || io.Platform.isAndroid)) {
-        return mediaQueryData.orientation == Orientation.landscape
-            ? size.height
-            : size.width;
-      }
+    if (DeviceService.isMobile) {
+      return mediaQueryData.orientation == Orientation.landscape
+          ? size.height
+          : size.width;
     }
     return size.width;
   }
@@ -114,12 +110,10 @@ extension AdaptiveXBuildContextParsing on BuildContext {
   ///
   double get deviceHeight {
     final Size size = mediaQueryData.size;
-    if (!kIsWeb) {
-      if ((io.Platform.isIOS || io.Platform.isAndroid)) {
-        return mediaQueryData.orientation == Orientation.landscape
-            ? size.width
-            : size.height;
-      }
+    if (DeviceService.isMobile) {
+      return mediaQueryData.orientation == Orientation.landscape
+          ? size.width
+          : size.height;
     }
     return size.height;
   }

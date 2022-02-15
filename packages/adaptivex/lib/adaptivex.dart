@@ -10,3 +10,4 @@ export 'src/enumerations.dart';
 export 'src/interfaces.dart';
 export 'src/constants.dart';
 export 'src/layout_breakpoint.dart';
+export 'src/services.dart';

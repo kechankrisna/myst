@@ -5,4 +5,6 @@ class LayoutBreakPoint {
   static double kLgBreakPoint = 1200;
 
   LayoutBreakPoint._();
+
+  
 }
