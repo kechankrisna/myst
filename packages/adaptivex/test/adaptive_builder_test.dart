@@ -122,5 +122,4 @@ void main() {
       variant: TargetPlatformVariant.all(),
     );
   });
-  
 }

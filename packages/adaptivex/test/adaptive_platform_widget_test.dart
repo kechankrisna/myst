@@ -133,5 +133,6 @@ void main() {
     );
   });
 }
+
 /// Reference of change target platform
 /// https://medium.com/geekculture/using-platform-variants-when-testing-flutter-widgets-d3a750d452f0

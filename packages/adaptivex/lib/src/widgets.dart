@@ -127,7 +127,8 @@ class AdaptivePlatformWidget extends StatelessWidget {
       return web!;
     } else {
       /// if android and android widget is not null
-      if ((defaultTargetPlatform == TargetPlatform.android) && android != null) {
+      if ((defaultTargetPlatform == TargetPlatform.android) &&
+          android != null) {
         return android!;
 
         /// if ios and ios widget is not null
@@ -135,15 +136,18 @@ class AdaptivePlatformWidget extends StatelessWidget {
         return ios!;
 
         /// if macos and macos widget is not null
-      } else if ((defaultTargetPlatform == TargetPlatform.macOS) && macos != null) {
+      } else if ((defaultTargetPlatform == TargetPlatform.macOS) &&
+          macos != null) {
         return macos!;
 
         /// if window and window widget is not null
-      } else if ((defaultTargetPlatform == TargetPlatform.windows) && window != null) {
+      } else if ((defaultTargetPlatform == TargetPlatform.windows) &&
+          window != null) {
         return window!;
 
         /// if linux and linux widget is not null
-      } else if ((defaultTargetPlatform == TargetPlatform.linux) && linux != null) {
+      } else if ((defaultTargetPlatform == TargetPlatform.linux) &&
+          linux != null) {
         return linux!;
       }
     }
