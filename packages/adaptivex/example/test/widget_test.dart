@@ -5,26 +5,53 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:flutter/material.dart';
+import 'package:example/my_cupertino_app.dart';
+import 'package:example/my_fusion_app.dart';
+import 'package:example/my_linux_app.dart';
+import 'package:example/my_macos_app.dart';
+import 'package:example/my_material_app.dart';
+import 'package:example/my_window_app.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:example/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    /// // Build our app and trigger a frame.
-    /// await tester.pumpWidget(const MyApp());
+  group("run and test for all target platforms", () {
+    setUpAll(() {
+      TestWidgetsFlutterBinding.ensureInitialized();
+    });
 
-    /// // Verify that our counter starts at 0.
-    /// expect(find.text('0'), findsOneWidget);
-    /// expect(find.text('1'), findsNothing);
+    testWidgets(
+      "assert for all TargetPlatform",
+      (WidgetTester tester) async {
+        await tester.pumpWidget(const MyApp());
 
-    /// // Tap the '+' icon and trigger a frame.
-    /// await tester.tap(find.byIcon(Icons.add));
-    /// await tester.pump();
+        await tester.pumpAndSettle();
 
-    /// // Verify that our counter has incremented.
-    /// expect(find.text('0'), findsNothing);
-    /// expect(find.text('1'), findsOneWidget);
+        if (defaultTargetPlatform == TargetPlatform.iOS) {
+          expect(find.byType(MyCupertinoApp), findsOneWidget);
+          await tester.pumpAndSettle();
+        } else if (defaultTargetPlatform == TargetPlatform.android) {
+          expect(find.byType(MyMaterialApp), findsOneWidget);
+          await tester.pumpAndSettle();
+        } else if (defaultTargetPlatform == TargetPlatform.windows) {
+          expect(find.byType(MyWindowApp), findsOneWidget);
+          await tester.pumpAndSettle();
+        } else if (defaultTargetPlatform == TargetPlatform.macOS) {
+          expect(find.byType(MyMacosApp), findsOneWidget);
+          await tester.pumpAndSettle();
+        } else if (defaultTargetPlatform == TargetPlatform.linux) {
+          expect(find.byType(MyLinuxApp), findsOneWidget);
+          await tester.pumpAndSettle();
+        } else {
+          expect(find.byType(MyFusionApp), findsOneWidget);
+          await tester.pumpAndSettle();
+        }
+      },
+      variant: TargetPlatformVariant.all(),
+      skip: true,
+    );
+
+    tearDownAll(() {});
   });
 }

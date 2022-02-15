@@ -14,10 +14,6 @@ class _AndroidAdaptiveScreenState extends State<AndroidAdaptiveScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("adaptive builder on android"),
-        leading: IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.menu),
-        ),
       ),
       body: Center(
         child: AdaptiveBuilder(
@@ -33,20 +29,16 @@ class _AndroidAdaptiveScreenState extends State<AndroidAdaptiveScreen> {
       drawer: Drawer(
         child: ListView(
           children: [
-            ListView(
-              children: [
-                ListTile(
-                  leading: const Icon(Icons.home),
-                  title: const Text("home"),
-                  onTap: () {},
-                ),
-                ListTile(
-                  leading: const Icon(Icons.folder),
-                  title: const Text("disk"),
-                  onTap: () {},
-                )
-              ],
+            ListTile(
+              leading: const Icon(Icons.home),
+              title: const Text("home"),
+              onTap: () {},
             ),
+            ListTile(
+              leading: const Icon(Icons.folder),
+              title: const Text("disk"),
+              onTap: () {},
+            )
           ],
         ),
       ),

@@ -14,9 +14,9 @@ class _WindowsAdaptiveScreenState extends State<WindowsAdaptiveScreen> {
   Widget build(BuildContext context) {
     return NavigationView(
       appBar: NavigationAppBar(
-        title: Text("adaptive builder on window"),
+        title: const Text("adaptive builder on window"),
         leading: IconButton(
-          icon: Icon(FluentIcons.back),
+          icon: const Icon(FluentIcons.back),
           onPressed: () {},
         ),
       ),
@@ -82,7 +82,7 @@ class _WindowsAdaptiveScreenState extends State<WindowsAdaptiveScreen> {
       ),
       content: NavigationBody(
         index: index,
-        children: List.generate(8, (i) => SampleScaffoldpage()).toList(),
+        children: List.generate(8, (i) => const SampleScaffoldpage()).toList(),
       ),
     );
   }
@@ -94,7 +94,7 @@ class SampleScaffoldpage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScaffoldPage(
-      header: PageHeader(
+      header: const PageHeader(
         title: Text("adpative scafold page"),
       ),
       content: SizedBox.expand(

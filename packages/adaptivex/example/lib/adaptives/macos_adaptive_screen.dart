@@ -21,20 +21,20 @@ class _MacosAdaptiveScreenState extends State<MacosAdaptiveScreen> {
             currentIndex: pageIndex,
             onChanged: (i) => setState(() => pageIndex = i),
             scrollController: controller,
-            items: [
-              const SidebarItem(
+            items: const [
+              SidebarItem(
                 leading: MacosIcon(CupertinoIcons.square_on_circle),
                 label: Text('Buttons'),
               ),
-              const SidebarItem(
+              SidebarItem(
                 leading: MacosIcon(CupertinoIcons.arrow_2_circlepath),
                 label: Text('Indicators'),
               ),
-              const SidebarItem(
+              SidebarItem(
                 leading: MacosIcon(CupertinoIcons.textbox),
                 label: Text('Fields'),
               ),
-              const SidebarItem(
+              SidebarItem(
                 label: Text('Disclosure'),
                 disclosureItems: [
                   SidebarItem(
@@ -51,7 +51,7 @@ class _MacosAdaptiveScreenState extends State<MacosAdaptiveScreen> {
                   ),
                 ],
               ),
-              const SidebarItem(
+              SidebarItem(
                 leading: MacosIcon(CupertinoIcons.rectangle),
                 label: Text('Dialogs & Sheets'),
               ),
