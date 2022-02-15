@@ -3,7 +3,6 @@ library widgets;
 import 'package:adaptivex/adaptivex.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'dart:io' as io;
 
 /// ### `AdaptiveBuilder`
 ///
@@ -128,23 +127,23 @@ class AdaptivePlatformWidget extends StatelessWidget {
       return web!;
     } else {
       /// if android and android widget is not null
-      if (io.Platform.isAndroid && android != null) {
+      if ((defaultTargetPlatform == TargetPlatform.android) && android != null) {
         return android!;
 
         /// if ios and ios widget is not null
-      } else if (io.Platform.isIOS && ios != null) {
+      } else if ((defaultTargetPlatform == TargetPlatform.iOS) && ios != null) {
         return ios!;
 
         /// if macos and macos widget is not null
-      } else if (io.Platform.isMacOS && macos != null) {
+      } else if ((defaultTargetPlatform == TargetPlatform.macOS) && macos != null) {
         return macos!;
 
         /// if window and window widget is not null
-      } else if (io.Platform.isWindows && window != null) {
+      } else if ((defaultTargetPlatform == TargetPlatform.windows) && window != null) {
         return window!;
 
         /// if linux and linux widget is not null
-      } else if (io.Platform.isLinux && linux != null) {
+      } else if ((defaultTargetPlatform == TargetPlatform.linux) && linux != null) {
         return linux!;
       }
     }
