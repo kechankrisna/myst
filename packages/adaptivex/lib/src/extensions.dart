@@ -92,7 +92,6 @@ extension AdaptiveXBuildContextParsing on BuildContext {
   ///
   ///
   double get deviceWidth {
-    // (io.Platform.isIOS || io.Platform.isAndroid) &&
     final Size size = mediaQueryData.size;
     if (DeviceService.isMobile) {
       return mediaQueryData.orientation == Orientation.landscape
@@ -215,4 +214,6 @@ extension AdaptiveXBuildContextParsing on BuildContext {
   /// context.mediaQueryData
   /// ```
   MediaQueryData get mediaQueryData => MediaQuery.of(this);
+
+  /// MediaQueryData.fromWindow(WidgetsBinding.instance.window);
 }

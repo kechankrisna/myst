@@ -1,7 +1,6 @@
 library widgets;
 
 import 'package:adaptivex/adaptivex.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 /// ### `AdaptiveBuilder`
@@ -123,34 +122,33 @@ class AdaptivePlatformWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     /// if brower and web widget is not null
-    if (kIsWeb && web != null) {
+    if (DeviceService.isWeb && web != null) {
       return web!;
-    } else {
-      /// if android and android widget is not null
-      if ((defaultTargetPlatform == TargetPlatform.android) &&
-          android != null) {
-        return android!;
-
-        /// if ios and ios widget is not null
-      } else if ((defaultTargetPlatform == TargetPlatform.iOS) && ios != null) {
-        return ios!;
-
-        /// if macos and macos widget is not null
-      } else if ((defaultTargetPlatform == TargetPlatform.macOS) &&
-          macos != null) {
-        return macos!;
-
-        /// if window and window widget is not null
-      } else if ((defaultTargetPlatform == TargetPlatform.windows) &&
-          window != null) {
-        return window!;
-
-        /// if linux and linux widget is not null
-      } else if ((defaultTargetPlatform == TargetPlatform.linux) &&
-          linux != null) {
-        return linux!;
-      }
     }
+
+    /// if android and android widget is not null
+    else if (DeviceService.isWeb && web != null) {
+      return web!;
+    } else if (DeviceService.isAndroid && android != null) {
+      return android!;
+
+      /// if ios and ios widget is not null
+    } else if (DeviceService.isIOS && ios != null) {
+      return ios!;
+
+      /// if macos and macos widget is not null
+    } else if (DeviceService.isMacOS && macos != null) {
+      return macos!;
+
+      /// if window and window widget is not null
+    } else if (DeviceService.isWindows && window != null) {
+      return window!;
+
+      /// if linux and linux widget is not null
+    } else if (DeviceService.isLinux && linux != null) {
+      return linux!;
+    }
+
     return child;
   }
 }
