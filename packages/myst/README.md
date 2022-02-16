@@ -39,6 +39,7 @@ flutter pub add myst
 | commands  | alias | description |
 | ------------- | ------------- | ------------- |
 | `myst init`  | `i`| ✔ generate a structure of flutter application   |
+| `myst repair`  | `r`| ✔ re-organized export into its sub libraies   |
 | `myst model`  | `m`| ✔ create a file in lib/models and test/models   |
 | `myst controller`  | `c`| ❌ create a file in lib/controllers and test/controllers   |
 | `myst provider`  | `p`| ❌ create a file in lib/providers and test/providers   |
@@ -61,6 +62,7 @@ flutter pub add myst
 | ------------- | ------------- | ------------- |
 | --help  | -h | show the usage information |
 | --name  | -n | set the new file name (optional) |
+| --dir  | -d | the directory name (optional) |
 
 
 

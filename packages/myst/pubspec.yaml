@@ -1,6 +1,6 @@
 name: myst
 description: The simple flutter structure cli which can help you to be more productive
-version: 0.0.1+4
+version: 0.0.1+5
 homepage: https://github.com/kechankrisna/myst
 
 environment:
