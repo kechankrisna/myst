@@ -3,7 +3,21 @@ const String mystYamlTemplate = """configs:
   model:
     rewrite: true
   interface:
-    rewrite: true""";
+    rewrite: true
+  controller:
+    rewrite: false
+  extension:
+    rewrite: false
+  layout:
+    rewrite: false
+  screen:
+    rewrite: false
+  service:
+    rewrite: false
+  utility:
+    rewrite: false
+  widget:
+    rewrite: false""";
 
 /// ###`testTemplate`
 ///
@@ -116,3 +130,85 @@ void main() {
     });
   });
 }""";
+
+/// ### `controllerTemplate`
+///
+/// will be used when create a new controller
+/// and its test file
+const String controllerTemplate = """
+/// ### `className`
+/// 
+/// `Description`:
+/// 
+/// `Example`:
+// TODO: Implement controller
+class className extends ChangeNotifier with DiagnosticableTreeMixin implements ReassembleHandler{
+  
+  className(){
+    
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    /// list all the properties of your class here.
+    /// See the documentation of debugFillProperties for more information.
+    /// properties.add(StringProperty('b', b));
+  }
+
+  @override
+  void reassemble() {
+    print('Did hot-reload className');
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+}
+""";
+
+const String controllerTestTemplate = """import 'package:test/test.dart';
+/// gestures handler
+import 'package:flutter/gestures.dart';
+
+
+void main() {
+  group("test controller className", () {
+    TestWidgetsFlutterBinding.ensureInitialized();
+    
+    late Widget app;
+    setUp(() {
+      app = MaterialApp(
+        home: ChangeNotifierProvider(
+          create: (_) => className(),
+          /// child: const CounterScreen(),
+        ),
+      );
+    });
+
+    tearDown(() {
+      ///
+    });
+
+    testWidgets("start a screen to pump widget and test", (tester) async {
+      await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
+
+      /// TODO: implement find
+      /// final titleFinder = find.text("counter");
+      /// final incrementFinder = find.byKey(CounterScreen.incrementkey);
+      /// await tester.pumpAndSettle();
+      
+      /// TODO: guester
+      /// await tester.tap(incrementFinder);
+      /// await tester.pumpAndSettle();
+      
+      /// TODO: expected
+      /// expect(titleFinder, findsWidgets);
+      /// expect(incrementFinder, findsOneWidget);
+
+    });
+  });
+}
+""";

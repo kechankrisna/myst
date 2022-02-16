@@ -47,6 +47,9 @@ void main(List<String> arguments) {
   /// add interface command to generate model and its test
   runner.addCommand(myst.InterfaceCommand());
 
+  /// add controller command to generate controller and its test
+  runner.addCommand(myst.ControllerCommand());
+
   runner.run(arguments).catchError((error) {
     if (error is! UsageException) throw error;
     printRed(error);

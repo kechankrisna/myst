@@ -28,6 +28,27 @@ mixin YamlInformation {
   /// current project interfaces config
   YamlMap? interfaceConfig;
 
+  /// current project controllers config
+  YamlMap? controllerConfig;
+
+  /// current project extensions config
+  YamlMap? extensionConfig;
+
+  /// current project layouts config
+  YamlMap? layoutConfig;
+
+  /// current project screens config
+  YamlMap? screenConfig;
+
+  /// current project services config
+  YamlMap? serviceConfig;
+
+  /// current project utilities config
+  YamlMap? utilityConfig;
+
+  /// current project widgets config
+  YamlMap? widgetConfig;
+
   /// current project name
   late String? projectName;
 
@@ -84,8 +105,17 @@ mixin YamlInformation {
             rewrite = mystConfig!['rewrite'];
           }
 
+          /// get the config from myst.yml
           modelConfig = mystConfig!['model'];
           interfaceConfig = mystConfig!['interface'];
+          controllerConfig = mystConfig!['controller'];
+          extensionConfig = mystConfig!['extension'];
+          layoutConfig = mystConfig!['layout'];
+          screenConfig = mystConfig!['screen'];
+          serviceConfig = mystConfig!['service'];
+          utilityConfig = mystConfig!['utility'];
+          widgetConfig = mystConfig!['widget'];
+
         }
       }
     }
