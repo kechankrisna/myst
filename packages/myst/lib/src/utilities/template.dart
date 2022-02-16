@@ -153,7 +153,8 @@ class className extends ChangeNotifier with DiagnosticableTreeMixin implements R
     super.debugFillProperties(properties);
     /// list all the properties of your class here.
     /// See the documentation of debugFillProperties for more information.
-    /// properties.add(StringProperty('b', b));
+    /// TODO: implement add
+    properties.add(StringProperty('className', null));
   }
 
   @override
