@@ -14,7 +14,9 @@ class DirectoryCreator extends DirectoryCreatorInterface {
     final current = io.Directory.current.path;
     final String exactPath = path.split(RegExp("$current/")).last;
     try {
+      bool isNew = false;
       if (!dir.existsSync()) {
+        isNew = true;
         dir.createSync();
         printGreen("✓ $exactPath");
       } else {

@@ -23,7 +23,9 @@ class FileCreator extends FileCreatorInterface {
     final current = io.Directory.current.path;
     final String exactPath = path.split(RegExp("$current/")).last;
     try {
+      var isNew = false;
       if (!file.existsSync()) {
+        isNew = true;
         file.createSync();
         printGreen("✓ $exactPath");
       } else {
@@ -31,7 +33,7 @@ class FileCreator extends FileCreatorInterface {
       }
 
       /// if content not empty then insert
-      if (contents != null && rewrite == true) {
+      if (contents != null && (rewrite || isNew)) {
         file.writeAsStringSync(contents!);
       }
 
