@@ -55,6 +55,9 @@ mixin YamlInformation {
   // if current project using provider
   late bool provider;
 
+  // if current project using integration_test
+  late bool integration_test;
+
   late bool rewrite;
 
   ensureYamlInitialized() {
@@ -106,6 +109,9 @@ mixin YamlInformation {
 
     /// check if current project using provider
     provider = dependencies.nodes.containsKey("provider");
+
+    /// check if current project using integration_test
+    integration_test = dev_dependencies.nodes.containsKey("integration_test");
 
     /// current project path
     currentPath = io.Directory.current.path;
