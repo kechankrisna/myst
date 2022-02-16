@@ -1,7 +1,7 @@
 const String mystYamlTemplate = """configs:
   rewrite: true
   model:
-    rewrite: false""";
+    rewrite: true""";
 
 /// ###`testTemplate`
 ///

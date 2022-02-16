@@ -23,6 +23,11 @@ class ModelCommand extends Command
   /// generate file name as underscore lowercase style
   late String? fileName;
 
+  /// directory from user and print help if null
+  late String? dirName;
+
+  final String parentDir = "models";
+
   @override
   List<String> get aliases => ['m'];
 
@@ -34,6 +39,10 @@ class ModelCommand extends Command
     argParser.addOption("file",
         callback: (v) => fileName = v,
         help: "please enter the file name correctly");
+
+    argParser.addOption("dir",
+        callback: (v) => dirName = v,
+        help: "please enter the class name correctly");
 
     argParser.addFlag("rewrite",
         callback: (value) => rewrite = value, defaultsTo: false);
@@ -82,13 +91,18 @@ class ModelCommand extends Command
   void generateLib() async {
     var contents = modelTemplate.replaceAll(RegExp(r"className"), className!);
 
-    final _parent = "models";
+    /// if user input directory name,
+    /// then create the new sub directory if not exists
+    if (dirName != null) {
+      DirectoryCreator(path.join(libraryPath, parentDir, dirName)).run();
+    }
 
     /// current file parent path
-    final _parentLibPath = path.join(libraryPath, _parent, "$_parent.dart");
+    final _parentLibPath = path.join(libraryPath, parentDir, "$parentDir.dart");
 
     /// current new file path
-    final _filePath = path.join(libraryPath, _parent, "$fileName.dart");
+    final _filePath =
+        path.join(libraryPath, parentDir, dirName, "$fileName.dart");
 
     FileCreator(_filePath, contents: contents, rewrite: rewrite);
 
@@ -101,7 +115,9 @@ class ModelCommand extends Command
     var content = io.File(_parentLibPath).readAsStringSync();
     var exist = content.contains(RegExp("$fileName.dart"));
     if (!exist) {
-      content += "\nexport '$fileName.dart';";
+      content += dirName == null
+          ? "\nexport '$fileName.dart';"
+          : "\nexport '$dirName/$fileName.dart';";
 
       /// force to rewrite
       FileCreator(_parentLibPath, contents: content, rewrite: true).run();
@@ -113,8 +129,6 @@ class ModelCommand extends Command
     /// load content and repllace
     var contents = modelTestTemplate
         .replaceAll(RegExp(r"className"), className!)
-
-        ///
         .replaceAll(RegExp(r"objectName"), className!.camelCase);
 
     if (flutter) {
@@ -128,8 +142,15 @@ class ModelCommand extends Command
 
     /// printCyan(contents);
 
+    /// if user input directory name,
+    /// then create the new sub directory if not exists
+    if (dirName != null) {
+      DirectoryCreator(path.join(testPath, parentDir, dirName)).run();
+    }
+
     /// current new file path
-    final _filePath = path.join(testPath, "models", "$fileName\_test.dart");
+    final _filePath =
+        path.join(testPath, parentDir, dirName, "${fileName}_test.dart");
 
     /// write content
     FileCreator(_filePath, contents: contents, rewrite: rewrite).run();

@@ -11,7 +11,7 @@ class RepairCommand extends Command with YamlInformation {
   @override
   String get name => "repair";
 
-  /// input from user and print help if null
+  /// directory from user and print help if null
   late String? dirName;
 
   @override
