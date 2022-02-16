@@ -126,30 +126,33 @@ class InitCommand extends Command with YamlInformation {
   /// generate integrate test directory
   Future<void> generateIntegrateTestDirectory() async {
     /// if current project is flutter and not yet add integration_test to dev
-    bool isIntegrationTest = dev_dependencies.containsKey("integration_test");
-    if (flutter && !isIntegrationTest) {
+    /// bool isIntegrationTest = dev_dependencies.containsKey("integration_test");
+    if (flutter && integration_test) {
       Shell().run("flutter pub add integration_test --dev --sdk=flutter");
-    }
 
-    String _integrationTestsPath = path.join(currentPath, 'integration_tests');
-    String _testDrivePath = path.join(currentPath, 'test_driver');
-    if (DirectoryCreator(_integrationTestsPath).run()) {
-      var _appIntegrationTestsPath =
-          path.join(_integrationTestsPath, 'app_test.dart');
-      final contents = integationTestTemplate;
-      FileCreator(_appIntegrationTestsPath,
-              contents: contents, rewrite: rewrite)
-          .run();
-    }
-    if (DirectoryCreator(_testDrivePath).run()) {
-      var _driveTestsPath = path.join(_testDrivePath, 'integration_test.dart');
-      final contents =
-          """import 'package:integration_test/integration_test_driver.dart'; \n\nFuture<void> main() => integrationDriver();""";
-      FileCreator(_driveTestsPath, contents: contents, rewrite: rewrite).run();
-    }
+      String _integrationTestsPath =
+          path.join(currentPath, 'integration_tests');
+      String _testDrivePath = path.join(currentPath, 'test_driver');
+      if (DirectoryCreator(_integrationTestsPath).run()) {
+        var _appIntegrationTestsPath =
+            path.join(_integrationTestsPath, 'app_test.dart');
+        final contents = integationTestTemplate;
+        FileCreator(_appIntegrationTestsPath,
+                contents: contents, rewrite: rewrite)
+            .run();
+      }
+      if (DirectoryCreator(_testDrivePath).run()) {
+        var _driveTestsPath =
+            path.join(_testDrivePath, 'integration_test.dart');
+        final contents =
+            """import 'package:integration_test/integration_test_driver.dart'; \n\nFuture<void> main() => integrationDriver();""";
+        FileCreator(_driveTestsPath, contents: contents, rewrite: rewrite)
+            .run();
+      }
 
-    /// ensure the test folder must be exist
-    DirectoryCreator(testPath).run();
+      /// ensure the test folder must be exist
+      DirectoryCreator(testPath).run();
+    }
   }
 
   /// generate the routes.dart in lib and routes_test.dart in test
