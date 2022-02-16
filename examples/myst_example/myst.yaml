@@ -1,4 +1,6 @@
 configs:
   rewrite: true
   model:
-    rewrite: false
+    rewrite: true
+  interface:
+    rewrite: true
