@@ -144,4 +144,11 @@ export 'widgets/widgets.dart';\n""");
       utilities,
     ];
   }
+
+  /// main directory refer to the directory where file shoud be stay in
+  static List<String> get keyDirectories =>
+      [...skeleton.map((e) => e.path).toList(), widgets.path, providers.path];
+
+  static List<String> get keyPaths =>
+      [...keyDirectories.map((e) => "${e}/${e}.dart").toList()];
 }

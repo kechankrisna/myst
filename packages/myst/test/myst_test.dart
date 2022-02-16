@@ -1,6 +1,8 @@
 /// import 'package:myst/myst.dart';
 /// import 'package:printx/printx.dart';
 /// import 'package:string_scanner/string_scanner.dart';
+import 'package:myst/myst.dart';
+import 'package:printx/printx.dart';
 import 'package:recase/recase.dart';
 import 'package:test/test.dart';
 
@@ -19,5 +21,11 @@ void main() {
     var result = "MyCamelCase".snakeCase;
 
     expect(shouldBe, result);
+  });
+
+  test("print app config", () {
+    printGreen(ApplicationConfig.keyDirectories);
+    printGreen(ApplicationConfig.keyPaths);
+    expect(ApplicationConfig.keyDirectories.length, ApplicationConfig.keyPaths.length);
   });
 }
