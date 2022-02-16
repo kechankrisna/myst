@@ -84,9 +84,8 @@ class InitCommand extends Command with YamlInformation {
         var scan = scanningFilesWithAsyncRecursive(io.Directory(_innerLibPath));
 
         for (var f in (await scan.toList())) {
-          if (!f.path.contains(RegExp("${directory.path}.dart"))) {
-            var _path = f.path.split(RegExp("$_innerLibPath/")).last;
-            printRed(_path);
+          var _path = f.path.split(RegExp("$_innerLibPath/")).last;
+          if (_path != "${directory.path}.dart") {
             missExports.add(_path);
           }
         }

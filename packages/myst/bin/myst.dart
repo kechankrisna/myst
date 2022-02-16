@@ -8,6 +8,7 @@ import 'package:printx/printx.dart';
 void main(List<String> arguments) {
   var parser = ArgParser()
     ..addOption("name", abbr: 'n', help: "class name")
+    ..addOption("dir", abbr: 'd', help: "directory name")
     ..addOption("file",
         abbr: 'f', help: "file name will be use instead of class name")
     ..addFlag("rewrite", defaultsTo: false)
@@ -36,6 +37,9 @@ void main(List<String> arguments) {
 
   /// add generate command to generate structure
   runner.addCommand(myst.InitCommand());
+
+  /// repair export in lib directory
+  runner.addCommand(myst.RepairCommand());
 
   /// add model command to generate model and its test
   runner.addCommand(myst.ModelCommand());
