@@ -181,11 +181,21 @@ class InitCommand extends Command with YamlInformation {
     if (flutter) {
       contents += "\nexport 'package:flutter/material.dart';";
     }
-    if (go_router) {
+    if(!go_router){
+       await Shell().run("flutter pub add go_router");
+      contents += "\nexport 'package:go_router/go_router.dart';";
+    }else if (go_router) {
       contents += "\nexport 'package:go_router/go_router.dart';";
     }
-    if (provider) {
+    if (!provider) {
+      await Shell().run("flutter pub add provider");
       contents += "\nexport 'package:provider/provider.dart';";
+    } else if (provider) {
+      contents += "\nexport 'package:provider/provider.dart';";
+    }
+    /// if one of them are not exist yet
+    if(!go_router || !provider){
+      await Shell().run("flutter pub get");
     }
     FileCreator(_corePath, contents: contents, rewrite: rewrite).run();
   }
