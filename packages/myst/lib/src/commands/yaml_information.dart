@@ -25,6 +25,9 @@ mixin YamlInformation {
   /// current project models config
   YamlMap? modelConfig;
 
+  /// current project interfaces config
+  YamlMap? interfaceConfig;
+
   /// current project name
   late String? projectName;
 
@@ -82,6 +85,7 @@ mixin YamlInformation {
           }
 
           modelConfig = mystConfig!['model'];
+          interfaceConfig = mystConfig!['interface'];
         }
       }
     }

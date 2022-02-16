@@ -1,6 +1,8 @@
 const String mystYamlTemplate = """configs:
   rewrite: true
   model:
+    rewrite: true
+  interface:
     rewrite: true""";
 
 /// ###`testTemplate`
@@ -71,6 +73,44 @@ void main() {
       expect(true, true);
     });
 
+    test(": ==", () {
+      expect(true, true);
+    });
+  });
+}""";
+
+/// ### `interfaceTemplate`
+///
+/// will be used when create a new interface
+/// and its test file
+const String interfaceTemplate = """
+/// ### `className`
+/// 
+/// `Description`:
+/// 
+/// `Example`:
+// TODO: Implement abstract class as interface
+abstract class className{
+  
+}
+""";
+
+const String interfaceTestTemplate = """import 'package:test/test.dart';
+
+/// TODO: implement and test its implementation 
+/// class classNameImp implements className{
+
+/// }
+
+void main() {
+  group("className", () {
+    /// late classNameImp objectName;
+
+    setUp(() {
+      // TODO: initialize impl and assert every method
+      /// objectName = classNameImp();
+    });
+    
     test(": ==", () {
       expect(true, true);
     });
