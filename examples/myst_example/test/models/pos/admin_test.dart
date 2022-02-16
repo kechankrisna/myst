@@ -1,6 +1,5 @@
-import 'package:flutter_test/flutter_test.dart'; 
+import 'package:flutter_test/flutter_test.dart';
 import 'package:myst_example/core.dart';
-
 
 void main() {
   group("Admin", () {
@@ -11,6 +10,7 @@ void main() {
     setUp(() {
       // TODO: initialize json data for testing
       json = {};
+
       /// admin = Admin.fromJson(json);
       /// data = admin.toJson();
     });

@@ -3,7 +3,7 @@ import 'package:myst/myst.dart';
 class ApplicationConfig {
   /// routes handler
   static FileCreator get routes => FileCreator("routes.dart",
-      contents: "/// Application route handler \n\nlibrary routes;\n");
+      contents: "/// Application route handler\n\nlibrary routes;\n");
 
   /// application core
   static FileCreator get core =>
@@ -26,7 +26,7 @@ export 'widgets/widgets.dart';\n""");
         "configs",
         inners: [
           FileCreator("configs.dart",
-              contents: "/// Application configuration \n\nlibrary configs;\n")
+              contents: "/// Application configuration\n\nlibrary configs;\n")
         ],
       );
 
@@ -36,7 +36,7 @@ export 'widgets/widgets.dart';\n""");
         inners: [
           FileCreator("controllers.dart",
               contents:
-                  "/// Data featching controller \n\nlibrary controllers;\n")
+                  "/// Data featching controller\n\nlibrary controllers;\n")
         ],
       );
 
@@ -46,7 +46,7 @@ export 'widgets/widgets.dart';\n""");
         inners: [
           FileCreator("extensions.dart",
               contents:
-                  "/// Extra more extesion on dart code \n\nlibrary extensions;\n")
+                  "/// Extra more extesion on dart code\n\nlibrary extensions;\n")
         ],
       );
 
@@ -56,7 +56,7 @@ export 'widgets/widgets.dart';\n""");
         inners: [
           FileCreator("interfaces.dart",
               contents:
-                  "/// For base class or abstraction \n\nlibrary interfaces;\n")
+                  "/// For base class or abstraction\n\nlibrary interfaces;\n")
         ],
       );
 
@@ -66,7 +66,7 @@ export 'widgets/widgets.dart';\n""");
         inners: [
           FileCreator("layouts.dart",
               contents:
-                  "/// Application overlay or layouts \n\nlibrary layouts;\n")
+                  "/// Application overlay or layouts\n\nlibrary layouts;\n")
         ],
       );
 
@@ -75,7 +75,7 @@ export 'widgets/widgets.dart';\n""");
         "models",
         inners: [
           FileCreator("models.dart",
-              contents: "/// Application data models \n\nlibrary models;\n")
+              contents: "/// Application data models\n\nlibrary models;\n")
         ],
       );
 
@@ -85,7 +85,7 @@ export 'widgets/widgets.dart';\n""");
         inners: [
           FileCreator("providers.dart",
               contents:
-                  "/// Application state management \n\nlibrary providers;\n")
+                  "/// Application state management\n\nlibrary providers;\n")
         ],
       );
 
@@ -95,7 +95,7 @@ export 'widgets/widgets.dart';\n""");
         inners: [
           FileCreator("screens.dart",
               contents:
-                  "/// Application screens or pages \n\nlibrary screens;\n")
+                  "/// Application screens or pages\n\nlibrary screens;\n")
         ],
       );
 
@@ -105,7 +105,7 @@ export 'widgets/widgets.dart';\n""");
         inners: [
           FileCreator("services.dart",
               contents:
-                  "/// Application services for handle background or as helper \n\nlibrary services;\n")
+                  "/// Application services for handle background or as helper\n\nlibrary services;\n")
         ],
       );
 
@@ -115,7 +115,7 @@ export 'widgets/widgets.dart';\n""");
         inners: [
           FileCreator("utilities.dart",
               contents:
-                  "/// Application utilities which mix the function \n\nlibrary utilities;\n")
+                  "/// Application utilities which mix the function\n\nlibrary utilities;\n")
         ],
       );
 
@@ -125,7 +125,7 @@ export 'widgets/widgets.dart';\n""");
         inners: [
           FileCreator("widgets.dart",
               contents:
-                  "/// Application utilities which mix the function \n\nlibrary widgets;\n")
+                  "/// Application utilities which mix the function\n\nlibrary widgets;\n")
         ],
       );
 
@@ -150,5 +150,5 @@ export 'widgets/widgets.dart';\n""");
       [...skeleton.map((e) => e.path).toList(), widgets.path, providers.path];
 
   static List<String> get keyPaths =>
-      [...keyDirectories.map((e) => "${e}/${e}.dart").toList()];
+      [...keyDirectories.map((e) => "$e/$e.dart").toList()];
 }

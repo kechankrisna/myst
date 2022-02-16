@@ -1,3 +1,3 @@
-/// Application state management 
+/// Application state management
 
 library providers;

@@ -26,6 +26,7 @@ void main() {
   test("print app config", () {
     printGreen(ApplicationConfig.keyDirectories);
     printGreen(ApplicationConfig.keyPaths);
-    expect(ApplicationConfig.keyDirectories.length, ApplicationConfig.keyPaths.length);
+    expect(ApplicationConfig.keyDirectories.length,
+        ApplicationConfig.keyPaths.length);
   });
 }

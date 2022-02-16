@@ -1,9 +1,7 @@
 /// ### `Person`
-/// 
+///
 /// `Description`:
-/// 
+///
 /// `Example`:
 // TODO: Implement model
-class Person{
-  
-}
+class Person {}
