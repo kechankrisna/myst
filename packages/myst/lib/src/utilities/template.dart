@@ -213,3 +213,37 @@ void main() {
   });
 }
 """;
+
+
+/// ### `extensionTemplate`
+///
+/// will be used when create a new extension
+/// and its test file
+const String extensionTemplate = """
+/// ### `className`
+/// 
+/// `Description`:
+/// 
+/// `Example`:
+// TODO: Implement extension on object
+extension className on String {
+  
+}
+""";
+
+const String extensionTestTemplate = """import 'package:test/test.dart';
+
+void main() {
+  group("className", () {
+    late String objectName;
+
+    setUp(() {
+      // TODO: initialize an object and try extension method
+      objectName = "String()";
+    });
+    
+    test(": ==", () {
+      expect(true, true);
+    });
+  });
+}""";

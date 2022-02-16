@@ -41,18 +41,15 @@ flutter pub add myst
 | `myst init`  | `i`| ✔ generate a structure of flutter application   |
 | `myst repair`  | `r`| ✔ re-organized export into its sub libraies   |
 | `myst model`  | `m`| ✔ create a file in lib/models and test/models   |
-| `myst controller`  | `c`| ❌ create a file in lib/controllers and test/controllers   |
+| `myst controller`  | `c`| ✔ create a file in lib/controllers and test/controllers   |
 | `myst provider`  | `p`| ❌ create a file in lib/providers and test/providers   |
-| `myst extension`  | `e`| ❌ create a file in lib/extensions and test/extensions   |
+| `myst extension`  | `x`| ❌ create a file in lib/extensions and test/extensions   |
 | `myst layout`  | `l`| ❌ create a file in lib/layouts and test/layouts   |
 | `myst service`  | `s`| ❌ create a file in lib/services and test/services   |
 | `myst util`  | `u`| ❌ create a file in lib/utilities and test/utilities   |
 | `myst widget`  | `w`| ❌ create a file in lib/widgets and test/widgets   |
 | `myst screen`  | `p`| ❌ create a file in lib/screens and test/screens   |
-| `myst interface`  | `a`| ❌ create a file in lib/interfaces and test/interfaces   |
-| `myst config`  | `cf`| ❌ create a file in lib/configs and test/configs   |
-
-
+| `myst interface`  | `a`| ✔ create a file in lib/interfaces and test/interfaces   |
 
 
 

@@ -5,15 +5,15 @@ import 'package:printx/printx.dart';
 import 'dart:io' as io;
 import 'package:path/path.dart' as path;
 
-class InterfaceCommand extends Command
+class ExtensionCommand extends Command
     with YamlInformation
     implements GenerateClassInterface {
   @override
   String get description =>
-      "generate interface in lib/interfaces and test/interfaces";
+      "generate extension in lib/extensions and test/extensions";
 
   @override
-  String get name => "interface";
+  String get name => "extension";
 
   /// input from user and print help if null
   late String? inputName;
@@ -27,14 +27,14 @@ class InterfaceCommand extends Command
   /// directory from user and print help if null
   late String? dirName;
 
-  final String parentDir = "interfaces";
+  final String parentDir = "extensions";
 
   @override
-  List<String> get aliases => ['a'];
+  List<String> get aliases => ['x'];
 
-  /// abstract
+  /// Xtension
 
-  InterfaceCommand() {
+  ExtensionCommand() {
     argParser.addOption("name",
         callback: (v) => inputName = className = v,
         help: "please enter the class name correctly");
@@ -57,14 +57,14 @@ class InterfaceCommand extends Command
     ensureYamlInitialized();
 
     /// split rewrite config if exist in myst.yaml
-    if (interfaceConfig != null) {
-      if (interfaceConfig!.containsKey("rewrite") == true) {
-        rewrite = interfaceConfig!['rewrite'];
+    if (extensionConfig != null) {
+      if (extensionConfig!.containsKey("rewrite") == true) {
+        rewrite = extensionConfig!['rewrite'];
       }
     }
 
     final watch = Stopwatch()..start();
-    PrintX.cool("interface start");
+    PrintX.cool("extension start");
 
     /// in case user don't want to type --name then take the first input instead
     if (argResults!.arguments.isNotEmpty) {
@@ -77,23 +77,23 @@ class InterfaceCommand extends Command
       /// printBlue("${argResults!.options}");
       /// printGreen([inputName, className, fileName]);
 
-      /// generate interface class in lib/interfaces
+      /// generate extension class in lib/extensions
       generateLib();
 
-      /// generate interface test class in test/interfaces
+      /// generate extension test class in test/extensions
       generateTest();
     } else {
       printCyan(usage);
     }
 
-    PrintX.cool("interface finished in (${watch.elapsedMilliseconds} ms)");
+    PrintX.cool("extension finished in (${watch.elapsedMilliseconds} ms)");
     watch.stop();
   }
 
   @override
   void generateLib() async {
     var contents =
-        interfaceTemplate.replaceAll(RegExp(r"className"), className!);
+        extensionTemplate.replaceAll(RegExp(r"className"), className!);
 
     /// if user input directory name,
     /// then create the new sub directory if not exists
@@ -132,7 +132,7 @@ class InterfaceCommand extends Command
   @override
   void generateTest() {
     /// load content and repllace
-    var contents = interfaceTestTemplate
+    var contents = extensionTestTemplate
         .replaceAll(RegExp(r"className"), className!)
         .replaceAll(RegExp(r"objectName"), className!.camelCase);
 

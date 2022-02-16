@@ -44,8 +44,11 @@ void main(List<String> arguments) {
   /// add model command to generate model and its test
   runner.addCommand(myst.ModelCommand());
 
-  /// add interface command to generate model and its test
+  /// add interface command to generate interface and its test
   runner.addCommand(myst.InterfaceCommand());
+
+  /// add extension command to generate extension parsing and its test
+  runner.addCommand(myst.ExtensionCommand());
 
   /// add controller command to generate controller and its test
   runner.addCommand(myst.ControllerCommand());
