@@ -22,7 +22,7 @@ class InitCommand extends Command with YamlInformation {
   }
 
   @override
-  run() {
+  run() async {
     /// ensure yaml load correctly
     ensureYamlInitialized();
 
@@ -36,26 +36,26 @@ class InitCommand extends Command with YamlInformation {
     }
 
     /// generate assets directory
-    generateAssetsDirectory();
+    await generateAssetsDirectory();
 
     /// if flutter then add integration_test
-    generateIntegrateTestDirectory();
+    await generateIntegrateTestDirectory();
 
     /// generate lib directory and test
-    generateLibDirectory();
+    await generateLibDirectory();
 
     /// generate the route
-    generateRoutesLib();
+    await generateRoutesLib();
 
     /// generate the core
-    generateCoreLib();
+    await generateCoreLib();
 
     PrintX.cool("init finished in (${watch.elapsedMilliseconds} ms)");
     watch.stop();
   }
 
   /// generate asset directory
-  void generateAssetsDirectory() {
+  Future<void> generateAssetsDirectory() async {
     String _assetsPath = path.join(currentPath, 'assets');
     String _fontsPath = path.join(_assetsPath, "fonts");
     String _imagesPath = path.join(_assetsPath, "images");
@@ -69,7 +69,7 @@ class InitCommand extends Command with YamlInformation {
   }
 
   /// generate asset directory
-  void generateLibDirectory() {
+  Future<void> generateLibDirectory() async {
     final skelentons = [
       ...ApplicationConfig.skeleton,
       if (flutter) ...[ApplicationConfig.widgets, ApplicationConfig.providers]
@@ -79,14 +79,17 @@ class InitCommand extends Command with YamlInformation {
       final _innerTestPath = path.join(testPath, directory.path);
       var createdDir = DirectoryCreator(_innerLibPath).run();
       if (createdDir) {
-        /// check if any exist file then add these file to its plural name .dart
-        var files = io.Directory(_innerLibPath).listSync();
         var missExports = <String>[];
-        var existDarts = files
-            .where((f) => !f.path.contains(RegExp("${directory.path}.dart")));
-        missExports = existDarts
-            .map((f) => f.path.split(RegExp("$_innerLibPath/")).last)
-            .toList();
+
+        var scan = scanningFilesWithAsyncRecursive(io.Directory(_innerLibPath));
+
+        for (var f in (await scan.toList())) {
+          if (!f.path.contains(RegExp("${directory.path}.dart"))) {
+            var _path = f.path.split(RegExp("$_innerLibPath/")).last;
+            printRed(_path);
+            missExports.add(_path);
+          }
+        }
 
         /// create its tests
         DirectoryCreator(_innerTestPath).run();
@@ -122,7 +125,7 @@ class InitCommand extends Command with YamlInformation {
   }
 
   /// generate integrate test directory
-  void generateIntegrateTestDirectory() {
+  Future<void> generateIntegrateTestDirectory() async {
     /// if current project is flutter and not yet add integration_test to dev
     bool isIntegrationTest = dev_dependencies.containsKey("integration_test");
     if (flutter && !isIntegrationTest) {
@@ -151,7 +154,7 @@ class InitCommand extends Command with YamlInformation {
   }
 
   /// generate the routes.dart in lib and routes_test.dart in test
-  generateRoutesLib() {
+  Future<void> generateRoutesLib() async {
     final _routePath = path.join(libraryPath, ApplicationConfig.routes.path);
     final _testFileName = ApplicationConfig.routes.path
         .replaceAll(RegExp(r'.dart'), '_test.dart');
@@ -170,7 +173,7 @@ class InitCommand extends Command with YamlInformation {
   }
 
   /// generate the core in lib directory
-  generateCoreLib() {
+  Future<void> generateCoreLib() async {
     final _corePath = path.join(libraryPath, ApplicationConfig.core.path);
     var contents = ApplicationConfig.core.contents!;
     if (flutter) {
@@ -185,6 +188,7 @@ class InitCommand extends Command with YamlInformation {
     FileCreator(_corePath, contents: contents, rewrite: rewrite).run();
   }
 
+  /// print the welcome message
   void printWelcome() {
     var border = List.generate(50, (i) => "=").toList().join();
     printCyan("""
