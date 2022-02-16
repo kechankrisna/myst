@@ -1,5 +1,6 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:simple/models/teacher.dart';
+import 'package:flutter_test/flutter_test.dart'; 
+import 'package:simple/core.dart';
+
 
 void main() {
   group("Teacher", () {
@@ -8,7 +9,7 @@ void main() {
     late Map<String, dynamic> data;
 
     setUp(() {
-      /// initialize json data for testing
+      // TODO: initialize json data for testing
       json = {};
       /// teacher = Teacher.fromJson(json);
       /// data = teacher.toJson();

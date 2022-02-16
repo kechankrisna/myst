@@ -1,17 +1,18 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:simple/models/person.dart';
+import 'package:flutter_test/flutter_test.dart'; 
+import 'package:simple/core.dart';
+
 
 void main() {
-  group("Person", () {
+  group("Human", () {
     late Map<String, dynamic> json;
-    late Person person;
+    late Human human;
     late Map<String, dynamic> data;
 
     setUp(() {
-      /// initialize json data for testing
+      // TODO: initialize json data for testing
       json = {};
-      /// person = Person.fromJson(json);
-      /// data = person.toJson();
+      /// human = Human.fromJson(json);
+      /// data = human.toJson();
     });
 
     test(": fromJson(json)", () {

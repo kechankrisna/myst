@@ -1,3 +1,4 @@
 configs:
+  rewrite: true
   model:
-    rewrite: false
+    rewrite: true
