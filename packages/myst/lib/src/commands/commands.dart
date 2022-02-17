@@ -8,3 +8,4 @@ export 'interface_command.dart';
 export 'controller_command.dart';
 export 'extension_command.dart';
 export 'layout_command.dart';
+export 'widget_command.dart';

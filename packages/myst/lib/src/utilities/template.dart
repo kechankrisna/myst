@@ -259,7 +259,7 @@ const String layoutStatelessTemplate = """
 /// `Description`:
 /// 
 /// `Example`:
-// TODO: Implement the layout
+// TODO: Implement the className
 class className extends StatelessWidget {
   final Widget child;
   const className({Key? key, required this.child}) : super(key: key);
@@ -281,7 +281,7 @@ const String layoutStatelessNotifierTemplate = """
 /// `Description`:
 ///
 /// `Example`:
-// TODO: Implement the layout
+// TODO: Implement the className
 class className extends StatelessWidget {
   final Widget child;
   const className({Key? key, required this.child}) : super(key: key);
@@ -308,7 +308,7 @@ const String layoutStatefulTemplate = """
 /// `Description`:
 /// 
 /// `Example`:
-// TODO: Implement the layout
+// TODO: Implement the className
 class className extends StatefulWidget {
   final Widget child;
   const className({Key? key, required this.child}) : super(key: key);

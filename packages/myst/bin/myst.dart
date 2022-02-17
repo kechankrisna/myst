@@ -57,6 +57,9 @@ void main(List<String> arguments) {
   /// add layout command to generate layout and its test
   runner.addCommand(myst.LayoutCommand());
 
+  /// add widget command to generate widget and its test
+  runner.addCommand(myst.WidgetCommand());
+
   runner.run(arguments).catchError((error) {
     if (error is! UsageException) throw error;
     printRed(error);
