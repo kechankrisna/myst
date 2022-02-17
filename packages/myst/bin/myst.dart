@@ -60,6 +60,12 @@ void main(List<String> arguments) {
   /// add widget command to generate widget and its test
   runner.addCommand(myst.WidgetCommand());
 
+  /// add service command to generate service and its test
+  runner.addCommand(myst.ServiceCommand());
+
+  /// add utility command to generate utility and its test
+  runner.addCommand(myst.UtilityCommand());
+
   runner.run(arguments).catchError((error) {
     if (error is! UsageException) throw error;
     printRed(error);

@@ -93,9 +93,75 @@ void main() {
   });
 }""";
 
+/// ### `serviceTemplate`
+///
+/// will be used when create a new service
+/// and its test file
+const String serviceTemplate = """
+/// ### `className`
+/// 
+/// `Description`:
+/// 
+/// `Example`:
+// TODO: Implement service
+class className{
+  
+}
+""";
+
+const String serviceTestTemplate = """import 'package:test/test.dart';
+
+void main() {
+  group("className", () {
+    late className objectName;
+
+    setUp(() {
+      // TODO: initialize objectName to test the behavior
+      objectName = className();
+    });
+
+    test(": ==", () {
+      expect(true, true);
+    });
+  });
+}""";
+
+/// ### `utilityTemplate`
+///
+/// will be used when create a new utility
+/// and its test file
+const String utilityTemplate = """
+/// ### `className`
+/// 
+/// `Description`:
+/// 
+/// `Example`:
+// TODO: Implement service
+class className{
+  
+}
+""";
+
+const String utilityTestTemplate = """import 'package:test/test.dart';
+
+void main() {
+  group("className", () {
+    late className objectName;
+
+    setUp(() {
+      // TODO: initialize objectName to test the behavior
+      objectName = className();
+    });
+
+    test(": ==", () {
+      expect(true, true);
+    });
+  });
+}""";
+
 /// ### `interfaceTemplate`
 ///
-/// will be used when create a new interface
+/// will be used when create a new interface(mostly abstraction)
 /// and its test file
 const String interfaceTemplate = """
 /// ### `className`

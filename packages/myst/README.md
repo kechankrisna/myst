@@ -45,9 +45,9 @@ flutter pub add myst
 | `myst provider`  | `p`| ❌ create a file in lib/providers and test/providers   |
 | `myst extension`  | `x`| ✔ create a file in lib/extensions and test/extensions   |
 | `myst layout`  | `l`| ✔ create a file in lib/layouts and test/layouts   |
-| `myst service`  | `s`| ❌ create a file in lib/services and test/services   |
-| `myst util`  | `u`| ❌ create a file in lib/utilities and test/utilities   |
-| `myst widget`  | `w`| ❌ create a file in lib/widgets and test/widgets   |
+| `myst service`  | `s`| ✔ create a file in lib/services and test/services   |
+| `myst util`  | `u`| ✔ create a file in lib/utilities and test/utilities   |
+| `myst widget`  | `w`| ✔ create a file in lib/widgets and test/widgets   |
 | `myst screen`  | `sc`| ❌ create a file in lib/screens and test/screens   |
 | `myst interface`  | `a`| ✔ create a file in lib/interfaces and test/interfaces   |
 

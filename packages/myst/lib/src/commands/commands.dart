@@ -9,3 +9,5 @@ export 'controller_command.dart';
 export 'extension_command.dart';
 export 'layout_command.dart';
 export 'widget_command.dart';
+export 'utility_command.dart';
+export 'service_command.dart';
