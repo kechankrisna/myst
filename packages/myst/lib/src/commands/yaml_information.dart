@@ -79,6 +79,12 @@ mixin YamlInformation {
   // if current project using provider
   late bool provider;
 
+  // if current project using adaptivex
+  late bool adaptivex;
+
+  // if current project using printx
+  late bool printx;
+
   // if current project using integration_test
   late bool integration_test;
 
@@ -115,7 +121,6 @@ mixin YamlInformation {
           serviceConfig = mystConfig!['service'];
           utilityConfig = mystConfig!['utility'];
           widgetConfig = mystConfig!['widget'];
-
         }
       }
     }
@@ -143,6 +148,12 @@ mixin YamlInformation {
 
     /// check if current project using provider
     provider = dependencies.nodes.containsKey("provider");
+
+    /// check if current project using adaptivex
+    adaptivex = dependencies.nodes.containsKey("adaptivex");
+
+    /// check if current project using printx
+    printx = dependencies.nodes.containsKey("printx");
 
     /// check if current project using integration_test
     integration_test = dev_dependencies.nodes.containsKey("integration_test");

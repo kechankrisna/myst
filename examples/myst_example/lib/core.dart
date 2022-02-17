@@ -16,3 +16,5 @@ export 'widgets/widgets.dart';
 export 'package:flutter/material.dart';
 export 'package:go_router/go_router.dart';
 export 'package:provider/provider.dart';
+export 'package:adaptivex/adaptivex.dart';
+export 'package:printx/printx.dart';

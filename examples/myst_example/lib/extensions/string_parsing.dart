@@ -4,6 +4,6 @@
 /// 
 /// `Example`:
 // TODO: Implement extension on object
-extension StringParsing on String {
+extension MystExampleStringParsing on String {
   
 }

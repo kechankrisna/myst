@@ -181,20 +181,41 @@ class InitCommand extends Command with YamlInformation {
     if (flutter) {
       contents += "\nexport 'package:flutter/material.dart';";
     }
-    if(!go_router){
-       await Shell().run("flutter pub add go_router");
+
+    /// handle go_router
+    if (!go_router) {
+      await Shell().run("flutter pub add go_router");
       contents += "\nexport 'package:go_router/go_router.dart';";
-    }else if (go_router) {
+    } else if (go_router) {
       contents += "\nexport 'package:go_router/go_router.dart';";
     }
+
+    /// handle provider
     if (!provider) {
       await Shell().run("flutter pub add provider");
       contents += "\nexport 'package:provider/provider.dart';";
     } else if (provider) {
       contents += "\nexport 'package:provider/provider.dart';";
     }
+
+    /// handle adaptivex
+    if (!adaptivex) {
+      await Shell().run("flutter pub add adaptivex");
+      contents += "\nexport 'package:adaptivex/adaptivex.dart';";
+    } else if (adaptivex) {
+      contents += "\nexport 'package:adaptivex/adaptivex.dart';";
+    }
+
+    /// handle printx
+    if (!printx) {
+      await Shell().run("flutter pub add printx");
+      contents += "\nexport 'package:printx/printx.dart';";
+    } else if (printx) {
+      contents += "\nexport 'package:printx/printx.dart';";
+    }
+
     /// if one of them are not exist yet
-    if(!go_router || !provider){
+    if (!go_router || !provider) {
       await Shell().run("flutter pub get");
     }
     FileCreator(_corePath, contents: contents, rewrite: rewrite).run();
