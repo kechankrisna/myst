@@ -13,6 +13,7 @@ void main() {
       app = MaterialApp(
         home: ChangeNotifierProvider(
           create: (_) => PersonController(),
+          child: Text("data"),
 
           /// child: const CounterScreen(),
         ),

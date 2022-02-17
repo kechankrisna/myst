@@ -183,7 +183,8 @@ void main() {
       app = MaterialApp(
         home: ChangeNotifierProvider(
           create: (_) => className(),
-          /// child: const CounterScreen(),
+          /// TODO: implement the child for test controller
+          child: const Text("sample"),
         ),
       );
     });
