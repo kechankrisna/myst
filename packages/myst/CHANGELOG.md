@@ -1,7 +1,14 @@
 ## 0.0.1+5
 
-- myst repair (re organized export)
+- myst repair (re-organized export)
 - generate integration_test only when use add integration_test to sdk
+- myst controller to generate controller
+- myst service to generate service
+- myst widget to generate widget
+- myst interface to generate interface
+- myst extension to generate extension
+- myst layout to generate layout
+- myst util to generate utility
 
 ## 0.0.1+4
 

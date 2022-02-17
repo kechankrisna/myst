@@ -53,14 +53,13 @@ flutter pub add myst
 
 
 
-
 ### Arguments
 | arguments  | alias | description |
 | ------------- | ------------- | ------------- |
 | --help  | -h | show the usage information |
-| --name  | -n | set the new file name (optional) |
+| --name  | -n | set the new file name (optional) or instead first argument is required |
 | --dir  | -d | the directory name (optional) |
-
+| --template  | -t | the template name (optional) |
 
 
 ## Ideas
