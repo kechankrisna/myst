@@ -1,3 +1,7 @@
+## 0.0.1+3
+
+- update comment doc
+
 ## 0.0.1+2
 
 - tested passed all,

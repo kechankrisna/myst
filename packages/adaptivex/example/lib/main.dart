@@ -7,14 +7,14 @@ import 'package:example/my_material_app.dart';
 import 'package:example/my_web_app.dart';
 import 'package:example/my_window_app.dart';
 
-/// import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   /// change this line to any target platform you want to see, except web version
-  /// debugDefaultTargetPlatformOverride = TargetPlatform.android;
+  debugDefaultTargetPlatformOverride = TargetPlatform.linux;
 
   runApp(const MyApp());
 }
