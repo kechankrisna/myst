@@ -214,7 +214,6 @@ void main() {
 }
 """;
 
-
 /// ### `extensionTemplate`
 ///
 /// will be used when create a new extension
@@ -247,7 +246,6 @@ void main() {
     });
   });
 }""";
-
 
 /// ### `layoutStatelessTemplate`
 ///

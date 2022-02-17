@@ -112,7 +112,7 @@ class LayoutCommand extends Command
       case "stl":
         return layoutStatelessTemplate;
       case "sstl":
-        return layoutStatelessNotifierTemplate;  
+        return layoutStatelessNotifierTemplate;
       case "stf":
         return layoutStatefulTemplate;
       default:

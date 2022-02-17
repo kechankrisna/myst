@@ -3,28 +3,6 @@ library widgets;
 import 'package:adaptivex/adaptivex.dart';
 import 'package:flutter/material.dart';
 
-/// ### `AdaptiveBuilder`
-///
-/// This widget will render base on context size width
-///
-/// Example:
-/// ```dart
-/// Scaffold(
-///   appBar: AppBar(
-///     title: const Text("using adaptive builder"),
-///   ),
-///   body: Center(
-///     child: AdaptiveBuilder(
-///       xlBuilder: (_) => const Text("xlBuilder"),
-///       lgBuilder: (_) => const Text("lgBuilder"),
-///       mdBuilder: (_) => const Text("mdBuilder"),
-///       smBuilder: (_) => const Text("smBuilder"),
-///       // xsBuilder: (_) => const Text("xsBuilder"),
-///       builder: (_) => const Text("xsBuilder"),
-///     ),
-///   ),
-/// )
-/// ```
 class AdaptiveBuilder extends StatelessWidget {
   /// `xlBuilder`
   ///
@@ -56,6 +34,28 @@ class AdaptiveBuilder extends StatelessWidget {
   /// this is required as the default rendering
   final Widget Function(BuildContext context) builder;
 
+  /// ### `AdaptiveBuilder`
+  ///
+  /// This widget will render base on context size width
+  ///
+  /// Example:
+  /// ```dart
+  /// Scaffold(
+  ///   appBar: AppBar(
+  ///     title: const Text("using adaptive builder"),
+  ///   ),
+  ///   body: Center(
+  ///     child: AdaptiveBuilder(
+  ///       xlBuilder: (_) => const Text("xlBuilder"),
+  ///       lgBuilder: (_) => const Text("lgBuilder"),
+  ///       mdBuilder: (_) => const Text("mdBuilder"),
+  ///       smBuilder: (_) => const Text("smBuilder"),
+  ///       // xsBuilder: (_) => const Text("xsBuilder"),
+  ///       builder: (_) => const Text("xsBuilder"),
+  ///     ),
+  ///   ),
+  /// )
+  /// ```
   const AdaptiveBuilder({
     Key? key,
     this.xlBuilder,
@@ -85,20 +85,6 @@ class AdaptiveBuilder extends StatelessWidget {
   }
 }
 
-/// ### `AdaptivePlatformWidget`
-///
-/// This widget will render based on the current running platform
-///
-/// Example:
-/// ```dart
-/// AdaptivePlatformWidget(
-///   child: MyMaterialApp(),
-///   ios: MyCupertinoApp(),
-///   macos: MyMacosApp(),
-///   web: MyWebApp(),
-///   window: MyWindowApp(),
-/// )
-/// ```
 class AdaptivePlatformWidget extends StatelessWidget {
   final Widget child;
   final Widget? web;
@@ -108,6 +94,20 @@ class AdaptivePlatformWidget extends StatelessWidget {
   final Widget? window;
   final Widget? linux;
 
+  /// ### `AdaptivePlatformWidget`
+  ///
+  /// This widget will render based on the current running platform
+  ///
+  /// Example:
+  /// ```dart
+  /// AdaptivePlatformWidget(
+  ///   child: MyMaterialApp(),
+  ///   ios: MyCupertinoApp(),
+  ///   macos: MyMacosApp(),
+  ///   web: MyWebApp(),
+  ///   window: MyWindowApp(),
+  /// )
+  /// ```
   const AdaptivePlatformWidget({
     Key? key,
     required this.child,

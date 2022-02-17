@@ -1,6 +1,5 @@
-import 'package:flutter_test/flutter_test.dart'; 
+import 'package:flutter_test/flutter_test.dart';
 import 'package:myst_example/core.dart';
-
 
 void main() {
   group("StringParsing", () {
@@ -10,7 +9,7 @@ void main() {
       // TODO: initialize an object and try extension method
       stringParsing = "String()";
     });
-    
+
     test(": ==", () {
       expect(true, true);
     });

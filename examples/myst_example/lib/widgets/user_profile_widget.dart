@@ -1,8 +1,9 @@
 import 'package:myst_example/core.dart';
+
 /// ### `UserProfileWidget`
-/// 
+///
 /// `Description`:
-/// 
+///
 /// `Example`:
 // TODO: Implement the UserProfileWidget
 class UserProfileWidget extends StatelessWidget {

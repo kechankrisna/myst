@@ -1,8 +1,9 @@
 import 'package:myst_example/core.dart';
+
 /// ### `AdminProfileWidget`
-/// 
+///
 /// `Description`:
-/// 
+///
 /// `Example`:
 // TODO: Implement the AdminProfileWidget
 class AdminProfileWidget extends StatelessWidget {

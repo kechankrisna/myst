@@ -1,4 +1,4 @@
-/// Application core file 
+/// Application core file
 
 export 'routes.dart';
 export 'configs/configs.dart';
