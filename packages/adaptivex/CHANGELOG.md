@@ -1,6 +1,7 @@
 ## 0.0.1+3
 
 - update comment doc
+- add linux adaptive example
 
 ## 0.0.1+2
 

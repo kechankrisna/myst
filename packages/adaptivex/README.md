@@ -12,6 +12,8 @@ This package allow you to build the widget based on width (screen) size or platf
 
 ![web](https://github.com/kechankrisna/myst/blob/main/packages/adaptivex/screenshot/web.png?raw=true)
 
+![linux](https://github.com/kechankrisna/myst/blob/main/packages/adaptivex/screenshot/linux.png?raw=true)
+
 
 ### Getting start
 
