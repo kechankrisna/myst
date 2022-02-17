@@ -11,6 +11,7 @@ void main(List<String> arguments) {
     ..addOption("dir", abbr: 'd', help: "directory name")
     ..addOption("file",
         abbr: 'f', help: "file name will be use instead of class name")
+    ..addOption("template", abbr: 't', help: "template name for current file")
     ..addFlag("rewrite", defaultsTo: false)
     ..addFlag("version",
         defaultsTo: false,
@@ -52,6 +53,9 @@ void main(List<String> arguments) {
 
   /// add controller command to generate controller and its test
   runner.addCommand(myst.ControllerCommand());
+
+  /// add layout command to generate layout and its test
+  runner.addCommand(myst.LayoutCommand());
 
   runner.run(arguments).catchError((error) {
     if (error is! UsageException) throw error;

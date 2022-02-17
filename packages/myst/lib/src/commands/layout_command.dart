@@ -5,15 +5,14 @@ import 'package:printx/printx.dart';
 import 'dart:io' as io;
 import 'package:path/path.dart' as path;
 
-class ExtensionCommand extends Command
+class LayoutCommand extends Command
     with YamlInformation
     implements GenerateClassInterface {
   @override
-  String get description =>
-      "generate extension in lib/extensions and test/extensions";
+  String get description => "generate layout in lib/layouts and test/layouts";
 
   @override
-  String get name => "extension";
+  String get name => "layout";
 
   /// input from user and print help if null
   late String? inputName;
@@ -27,14 +26,17 @@ class ExtensionCommand extends Command
   /// directory from user and print help if null
   late String? dirName;
 
-  final String parentDir = "extensions";
+  /// template from user and print help if null
+  late String? templateName;
+
+  final String parentDir = "layouts";
 
   @override
-  List<String> get aliases => ['x'];
+  List<String> get aliases => ['l'];
 
   /// Xtension
 
-  ExtensionCommand() {
+  LayoutCommand() {
     argParser.addOption("name",
         callback: (v) => inputName = className = v,
         help: "please enter the class name correctly");
@@ -47,6 +49,20 @@ class ExtensionCommand extends Command
         callback: (v) => dirName = v,
         help: "please enter the directory name correctly");
 
+    argParser.addOption("template",
+        callback: (v) => templateName = v,
+        help: "please enter the template name correctly",
+        allowed: [
+          "stl",
+          "sstl",
+          "stf",
+        ],
+        allowedHelp: {
+          "stl": "stateless widget",
+          "sstl": "stateless widget with change notifier for state management",
+          "stf": "stateful widget when its contain its own state",
+        });
+
     argParser.addFlag("rewrite",
         callback: (value) => rewrite = value, defaultsTo: false);
   }
@@ -57,14 +73,14 @@ class ExtensionCommand extends Command
     ensureYamlInitialized();
 
     /// split rewrite config if exist in myst.yaml
-    if (extensionConfig != null) {
-      if (extensionConfig!.containsKey("rewrite") == true) {
-        rewrite = extensionConfig!['rewrite'];
+    if (layoutConfig != null) {
+      if (layoutConfig!.containsKey("rewrite") == true) {
+        rewrite = layoutConfig!['rewrite'];
       }
     }
 
     final watch = Stopwatch()..start();
-    PrintX.cool("extension start");
+    PrintX.cool("layout start");
 
     /// in case user don't want to type --name then take the first input instead
     if (argResults!.arguments.isNotEmpty) {
@@ -77,23 +93,37 @@ class ExtensionCommand extends Command
       /// printBlue("${argResults!.options}");
       /// printGreen([inputName, className, fileName]);
 
-      /// generate extension class in lib/extensions
+      /// generate layout class in lib/layouts
       generateLib();
 
-      /// generate extension test class in test/extensions
+      /// generate layout test class in test/layouts
       generateTest();
     } else {
       printCyan(usage);
     }
 
-    PrintX.cool("extension finished in (${watch.elapsedMilliseconds} ms)");
+    PrintX.cool("layout finished in (${watch.elapsedMilliseconds} ms)");
     watch.stop();
+  }
+
+  /// get template of current file
+  String getTemplate() {
+    switch (templateName) {
+      case "stl":
+        return layoutStatelessTemplate;
+      case "sstl":
+        return layoutStatelessNotifierTemplate;  
+      case "stf":
+        return layoutStatefulTemplate;
+      default:
+        return layoutStatelessTemplate;
+    }
   }
 
   @override
   void generateLib() async {
-    var contents =
-        extensionTemplate.replaceAll(RegExp(r"className"), className!);
+    String contents = "import 'package:$projectName/core.dart';\n" +
+        getTemplate().replaceAll(RegExp(r"className"), className!);
 
     /// if user input directory name,
     /// then create the new sub directory if not exists
@@ -132,7 +162,7 @@ class ExtensionCommand extends Command
   @override
   void generateTest() {
     /// load content and repllace
-    var contents = extensionTestTemplate
+    var contents = layoutTestTemplate
         .replaceAll(RegExp(r"className"), className!)
         .replaceAll(RegExp(r"objectName"), className!.camelCase);
 

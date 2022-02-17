@@ -48,7 +48,7 @@ flutter pub add myst
 | `myst service`  | `s`| ❌ create a file in lib/services and test/services   |
 | `myst util`  | `u`| ❌ create a file in lib/utilities and test/utilities   |
 | `myst widget`  | `w`| ❌ create a file in lib/widgets and test/widgets   |
-| `myst screen`  | `p`| ❌ create a file in lib/screens and test/screens   |
+| `myst screen`  | `sc`| ❌ create a file in lib/screens and test/screens   |
 | `myst interface`  | `a`| ✔ create a file in lib/interfaces and test/interfaces   |
 
 
