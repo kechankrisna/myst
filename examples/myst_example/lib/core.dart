@@ -18,3 +18,4 @@ export 'package:go_router/go_router.dart';
 export 'package:provider/provider.dart';
 export 'package:adaptivex/adaptivex.dart';
 export 'package:printx/printx.dart';
+export 'package:material_design_icons_flutter/material_design_icons_flutter.dart';

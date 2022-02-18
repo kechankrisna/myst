@@ -36,8 +36,12 @@ dependencies:
   cupertino_icons: ^1.0.2
   go_router: ^3.0.1
   provider: ^6.0.2
-  adaptivex: ^0.0.1+2
+  adaptivex: 
+    path: ../../packages/adaptivex
   printx: ^0.0.1
+  material_design_icons_flutter: ^5.0.6595
+  tab_container: ^1.2.2
+  flutter_portal: ^0.4.0
 
 dev_dependencies:
   flutter_test:

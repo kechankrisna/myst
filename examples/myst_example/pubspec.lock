@@ -4,10 +4,10 @@ packages:
   adaptivex:
     dependency: "direct main"
     description:
-      name: adaptivex
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.1+2"
+      path: "../../packages/adaptivex"
+      relative: true
+    source: path
+    version: "0.0.1+3"
   ansicolor:
     dependency: transitive
     description:
@@ -97,6 +97,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
+  flutter_portal:
+    dependency: "direct main"
+    description:
+      name: flutter_portal
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -149,6 +156,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.3"
+  material_design_icons_flutter:
+    dependency: "direct main"
+    description:
+      name: material_design_icons_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.0.6595"
   meta:
     dependency: transitive
     description:
@@ -266,6 +280,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.0"
+  tab_container:
+    dependency: "direct main"
+    description:
+      name: tab_container
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.2"
   term_glyph:
     dependency: transitive
     description:
@@ -303,4 +324,4 @@ packages:
     version: "3.1.0"
 sdks:
   dart: ">=2.15.1 <3.0.0"
-  flutter: ">=1.17.0"
+  flutter: ">=1.21.0"
