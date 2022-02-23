@@ -18,7 +18,7 @@ class HomeLayout extends StatelessWidget {
     const sidebar = MacosSidebar(key: ValueKey("sidebar"));
     const divider = VerticalDivider(width: 1);
     return ChangeNotifierProvider(
-      create: (_) => HomeLayoutState(),
+      create: (_) => HomeLayoutContoller(),
       child: Scaffold(
         appBar: context.isXSD && appBar != null ? appBar : null,
         drawer: AdaptiveBuilder(
@@ -96,4 +96,4 @@ List<ListTile> drawers(BuildContext context) => [
       ),
     ];
 
-class HomeLayoutState extends ChangeNotifier {}
+class HomeLayoutContoller extends ChangeNotifier {}

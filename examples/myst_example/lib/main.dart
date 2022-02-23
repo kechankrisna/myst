@@ -19,13 +19,12 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Portal(
-      child: MaterialApp.router(
-        title: 'myst example',
-        theme: ThemeData(primarySwatch: Colors.blue),
-        routeInformationParser: _router.routeInformationParser,
-        routerDelegate: _router.routerDelegate,
-      ),
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      title: 'myst example',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      routeInformationParser: _router.routeInformationParser,
+      routerDelegate: _router.routerDelegate,
     );
   }
 }

@@ -9,10 +9,20 @@ class SelectProjectTitle extends StatelessWidget {
     final themeData = Theme.of(context);
     return InkWell(
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-        child: Text(
-          "your project",
-          style: themeData.textTheme.titleMedium!.copyWith(color: Colors.white),
+        constraints: BoxConstraints(maxWidth: 200),
+        padding: context.isXSS
+            ? EdgeInsets.all(12)
+            : EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        child: SizedBox(
+          width: double.infinity,
+          child: Text(
+            "your project",
+            style: context.isXSS
+                ? null
+                : themeData.textTheme.titleMedium!
+                    .copyWith(color: Colors.white),
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
       onTap: () {
