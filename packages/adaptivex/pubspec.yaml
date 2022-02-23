@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  printx: ^0.0.1
 
 dev_dependencies:
   lints: ^1.0.0

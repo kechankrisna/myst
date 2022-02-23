@@ -3,36 +3,38 @@ library widgets;
 import 'package:adaptivex/adaptivex.dart';
 import 'package:flutter/material.dart';
 
+/// import 'package:printx/printx.dart';
+
 class AdaptiveBuilder extends StatelessWidget {
   /// `xlBuilder`
   ///
   /// this widget will render on xlarge width
-  final Widget Function(BuildContext context)? xlBuilder;
+  final WidgetBuilder? xlBuilder;
 
   /// `lgBuilder`
   ///
   /// this widget will render on large width
-  final Widget Function(BuildContext context)? lgBuilder;
+  final WidgetBuilder? lgBuilder;
 
   /// `mdBuilder`
   ///
   /// this widget will render on medium width
-  final Widget Function(BuildContext context)? mdBuilder;
+  final WidgetBuilder? mdBuilder;
 
   /// `smBuilder`
   ///
   /// this widget will render on small width
-  final Widget Function(BuildContext context)? smBuilder;
+  final WidgetBuilder? smBuilder;
 
   /// `xsBuilder`
   ///
   /// this widget will render on xsmall width
-  final Widget Function(BuildContext context)? xsBuilder;
+  final WidgetBuilder? xsBuilder;
 
   /// `builder`
   ///
   /// this is required as the default rendering
-  final Widget Function(BuildContext context) builder;
+  final WidgetBuilder builder;
 
   /// ### `AdaptiveBuilder`
   ///
@@ -152,3 +154,165 @@ class AdaptivePlatformWidget extends StatelessWidget {
     return child;
   }
 }
+
+class AdaptivePopup extends StatefulWidget {
+  /// `child`
+  /// Creates a widget that centers its child.
+  final Widget child;
+  final WidgetBuilder builder;
+  final bool barrierDismissible;
+  final Color barrierColor;
+  final Offset offset;
+  final Duration animationDuration;
+  final double? maxDropdownWidth;
+  final double? maxDropdownHeight;
+  final PopupPosition position;
+  final RouteSettings? settings;
+  final bool isPopped;
+  final Function(bool value)? onPopup;
+
+  /// create a widget for an adptive dropdown
+  ///
+  /// `child` will render by default
+  ///
+  /// `builder` will be hide by default and only render when gesture dectected
+  ///
+  /// `barrierColor` will be used for force display dropdown overlay in defferent color
+  ///
+  /// `animationDuration` duration of trasition builder
+  ///
+  ///
+  const AdaptivePopup({
+    Key? key,
+    required this.child,
+    required this.builder,
+    this.barrierDismissible = true,
+    this.offset = Offset.zero,
+    this.animationDuration = const Duration(milliseconds: 100),
+    this.maxDropdownWidth,
+    this.maxDropdownHeight,
+    this.position = PopupPosition.bottom,
+    this.barrierColor = Colors.transparent,
+    this.settings,
+    this.onPopup,
+    this.isPopped = false,
+  }) : super(key: key);
+
+  @override
+  _AdaptivePopupState createState() => _AdaptivePopupState();
+}
+
+class _AdaptivePopupState extends State<AdaptivePopup> {
+  final GlobalKey _globalKey = GlobalKey();
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.isPopped == true) {
+      Future.delayed(widget.animationDuration)
+          .then((value) => _onPoppedUp.call());
+    }
+  }
+
+  Positioned getPosition({
+    required Widget child,
+    required Offset offset,
+    required Size childSize,
+  }) {
+    /// printGreen(offset);
+    /// printCyan(widget.alignment);
+    /// printGreen(childSize);
+    final dropDownWidth = widget.maxDropdownWidth ?? childSize.width;
+
+    /// final dropDownHeight = widget.maxDropdownHeight ?? childSize.height;
+
+    if (widget.position == PopupPosition.bottom) {
+      final extendHeight = 5;
+      final right = offset.dx + childSize.width - dropDownWidth;
+      final top = (offset.dy + childSize.height + extendHeight);
+      return Positioned(
+        right: right,
+        top: top,
+        left: null,
+        bottom: null,
+        child: child,
+      );
+    } else if (widget.position == PopupPosition.top) {
+      final right = offset.dx + childSize.width - dropDownWidth;
+      final bottom = (offset.dy);
+      return Positioned(
+        right: right,
+        top: null,
+        left: null,
+        bottom: bottom,
+        child: child,
+      );
+    }
+    return Positioned(
+      right: offset.dx,
+      top: offset.dy,
+      child: child,
+    );
+  }
+
+  @override
+  void setState(VoidCallback fn) {
+    if (!mounted) return;
+    super.setState(fn);
+  }
+
+  _onPoppedUp() async {
+    /// final _screenSize = MediaQuery.of(context).size;
+    /// final _overlayBackground = widget.overlayBackground;
+    /// final _animationDuration = widget.animationDuration;
+    /// final _opacity = widget.opacity;
+    final overlay = _globalKey.currentContext!.findRenderObject() as RenderBox;
+    final childSize = (overlay.size);
+    final _offset = overlay.localToGlobal(widget.offset);
+    final Widget build = widget.builder(context);
+    final dropDownWidth = widget.maxDropdownWidth ?? childSize.width;
+    final dropDownHeight = widget.maxDropdownHeight ?? childSize.height;
+
+    /// printRed("dropDownHeight $dropDownHeight");
+    /// printRed("dropDownWidth $dropDownWidth");
+
+    var position = getPosition(
+      offset: _offset,
+      childSize: childSize,
+      child: build,
+    );
+
+    ///
+    widget.onPopup?.call(true);
+
+    await Navigator.of(context).push(
+      AdaptivePopupRoute(
+        builder: (_) => build,
+        settings: widget.settings,
+        top: position.top,
+        right: position.right,
+        bottom: position.bottom,
+        left: position.left,
+        contentHeight: dropDownHeight,
+        contentWidth: dropDownWidth,
+        barrierDismissible: widget.barrierDismissible,
+        barrierColor: widget.barrierColor,
+        duration: widget.animationDuration,
+      ),
+    );
+
+    widget.onPopup?.call(false);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      key: _globalKey,
+      child: widget.child,
+      onTap: _onPoppedUp,
+    );
+  }
+}
+
+enum PopupPosition { top, bottom }

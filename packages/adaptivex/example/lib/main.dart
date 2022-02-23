@@ -14,7 +14,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   /// change this line to any target platform you want to see, except web version
-  /// debugDefaultTargetPlatformOverride = TargetPlatform.linux;
+  debugDefaultTargetPlatformOverride = TargetPlatform.linux;
 
   runApp(const MyApp());
 }
