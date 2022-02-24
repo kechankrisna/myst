@@ -130,7 +130,9 @@ class _DashboardLayoutBottomBar extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 DashobardCloudShellIcon(),
-                if (!context.isXSS) Expanded(child: DashboardShellTabView()),
+                Expanded(
+                    child:
+                        !context.isXSS ? DashboardShellTabView() : SizedBox()),
                 DashboardOpenEditorIcon(),
                 DashboardKeyboardIcon(),
                 DashboardShellSettingIcon(),
