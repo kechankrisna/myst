@@ -1,5 +1,8 @@
+import 'package:data_table_2/data_table_2.dart';
 import 'package:myst_example/core.dart';
 import 'widgets/dashboard_screen_sidebar.dart';
+import 'widgets/dashboard_select_time_frame_option.dart';
+import 'widgets/dashboard_traffic_report_card.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -112,6 +115,7 @@ class DashboardScreenReports extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
+        DashboardSelectTimeFrameOption(),
         GridView.count(
           shrinkWrap: true,
           crossAxisCount: context.isXSS ? 1 : 2,
@@ -122,25 +126,44 @@ class DashboardScreenReports extends StatelessWidget {
               ? 1.75
               : 1.5,
           children: [
-            RandomTrafficReport(),
-            RandomTrafficReport(),
-            RandomTrafficReport()
+            DashboardTrafficReportCard(title: Text('Traffic')),
+            DashboardTrafficReportCard(title: Text('Error')),
+            DashboardTrafficReportCard(title: Text('Median latency'))
           ],
-        )
+        ),
+        DashboardFilterProductTable(),
       ],
     );
   }
 }
 
-class RandomTrafficReport extends StatelessWidget {
-  const RandomTrafficReport({Key? key}) : super(key: key);
+class DashboardFilterProductTable extends StatelessWidget {
+  const DashboardFilterProductTable({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 4,
-      child: Center(
-        child: Text("center"),
+      child: DataTable2(
+        rows: [
+          ...List.generate(
+              50,
+              (i) => DataRow2(
+                    cells: [
+                      DataCell(Text("BigQuery API")),
+                      DataCell(SizedBox()),
+                      DataCell(SizedBox()),
+                      DataCell(SizedBox()),
+                      DataCell(SizedBox()),
+                    ],
+                  )).toList()
+        ],
+        columns: [
+          DataColumn2(label: Text("name"), tooltip: "name"),
+          DataColumn2(label: Text("request"), tooltip: "request"),
+          DataColumn2(label: Text("error"), tooltip: "error"),
+          DataColumn2(label: Text("latency ms"), tooltip: "latency ms"),
+          DataColumn2(label: Text("latency 59%"), tooltip: "latency 59%"),
+        ],
       ),
     );
   }

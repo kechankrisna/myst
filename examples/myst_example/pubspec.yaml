@@ -44,6 +44,8 @@ dependencies:
   flutter_portal: ^0.4.0
   custom_pop_up_menu: ^1.2.3+1
   tabbed_view: ^1.10.0+1
+  syncfusion_flutter_charts: ^19.4.53
+  data_table_2: ^2.2.1
 
 dev_dependencies:
   flutter_test:
