@@ -1,4 +1,5 @@
 import 'package:myst_example/core.dart';
+import 'package:myst_example/layouts/dashboard_layout/dashboard_layout_controller.dart';
 import 'package:myst_example/layouts/dashboard_layout/widgets/help_dropdown_icon.dart';
 
 class MoreOptionDropDownIcon extends StatelessWidget {
@@ -6,13 +7,14 @@ class MoreOptionDropDownIcon extends StatelessWidget {
 
   static List<PopupMenuEntry> get menuItems {
     const double kListMenuItemHeight = 30;
+    final icon = Icon(MdiIcons.openInNew, color: Colors.grey);
     return [
       PopupMenuItem(
         height: kListMenuItemHeight,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
-          children: [Text("Perference"), Icon(MdiIcons.openInNew)],
+          children: [Text("Perference"), icon],
         ),
       ),
       PopupMenuDivider(),
@@ -21,7 +23,7 @@ class MoreOptionDropDownIcon extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
-          children: [Text("Downloads"), Icon(MdiIcons.openInNew)],
+          children: [Text("Downloads"), icon],
         ),
       ),
       PopupMenuItem(
@@ -29,24 +31,7 @@ class MoreOptionDropDownIcon extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
-          children: [Text("Cloud Partner"), Icon(MdiIcons.openInNew)],
-        ),
-      ),
-      PopupMenuDivider(),
-      PopupMenuItem(
-        height: kListMenuItemHeight,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [Text("Terms of service"), Icon(MdiIcons.openInNew)],
-        ),
-      ),
-      PopupMenuItem(
-        height: kListMenuItemHeight,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [Text("Privacy"), Icon(MdiIcons.openInNew)],
+          children: [Text("Cloud Partner"), icon],
         ),
       ),
       PopupMenuDivider(),
@@ -55,7 +40,24 @@ class MoreOptionDropDownIcon extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
-          children: [Text("project setting"), Icon(MdiIcons.openInNew)],
+          children: [Text("Terms of service"), icon],
+        ),
+      ),
+      PopupMenuItem(
+        height: kListMenuItemHeight,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [Text("Privacy"), icon],
+        ),
+      ),
+      PopupMenuDivider(),
+      PopupMenuItem(
+        height: kListMenuItemHeight,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [Text("project setting"), icon],
         ),
       ),
     ];
@@ -75,6 +77,14 @@ class MoreOptionDropDownIcon extends StatelessWidget {
       ),
       offset: Offset(0, (kToolbarHeight - 10)),
       itemBuilder: (_) => [
+        if (context.isXSS) ...[
+          PopupMenuItem(
+              child: Text("Activate cloud sheel"),
+              onTap: () {
+                context.read<DashboardLayoutController>().openConsole();
+              }),
+          PopupMenuDivider()
+        ],
         ...menuItems,
         if (context.isXSS) ...HelperDropDownIcon.menuItems,
       ],

@@ -85,12 +85,22 @@ class DasbhoardScreenSideBar extends StatelessWidget {
   }
 
   Widget builder(BuildContext context) {
-    return Material(
-      type: MaterialType.card,
-      child: context.select<DashboardScreenController, bool>(
-              (ctrl) => ctrl.isMiniMenu)
-          ? DashboardScreenMiniSidebar()
-          : DashboardScreenLargeSidebar(),
+    return MouseRegion(
+      onEnter: (pointer) {
+        context.read<DashboardScreenController>().toggleTemporarySidebar(true);
+      },
+      onExit: (pointer) {
+        context.read<DashboardScreenController>().toggleTemporarySidebar(false);
+      },
+      child: Material(
+        type: MaterialType.card,
+        child: (context.select<DashboardScreenController, bool>(
+                    (ctrl) => !ctrl.isMiniMenu)) ||
+                (context.select<DashboardScreenController, bool>(
+                    (ctrl) => ctrl.isFullTemporary))
+            ? DashboardScreenLargeSidebar()
+            : DashboardScreenMiniSidebar(),
+      ),
     );
   }
 }

@@ -26,6 +26,9 @@ class SelectProjectTitle extends StatelessWidget {
         ),
       ),
       onTap: () {
+        if (Scaffold.of(context).isDrawerOpen) {
+          Navigator.of(context).pop();
+        }
         showDialog(
             context: context,
             builder: (_) => Dialog(

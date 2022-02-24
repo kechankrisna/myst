@@ -1,4 +1,5 @@
 import 'package:myst_example/core.dart';
+import 'widgets/dashboard_layout_drawer.dart';
 import 'widgets/dashboard_shell_terminal.dart';
 import 'widgets/dashboard_shell_tabview.dart';
 import 'widgets/dashboard_shell_close_icon.dart';
@@ -41,16 +42,16 @@ class DashboardLayout extends StatelessWidget {
         child: Scaffold(
           appBar: _DashboardLayoutAppbar(),
           drawer: AdaptiveBuilder(
-            builder: (_) => _DashboardLayoutDrawer(),
+            builder: (_) => DashboardLayoutDrawer(),
             xlBuilder: (_) => Container(
               padding: EdgeInsets.only(top: statusBarHeight + appBarHeight + 1),
-              width: 300,
-              child: _DashboardLayoutDrawer(),
+              width: kDrawerWidth,
+              child: DashboardLayoutDrawer(),
             ),
             lgBuilder: (_) => Container(
               padding: EdgeInsets.only(top: statusBarHeight + appBarHeight + 1),
-              width: 300,
-              child: _DashboardLayoutDrawer(),
+              width: kDrawerWidth,
+              child: DashboardLayoutDrawer(),
             ),
           ),
           body: child,
@@ -141,85 +142,13 @@ class _DashboardLayoutBottomBar extends StatelessWidget {
                 if (!context.isXSS) VerticalDivider(indent: 8, endIndent: 8),
                 if (!context.isXSS) DashboardShellFullIcon(),
                 if (!context.isXSS) DashboardShellNewWindowsIcon(),
-                if (!context.isXSS) DashboardShellCloseIcon(),
+                DashboardShellCloseIcon(),
               ],
             ),
           ),
           if (context.select<DashboardLayoutController, bool>(
               (state) => state.activateConsole))
             Expanded(child: DashboardShellTerminal()),
-        ],
-      ),
-    );
-  }
-}
-
-class _DashboardLayoutDrawer extends StatelessWidget {
-  const _DashboardLayoutDrawer({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: Column(
-        children: [
-          if (context.isXSS)
-            ListTile(
-              title: DashboardTitle(),
-            ),
-          if (context.isXSS) Divider(),
-          if (context.isXSS) SelectProjectTitle(),
-          if (context.isXSS) Divider(),
-          ListTile(
-            title: Text("Home"),
-            leading: Icon(MdiIcons.homeOutline),
-            onTap: () {},
-          ),
-          ListTile(
-            title: Text("Recent"),
-            leading: Icon(MdiIcons.history),
-            onTap: () {},
-          ),
-          Container(
-            padding: EdgeInsets.all(15),
-            child: ListTile(
-              title: Text("View all products"),
-              leading: Icon(MdiIcons.viewDashboard),
-              onTap: () {},
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                  side: BorderSide(
-                    color: Theme.of(context).dividerColor,
-                  )),
-            ),
-          ),
-          Divider(height: 1),
-          ListTile(
-            title: Text("PINNED"),
-          ),
-          ListTile(
-            title: Text("APIs and Services"),
-            leading: Icon(MdiIcons.api),
-            onTap: () {},
-          ),
-          ListTile(
-            title: Text("Marketplace"),
-            leading: Icon(MdiIcons.basketPlusOutline),
-            onTap: () {},
-          ),
-          Divider(height: 1),
-          ListTile(
-            title: Text("MORE PRODUCTS"),
-          ),
-          Divider(height: 1),
-          Expanded(
-              child: ListView.builder(
-            primary: false,
-            itemCount: 100,
-            itemBuilder: (_, i) => ListTile(
-              title: Text("Product random"),
-              onTap: () {},
-            ),
-          ))
         ],
       ),
     );

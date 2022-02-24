@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_portal/flutter_portal.dart';
 import 'package:myst_example/core.dart';
 
 void main() {
@@ -10,7 +8,7 @@ void main() {
 class App extends StatelessWidget {
   App({Key? key}) : super(key: key);
 
-  /// TODO: register route here
+  // TODO: register route here
   final _router = GoRouter(routes: [
     HomeService.router,
     PostsService.router,

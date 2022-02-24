@@ -2,9 +2,11 @@ import 'package:myst_example/core.dart';
 
 class DashboardScreenController extends ChangeNotifier {
   late bool isMiniMenu;
+  late bool isFullTemporary;
   late bool isExpanedMenu;
   DashboardScreenController() {
     isMiniMenu = false;
+    isFullTemporary = false;
     isExpanedMenu = false;
   }
 
@@ -14,6 +16,13 @@ class DashboardScreenController extends ChangeNotifier {
   toggleSidebar() {
     isMiniMenu = !isMiniMenu;
     notifyListeners();
+  }
+
+  toggleTemporarySidebar(bool v) {
+    if (isMiniMenu) {
+      isFullTemporary = v;
+      notifyListeners();
+    }
   }
 
   /// `toggleMenubar`

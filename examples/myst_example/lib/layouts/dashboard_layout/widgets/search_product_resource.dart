@@ -314,7 +314,7 @@ class _CustomFilterState extends State<CustomFilter> {
             pressType: PressType.singleClick,
             position: PreferredPosition.bottom,
           ),
-          Flexible(child: SizedBox.expand()),
+          SizedBox(height: 30),
           Container(
             alignment: Alignment.bottomRight,
             child: Row(
