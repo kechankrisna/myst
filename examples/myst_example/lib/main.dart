@@ -9,11 +9,14 @@ class App extends StatelessWidget {
   App({Key? key}) : super(key: key);
 
   // TODO: register route here
-  final _router = GoRouter(routes: [
-    HomeService.router,
-    PostsService.router,
-    DashboardService.router,
-  ]);
+  final _router = GoRouter(
+    routes: [
+      HomeService.router,
+      PostsService.router,
+      DashboardService.router,
+    ],
+    debugLogDiagnostics: true,
+  );
 
   @override
   Widget build(BuildContext context) {

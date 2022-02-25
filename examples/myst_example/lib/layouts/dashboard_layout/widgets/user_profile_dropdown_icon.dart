@@ -1,5 +1,4 @@
 import 'package:myst_example/core.dart';
-import 'package:myst_example/layouts/dashboard_layout/widgets/profile_image.dart';
 
 class UserProfileDropDownIcon extends StatelessWidget {
   const UserProfileDropDownIcon({Key? key}) : super(key: key);
@@ -62,7 +61,13 @@ class UserProfileDropDownIcon extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(12),
         child: CircleAvatar(
-          child: PlatformImage(),
+          child: FadeInImage.assetNetwork(
+              placeholder: placeholder, image: "https://i.pravatar.cc/300"),
+
+          /// child: AdaptiveImage(
+          ///   url: 'https://i.pravatar.cc/300',
+          ///   width: 100,
+          /// ),
         ),
       ),
       constraints: BoxConstraints(maxWidth: 300),
