@@ -1,4 +1,5 @@
 import 'package:myst_example/core.dart';
+import 'package:myst_example/layouts/dashboard_layout/widgets/my_image.dart';
 
 class UserProfileDropDownIcon extends StatelessWidget {
   const UserProfileDropDownIcon({Key? key}) : super(key: key);
@@ -61,11 +62,38 @@ class UserProfileDropDownIcon extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(12),
         child: CircleAvatar(
-          child: Icon(MdiIcons.account),
+          child: MyImage(),
         ),
       ),
-      offset: Offset(0, (kToolbarHeight - 10)),
-      itemBuilder: (_) => menuItems,
+      constraints: BoxConstraints(maxWidth: 300),
+      offset: Offset(0, kToolbarHeight),
+      itemBuilder: (_) => [
+        PopupMenuItem(child: Text("This account is managed by ......com.")),
+        PopupMenuItem(
+            child: Container(
+          height: 100,
+          child: Row(
+            children: [
+              Flexible(
+                flex: 5,
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: Container(
+                    color: Colors.green,
+                  ),
+                ),
+              ),
+              Flexible(
+                flex: 7,
+                child: UserAccountsDrawerHeader(
+                  accountEmail: Text("accountEmail"),
+                  accountName: Text("accountName"),
+                ),
+              ),
+            ],
+          ),
+        ))
+      ],
     );
   }
 }

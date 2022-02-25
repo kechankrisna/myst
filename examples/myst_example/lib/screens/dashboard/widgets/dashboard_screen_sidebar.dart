@@ -56,6 +56,38 @@ class DasbhoardScreenSideBar extends StatelessWidget {
   }
 
   Widget xsBuilder(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    return PopupMenuButton(
+      constraints: BoxConstraints(
+        minWidth: width,
+        maxWidth: width,
+      ),
+      offset: Offset(0, kToolbarHeight),
+      padding: EdgeInsets.zero,
+      enableFeedback: false,
+      itemBuilder: (_) => [
+        PopupMenuItem(
+          enabled: false,
+          padding: EdgeInsets.zero,
+          child: Container(
+            height: height - ((kToolbarHeight * 3) + 16),
+            child: SingleChildScrollView(
+              child: Column(
+                children: DasbhoardScreenSideBar.menus,
+              ),
+            ),
+          ),
+        )
+      ],
+      child: Card(
+        child: ListTile(
+          title: DasbhoardScreenSideBar.header.title,
+          leading: DasbhoardScreenSideBar.header.leading,
+          trailing: Icon(Icons.arrow_drop_down),
+        ),
+      ),
+    );
     return Material(
       type: MaterialType.card,
       child: ExpansionPanelList(
