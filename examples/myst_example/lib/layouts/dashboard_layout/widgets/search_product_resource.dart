@@ -44,33 +44,20 @@ class _SearchProductResourceState extends State<SearchProductResource> {
               ),
             ),
             filled: _filled,
-            suffixIcon: AdaptivePopup(
-              offset: Offset(-195, 0),
-              maxDropdownWidth: constrains.maxWidth,
-              maxDropdownHeight: 300,
-              position: PopupPosition.bottom,
-              onPopup: (v) {
-                setState(() {
-                  _isMore = v;
-                });
+            suffixIcon: PopupMenuButton(
+              offset: Offset(0, kTextTabBarHeight),
+              constraints: BoxConstraints(minWidth: constrains.maxWidth),
+              onCanceled: () {
+                setState(() => _isMore = false);
               },
               child:
                   Icon(!_isMore ? Icons.arrow_drop_down : Icons.arrow_drop_up),
-              builder: (_) => Semantics(
-                container: true,
-                child: Material(
-                  type: MaterialType.card,
-                  shadowColor: cardTheme.shadowColor ?? theme.shadowColor,
-                  color: cardTheme.color ?? theme.cardColor,
-                  elevation: 2.0,
-                  shape: cardTheme.shape ??
-                      const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                      ),
-                  borderOnForeground: true,
+              itemBuilder: (_) => [
+                PopupMenuItem(
+                  enabled: false,
                   child: CustomFilter(),
                 ),
-              ),
+              ],
             ),
             fillColor: Colors.white,
             focusedBorder: OutlineInputBorder(
@@ -155,8 +142,7 @@ class _CustomFilterState extends State<CustomFilter> {
             },
           ),
           SizedBox(height: 15),
-          CustomPopupMenu(
-            controller: _controller,
+          PopupMenuButton(
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(
@@ -171,12 +157,17 @@ class _CustomFilterState extends State<CustomFilter> {
                 trailing: Icon(Icons.arrow_drop_down),
               ),
             ),
-            menuBuilder: () => Material(
-              type: MaterialType.card,
-              child: Container(
+            constraints: BoxConstraints(minWidth: 400),
+            itemBuilder: (_) => [
+              PopupMenuItem(
+                enabled: false,
+                child: Container(
                   width: 400,
-                  height: 400,
+                  height: 300,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       CheckboxListTile(
                         value: false,
@@ -302,17 +293,17 @@ class _CustomFilterState extends State<CustomFilter> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             TextButton(
-                              onPressed: _controller.hideMenu,
+                              onPressed: () => Navigator.of(context).pop(),
                               child: Text("close"),
                             )
                           ],
                         ),
                       )
                     ],
-                  )),
-            ),
-            pressType: PressType.singleClick,
-            position: PreferredPosition.bottom,
+                  ),
+                ),
+              ),
+            ],
           ),
           SizedBox(height: 30),
           Container(
