@@ -82,12 +82,12 @@ List<ListTile> drawers(BuildContext context) => [
       ListTile(
         leading: const Icon(Icons.home),
         title: const Text("home"),
-        onTap: () => context.goNamed(HomeService.router.name!),
+        onTap: () => context.goNamed(HomeScreenService.router.name!),
       ),
       ListTile(
         leading: const Icon(Icons.dashboard_customize),
         title: const Text("dashboard"),
-        onTap: () => context.goNamed(DashboardService.router.name!),
+        onTap: () => context.goNamed(dashboardRouteName),
       ),
       ListTile(
         leading: const Icon(Icons.article),

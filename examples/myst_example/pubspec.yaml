@@ -46,6 +46,7 @@ dependencies:
   tabbed_view: ^1.10.0+1
   syncfusion_flutter_charts: ^19.4.53
   data_table_2: ^2.2.1
+  shared_preferences: ^2.0.13
 
 dev_dependencies:
   flutter_test:

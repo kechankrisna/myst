@@ -1,31 +1,46 @@
 import 'package:myst_example/core.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(App());
+
+  await ApplicationService.ensureSharedPreferences();
+
+  final authenticationController = AuthenticationController();
+
+  ///
+
+  runApp(MyApp(authenticationController: authenticationController));
 }
 
-class App extends StatelessWidget {
-  App({Key? key}) : super(key: key);
-
-  // TODO: register route here
-  final _router = GoRouter(
-    routes: [
-      HomeService.router,
-      PostsService.router,
-      DashboardService.router,
-    ],
-    debugLogDiagnostics: true,
-  );
+class MyApp extends StatelessWidget {
+  final AuthenticationController authenticationController;
+  const MyApp({Key? key, required this.authenticationController})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      title: 'myst example',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      routeInformationParser: _router.routeInformationParser,
-      routerDelegate: _router.routerDelegate,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<AuthenticationController>.value(
+          value: authenticationController,
+        ),
+        Provider<MyRouter>(
+          lazy: false,
+          create: (BuildContext createContext) =>
+              MyRouter(authenticationController),
+        ),
+      ],
+      child: Builder(builder: (context) {
+        final router = Provider.of<MyRouter>(context, listen: false).router;
+        return MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          title:
+              'myst example ${context.read<AuthenticationController>().isLoggedIn}',
+          theme: ThemeData(primarySwatch: Colors.blue),
+          routeInformationParser: router.routeInformationParser,
+          routerDelegate: router.routerDelegate,
+        );
+      }),
     );
   }
 }

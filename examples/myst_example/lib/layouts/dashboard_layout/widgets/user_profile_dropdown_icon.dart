@@ -73,31 +73,48 @@ class UserProfileDropDownIcon extends StatelessWidget {
       constraints: BoxConstraints(maxWidth: 300),
       offset: Offset(0, kToolbarHeight),
       itemBuilder: (_) => [
-        PopupMenuItem(child: Text("This account is managed by ......com.")),
         PopupMenuItem(
+          enabled: false,
+          child: Text("This account is managed by ......com."),
+        ),
+        PopupMenuItem(
+            enabled: false,
             child: Container(
-          height: 100,
+              height: 100,
+              child: Row(
+                children: [
+                  Flexible(
+                    flex: 5,
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: Container(
+                        color: Colors.green,
+                      ),
+                    ),
+                  ),
+                  Flexible(
+                    flex: 7,
+                    child: UserAccountsDrawerHeader(
+                      accountEmail: Text("accountEmail"),
+                      accountName: Text("accountName"),
+                    ),
+                  ),
+                ],
+              ),
+            )),
+        PopupMenuItem(
+          enabled: false,
           child: Row(
             children: [
-              Flexible(
-                flex: 5,
-                child: AspectRatio(
-                  aspectRatio: 1,
-                  child: Container(
-                    color: Colors.green,
-                  ),
-                ),
-              ),
-              Flexible(
-                flex: 7,
-                child: UserAccountsDrawerHeader(
-                  accountEmail: Text("accountEmail"),
-                  accountName: Text("accountName"),
-                ),
-              ),
+              Expanded(child: SizedBox()),
+              TextButton(
+                  onPressed: () {
+                    context.read<AuthenticationController>().logout();
+                  },
+                  child: Text("logout"))
             ],
           ),
-        ))
+        ),
       ],
     );
   }

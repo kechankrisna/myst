@@ -1,17 +1,17 @@
 import 'package:myst_example/core.dart';
 
-class DashboardService {
+class HomeScreenService {
   static GoRoute route(String? Function(GoRouterState) redirect) => GoRoute(
-        path: "/dashboard",
-        name: "dashboard",
+        path: "/",
+        name: "home",
         pageBuilder: (_, state) => const NoTransitionPage(
-            child: DashboardScreen(key: DashboardService.screenKey)),
+            child: HomeScreen(key: HomeScreenService.screenKey)),
         redirect: redirect,
       );
 
   static GoRoute get router => route((p0) => null);
 
-  static const Key screenKey = ValueKey("DashboardScreen");
+  static const Key screenKey = ValueKey("HomeScreen");
 
-  static const String title = "dashboard";
+  static const String title = "home";
 }
