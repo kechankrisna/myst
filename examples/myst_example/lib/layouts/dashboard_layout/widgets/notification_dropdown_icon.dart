@@ -15,7 +15,8 @@ class NotificationDropDownIcon extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        offset: Offset(0, (kToolbarHeight - 10)),
+        offset: Offset(0, kToolbarHeight),
+        constraints: BoxConstraints(minWidth: 300),
         itemBuilder: (_) => [
               PopupMenuTitle(
                 child: Container(
@@ -25,19 +26,22 @@ class NotificationDropDownIcon extends StatelessWidget {
                 ),
               ),
               PopupMenuDivider(),
-              ...List.generate(3, (index) => PopupMenuItem(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      child: Icon(MdiIcons.checkCircle),
-                      padding: EdgeInsets.all(8),
-                    ),
-                    Expanded(
-                        child: Text("Enable service: container.google.com")),
-                  ],
+              ...List.generate(
+                3,
+                (index) => PopupMenuItem(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        child: Icon(MdiIcons.checkCircle),
+                        padding: EdgeInsets.all(8),
+                      ),
+                      Expanded(
+                          child: Text("Enable service: container.google.com")),
+                    ],
+                  ),
                 ),
-              ),).toList()
+              ).toList()
             ]);
   }
 }

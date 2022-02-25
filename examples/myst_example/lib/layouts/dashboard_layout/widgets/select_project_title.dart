@@ -11,17 +11,38 @@ class SelectProjectTitle extends StatelessWidget {
       child: Container(
         constraints: BoxConstraints(maxWidth: 200),
         padding: context.isXSS
-            ? EdgeInsets.all(12)
-            : EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+            ? EdgeInsets.all(8)
+            : EdgeInsets.symmetric(horizontal: 4, vertical: 4),
         child: SizedBox(
           width: double.infinity,
-          child: Text(
-            "your project",
-            style: context.isXSS
-                ? null
-                : themeData.textTheme.titleMedium!
-                    .copyWith(color: Colors.white),
-            textAlign: TextAlign.center,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: EdgeInsets.all(4),
+                child: Icon(
+                  MdiIcons.arrowProjectile,
+                  color: Colors.white,
+                ),
+              ),
+              Text(
+                "your project",
+                style: context.isXSS
+                    ? null
+                    : themeData.textTheme.titleMedium!
+                        .copyWith(color: Colors.white),
+                textAlign: TextAlign.center,
+              ),
+              Padding(
+                padding: EdgeInsets.all(4),
+                child: Icon(
+                  MdiIcons.menuDown,
+                  color: Colors.white,
+                ),
+              ),
+            ],
           ),
         ),
       ),
