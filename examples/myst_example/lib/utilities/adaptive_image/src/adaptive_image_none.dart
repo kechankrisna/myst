@@ -1,9 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class AdaptiveImage extends StatelessWidget {
   final String url;
-  final int? width;
-  final int? height;
+  final double? width;
+  final double? height;
   final String? assetUrl;
 
   const AdaptiveImage(
@@ -17,11 +18,12 @@ class AdaptiveImage extends StatelessWidget {
 
     String imageUrl = url;
 
-    return Image.network(
-      imageUrl,
-      width: width?.toDouble(),
-      height: height?.toDouble(),
-      
+    return CachedNetworkImage(
+      imageUrl: imageUrl,
+      width: width,
+      height: height,
+      placeholder:
+          assetUrl == null ? null : (_, value) => Image.asset(assetUrl!),
     );
   }
 }

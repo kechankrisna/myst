@@ -1,5 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:image_network/image_network.dart';
 import 'package:myst_example/core.dart';
 
 class UserProfileDropDownIcon extends StatelessWidget {
@@ -62,28 +60,7 @@ class UserProfileDropDownIcon extends StatelessWidget {
     return PopupMenuButton<void>(
       initialValue: null,
       child: CircleAvatar(
-        child: ImageNetwork(
-          image: imageUrl,
-          imageCache: CachedNetworkImageProvider(imageUrl),
-          height: 100,
-          width: 100,
-          duration: 1500,
-          curve: Curves.easeIn,
-          onPointer: true,
-          debugPrint: true,
-          fullScreen: false,
-          fitAndroidIos: BoxFit.cover,
-          fitWeb: BoxFitWeb.cover,
-          onLoading: const CircularProgressIndicator(
-            color: Colors.indigoAccent,
-          ),
-          onError: const Icon(
-            Icons.error,
-            color: Colors.red,
-          ),
-          borderRadius: BorderRadius.circular(70),
-          onTap: null,
-        ),
+        child: AdaptiveImage(url: imageUrl),
       ),
       constraints: BoxConstraints(maxWidth: 300),
       offset: Offset(0, kToolbarHeight),
@@ -103,30 +80,7 @@ class UserProfileDropDownIcon extends StatelessWidget {
                     child: AspectRatio(
                       aspectRatio: 1,
                       child: CircleAvatar(
-                        child: ImageNetwork(
-                          image: imageUrl,
-                          imageCache: CachedNetworkImageProvider(imageUrl),
-                          height: 150,
-                          width: 150,
-                          duration: 1500,
-                          curve: Curves.easeIn,
-                          onPointer: true,
-                          debugPrint: false,
-                          fullScreen: false,
-                          fitAndroidIos: BoxFit.cover,
-                          fitWeb: BoxFitWeb.cover,
-                          onLoading: const CircularProgressIndicator(
-                            color: Colors.indigoAccent,
-                          ),
-                          onError: const Icon(
-                            Icons.error,
-                            color: Colors.red,
-                          ),
-                          borderRadius: BorderRadius.circular(70),
-                          onTap: () {
-                            printCyan("hello bro");
-                          },
-                        ),
+                        child: AdaptiveImage(url: imageUrl),
                       ),
                     ),
                   ),
