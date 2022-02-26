@@ -9,3 +9,6 @@ export 'full_screen/full_screen.dart';
 
 /// handle loading image
 export 'adaptive_image/adaptive_image.dart';
+
+
+export 'adaptive_webview/adaptive_webview.dart';

@@ -12,6 +12,10 @@ const String apiRoutePath = "/api";
 const String dashboardRouteName = "dashboard";
 const String dashboardRoutePath = "dashboard";
 
+/// api routes
+const String templateRouteName = "template";
+const String templateRoutePath = "template";
+
 /// pulic
 const String postRouteName = "posts";
 const String postRoutePath = "/posts";

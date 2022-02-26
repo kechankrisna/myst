@@ -80,7 +80,18 @@ class MyRouter {
             name: dashboardRouteName,
             path: dashboardRoutePath,
             pageBuilder: (_, state) => const NoTransitionPage(
-                child: DashboardScreen(key: DashboardScreenService.screenKey)),
+                child: DashboardScreen(key: DashboardScreen.screenKey)),
+            routes: [
+              /// nested routes
+            ],
+
+            /// redirect: redirect,
+          ),
+          GoRoute(
+            name: templateRouteName,
+            path: templateRoutePath,
+            pageBuilder: (_, state) => const NoTransitionPage(
+                child: TemplateScreen(key: TemplateScreen.screenKey)),
             routes: [
               /// nested routes
             ],

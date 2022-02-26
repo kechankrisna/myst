@@ -12,7 +12,7 @@ void main() {
     late Widget app;
     setUp(() {
       app = MaterialApp(
-        home: DashboardLayout(
+        home: BackendLayout(
           child: const Text("hello"),
         ),
       );

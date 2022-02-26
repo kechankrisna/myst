@@ -1,6 +1,5 @@
 import 'package:myst_example/core.dart';
-import 'package:myst_example/layouts/dashboard_layout/dashboard_layout_controller.dart';
-import 'package:myst_example/layouts/dashboard_layout/widgets/help_dropdown_icon.dart';
+import 'help_dropdown_icon.dart';
 
 class MoreOptionDropDownIcon extends StatelessWidget {
   const MoreOptionDropDownIcon({Key? key}) : super(key: key);
@@ -81,7 +80,7 @@ class MoreOptionDropDownIcon extends StatelessWidget {
           PopupMenuItem(
               child: Text("Activate cloud sheel"),
               onTap: () {
-                context.read<DashboardLayoutController>().openConsole();
+                context.read<BackendLayoutController>().openConsole();
               }),
           PopupMenuDivider()
         ],

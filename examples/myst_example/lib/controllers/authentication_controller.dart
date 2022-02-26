@@ -39,7 +39,7 @@ class AuthenticationController extends ChangeNotifier
     var result = await AuthenticationService.profile();
     name = result['name'];
     token = result['token'];
-    printGreen("name $name and token $token");
+    printGreen("loadProfile name $name and token $token");
     notifyListeners();
   }
 

@@ -1,7 +1,7 @@
 import 'package:myst_example/core.dart';
 
-class DasbhoardScreenSideBar extends StatelessWidget {
-  const DasbhoardScreenSideBar({Key? key}) : super(key: key);
+class ApiLayoutSideBar extends StatelessWidget {
+  const ApiLayoutSideBar({Key? key}) : super(key: key);
 
   static ListTile get header {
     return ListTile(
@@ -11,12 +11,14 @@ class DasbhoardScreenSideBar extends StatelessWidget {
     );
   }
 
-  static List<ListTile> get menus {
+  static List<ListTile> getMenus(BuildContext context) {
     return [
       ListTile(
         leading: Icon(MdiIcons.viewDashboardOutline),
         title: Text("Dashboard"),
-        onTap: () {},
+        onTap: () {
+          context.goNamed(dashboardRouteName);
+        },
       ),
       ListTile(
         leading: Icon(MdiIcons.library),
@@ -43,6 +45,13 @@ class DasbhoardScreenSideBar extends StatelessWidget {
         title: Text("Page usage agreements"),
         onTap: () {},
       ),
+      ListTile(
+        leading: Icon(MdiIcons.toyBrick),
+        title: Text("Template"),
+        onTap: () {
+          context.goNamed(templateRouteName);
+        },
+      )
     ];
   }
 
@@ -74,7 +83,7 @@ class DasbhoardScreenSideBar extends StatelessWidget {
             height: height - ((kToolbarHeight * 3) + 16),
             child: SingleChildScrollView(
               child: Column(
-                children: DasbhoardScreenSideBar.menus,
+                children: ApiLayoutSideBar.getMenus(context),
               ),
             ),
           ),
@@ -82,36 +91,10 @@ class DasbhoardScreenSideBar extends StatelessWidget {
       ],
       child: Card(
         child: ListTile(
-          title: DasbhoardScreenSideBar.header.title,
-          leading: DasbhoardScreenSideBar.header.leading,
+          title: ApiLayoutSideBar.header.title,
+          leading: ApiLayoutSideBar.header.leading,
           trailing: Icon(Icons.arrow_drop_down),
         ),
-      ),
-    );
-    return Material(
-      type: MaterialType.card,
-      child: ExpansionPanelList(
-        expandedHeaderPadding: EdgeInsets.zero,
-        expansionCallback: (panelIndex, isExpanded) {
-          context.read<DashboardScreenController>().toggleMenubar();
-        },
-        children: [
-          ExpansionPanel(
-            isExpanded: context.select<DashboardScreenController, bool>(
-                (ctrl) => ctrl.isExpanedMenu),
-            headerBuilder: (_, isOpen) => ListTile(
-              title: DasbhoardScreenSideBar.header.title,
-              leading: DasbhoardScreenSideBar.header.leading,
-            ),
-            body: SizedBox(
-              height: context.deviceHeight -
-                  ((kToolbarHeight * 2) + kBottomNavigationBarHeight),
-              child: Column(
-                children: [Divider(), ...DasbhoardScreenSideBar.menus],
-              ),
-            ),
-          )
-        ],
       ),
     );
   }
@@ -119,26 +102,26 @@ class DasbhoardScreenSideBar extends StatelessWidget {
   Widget builder(BuildContext context) {
     return MouseRegion(
       onEnter: (pointer) {
-        context.read<DashboardScreenController>().toggleTemporarySidebar(true);
+        context.read<ApiLayoutController>().toggleTemporarySidebar(true);
       },
       onExit: (pointer) {
-        context.read<DashboardScreenController>().toggleTemporarySidebar(false);
+        context.read<ApiLayoutController>().toggleTemporarySidebar(false);
       },
       child: Material(
         type: MaterialType.card,
-        child: (context.select<DashboardScreenController, bool>(
+        child: (context.select<ApiLayoutController, bool>(
                     (ctrl) => !ctrl.isMiniMenu)) ||
-                (context.select<DashboardScreenController, bool>(
+                (context.select<ApiLayoutController, bool>(
                     (ctrl) => ctrl.isFullTemporary))
-            ? DashboardScreenLargeSidebar()
-            : DashboardScreenMiniSidebar(),
+            ? ApiLayoutLargeSidebar()
+            : ApiLayoutMiniSidebar(),
       ),
     );
   }
 }
 
-class DashboardScreenLargeSidebar extends StatelessWidget {
-  const DashboardScreenLargeSidebar({Key? key}) : super(key: key);
+class ApiLayoutLargeSidebar extends StatelessWidget {
+  const ApiLayoutLargeSidebar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -146,16 +129,16 @@ class DashboardScreenLargeSidebar extends StatelessWidget {
       width: 300,
       child: Column(
         children: [
-          DasbhoardScreenSideBar.header,
+          ApiLayoutSideBar.header,
           Divider(),
           Expanded(
               child: ListView(
-            children: [...DasbhoardScreenSideBar.menus],
+            children: [...ApiLayoutSideBar.getMenus(context)],
           )),
           ListTile(
             leading: Icon(MdiIcons.pageFirst),
             onTap: () {
-              context.read<DashboardScreenController>().toggleSidebar();
+              context.read<ApiLayoutController>().toggleSidebar();
             },
           ),
         ],
@@ -164,8 +147,8 @@ class DashboardScreenLargeSidebar extends StatelessWidget {
   }
 }
 
-class DashboardScreenMiniSidebar extends StatelessWidget {
-  const DashboardScreenMiniSidebar({Key? key}) : super(key: key);
+class ApiLayoutMiniSidebar extends StatelessWidget {
+  const ApiLayoutMiniSidebar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -174,13 +157,13 @@ class DashboardScreenMiniSidebar extends StatelessWidget {
       child: Column(
         children: [
           ListTile(
-              leading: DasbhoardScreenSideBar.header.leading,
-              onTap: DasbhoardScreenSideBar.header.onTap),
+              leading: ApiLayoutSideBar.header.leading,
+              onTap: ApiLayoutSideBar.header.onTap),
           Divider(),
           Expanded(
               child: ListView(
             children: [
-              ...DasbhoardScreenSideBar.menus.map(
+              ...ApiLayoutSideBar.getMenus(context).map(
                 (e) => ListTile(leading: e.leading, onTap: e.onTap),
               ),
             ],
@@ -188,7 +171,7 @@ class DashboardScreenMiniSidebar extends StatelessWidget {
           ListTile(
             leading: Icon(MdiIcons.pageLast),
             onTap: () {
-              context.read<DashboardScreenController>().toggleSidebar();
+              context.read<ApiLayoutController>().toggleSidebar();
             },
           ),
         ],

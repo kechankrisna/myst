@@ -127,19 +127,22 @@ class _SalesData {
 class DashboardTrafficReportCardController extends ChangeNotifier {
   late List<_SalesData> data;
   late bool isFullScreen;
+  late bool mounted;
 
   DashboardTrafficReportCardController() {
     data = [];
     isFullScreen = false;
+    mounted = true;
   }
 
-  load() async {
-    await Future.delayed(const Duration(milliseconds: 2000));
-    generateMock();
+  load() {
+    Future.delayed(const Duration(milliseconds: 2000)).then((value) {
+      if (mounted) generateMock();
+    });
   }
 
   generateMock() {
-    DateTime.january;
+    printRed("generateMock");
     data = [
       _SalesData(DateTime.january.toString(), Random().nextDouble()),
       _SalesData(DateTime.february.toString(), Random().nextDouble()),
@@ -167,5 +170,11 @@ class DashboardTrafficReportCardController extends ChangeNotifier {
     FullScreenService().exitFullScreen();
     isFullScreen = false;
     notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    mounted = false;
+    super.dispose();
   }
 }

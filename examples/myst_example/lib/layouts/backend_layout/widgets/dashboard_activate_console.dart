@@ -1,5 +1,5 @@
 import 'package:myst_example/core.dart';
-import '../dashboard_layout_controller.dart';
+import '../backend_layout_controller.dart';
 
 class DashboardActivateConsole extends StatelessWidget {
   const DashboardActivateConsole({Key? key}) : super(key: key);
@@ -7,7 +7,7 @@ class DashboardActivateConsole extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var activateConsole = context
-        .select<DashboardLayoutController, bool>((ctl) => ctl.activateConsole);
+        .select<BackendLayoutController, bool>((ctl) => ctl.activateConsole);
     return IconButton(
       icon: Icon(
         MdiIcons.console,
@@ -16,7 +16,7 @@ class DashboardActivateConsole extends StatelessWidget {
       onPressed: activateConsole
           ? null
           : () {
-              context.read<DashboardLayoutController>().openConsole();
+              context.read<BackendLayoutController>().openConsole();
             },
     );
   }

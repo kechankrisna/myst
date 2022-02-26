@@ -4,7 +4,6 @@ import 'widgets/dashboard_shell_terminal.dart';
 import 'widgets/dashboard_shell_tabview.dart';
 import 'widgets/dashboard_shell_close_icon.dart';
 import 'widgets/dashboard_shell_webview_icon.dart';
-import 'dashboard_layout_controller.dart';
 import 'widgets/dashboard_cloud_shell_icon.dart';
 import 'widgets/dashboard_keyboard_icon.dart';
 import 'widgets/dashboard_open_editor_icon.dart';
@@ -22,21 +21,24 @@ import 'widgets/dasbhoard_title.dart';
 import 'widgets/dashboard_leading_icon.dart';
 import 'widgets/dashboard_activate_console.dart';
 
+export 'backend_layout_controller.dart';
+export 'backend_layout_service.dart';
+
 /// ### `DashboardLayout`
 ///
 /// `Description`:
 ///
 /// `Example`:
 // TODO: Implement the DashboardLayout
-class DashboardLayout extends StatefulWidget {
+class BackendLayout extends StatefulWidget {
   final Widget child;
-  const DashboardLayout({Key? key, required this.child}) : super(key: key);
+  const BackendLayout({Key? key, required this.child}) : super(key: key);
 
   @override
-  State<DashboardLayout> createState() => _DashboardLayoutState();
+  State<BackendLayout> createState() => _BackendLayoutState();
 }
 
-class _DashboardLayoutState extends State<DashboardLayout> {
+class _BackendLayoutState extends State<BackendLayout> {
   @override
   void initState() {
     context.read<AuthenticationController>().loadProfile();
@@ -50,7 +52,7 @@ class _DashboardLayoutState extends State<DashboardLayout> {
     var appBarHeight = kToolbarHeight;
 
     return ChangeNotifierProvider(
-      create: (_) => DashboardLayoutController(),
+      create: (_) => BackendLayoutController(),
       child: AdaptivePlatformWidget(
         child: Scaffold(
           appBar: _DashboardLayoutAppbar(),
@@ -159,7 +161,7 @@ class _DashboardLayoutBottomBar extends StatelessWidget {
               ],
             ),
           ),
-          if (context.select<DashboardLayoutController, bool>(
+          if (context.select<BackendLayoutController, bool>(
               (state) => state.activateConsole))
             Expanded(child: DashboardShellTerminal()),
         ],

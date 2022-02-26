@@ -1,20 +1,22 @@
 import 'package:myst_example/core.dart';
 import 'widgets/dashboard_filter_product_table.dart';
-import 'widgets/dashboard_screen_sidebar.dart';
 import 'widgets/dashboard_select_time_frame_option.dart';
 import 'widgets/dashboard_traffic_report_card.dart';
+import '../../../layouts/api_layout/widgets/api_layout_sidebar.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({Key? key}) : super(key: key);
 
+  ///
+  static const Key screenKey = ValueKey("DashboardScreen");
+
+  static const String title = "dashboard";
+
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => DashboardScreenController(),
-      child: AdaptivePlatformWidget(
-        child: DashboardLayout(
-          child: DashboardScreenBody(),
-        ),
+    return AdaptivePlatformWidget(
+      child: ApiLayout(
+        child: DashboardScreenBody(),
       ),
     );
   }
@@ -34,7 +36,7 @@ class DashboardScreenBody extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        DasbhoardScreenSideBar(),
+        ApiLayoutSideBar(),
         DashboardScreenBodyHeader(),
         Divider(),
         Expanded(
@@ -52,7 +54,7 @@ class DashboardScreenBody extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        DasbhoardScreenSideBar(),
+        ApiLayoutSideBar(),
         VerticalDivider(width: 1),
         Expanded(
           child: Material(
@@ -121,8 +123,8 @@ class DashboardScreenReports extends StatelessWidget {
           crossAxisCount: context.isXSS ? 1 : 2,
           crossAxisSpacing: 15,
           mainAxisSpacing: 15,
-          childAspectRatio: context.select<DashboardScreenController, bool>(
-                  (ctrl) => ctrl.isMiniMenu)
+          childAspectRatio: context
+                  .select<ApiLayoutController, bool>((ctrl) => ctrl.isMiniMenu)
               ? 1.75
               : 1.5,
           children: [

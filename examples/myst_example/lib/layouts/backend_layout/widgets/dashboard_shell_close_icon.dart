@@ -1,5 +1,5 @@
 import 'package:myst_example/core.dart';
-import '../dashboard_layout_controller.dart';
+import '../backend_layout_controller.dart';
 
 class DashboardShellCloseIcon extends StatelessWidget {
   const DashboardShellCloseIcon({Key? key}) : super(key: key);
@@ -9,7 +9,7 @@ class DashboardShellCloseIcon extends StatelessWidget {
     return IconButton(
       icon: Icon(MdiIcons.close),
       onPressed: () {
-         context.read<DashboardLayoutController>().closeConsole();
+         context.read<BackendLayoutController>().closeConsole();
       },
     );
   }
