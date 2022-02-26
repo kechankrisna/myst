@@ -11,4 +11,4 @@ export 'home_screen/home_screen_core.dart';
 export 'login_screen/login_screen_core.dart';
 export 'register_screen/register_screen_core.dart';
 
-export 'dashboard_screen/dashboard_screen_core.dart';
+export 'apis/dashboard_screen/dashboard_screen_core.dart';

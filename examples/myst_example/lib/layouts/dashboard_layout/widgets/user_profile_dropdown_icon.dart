@@ -87,17 +87,15 @@ class UserProfileDropDownIcon extends StatelessWidget {
                     flex: 5,
                     child: AspectRatio(
                       aspectRatio: 1,
-                      child: Container(
-                        color: Colors.green,
-                      ),
+                      child: CircleAvatar(
+                          child: FadeInImage.assetNetwork(
+                              placeholder: placeholder,
+                              image: "https://i.pravatar.cc/300")),
                     ),
                   ),
                   Flexible(
                     flex: 7,
-                    child: UserAccountsDrawerHeader(
-                      accountEmail: Text("accountEmail"),
-                      accountName: Text("accountName"),
-                    ),
+                    child: _UserProfileInfo(),
                   ),
                 ],
               ),
@@ -116,6 +114,27 @@ class UserProfileDropDownIcon extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _UserProfileInfo extends StatelessWidget {
+  const _UserProfileInfo({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = context.watch<AuthenticationController>();
+    final themeData = Theme.of(context);
+    return UserAccountsDrawerHeader(
+      decoration: BoxDecoration(color: Colors.transparent),
+      accountEmail: Text(
+        "email is ${controller.name ?? ""}",
+        style: themeData.textTheme.bodyText1,
+      ),
+      accountName: Text(
+        "name is ${controller.token ?? ""}",
+        style: themeData.textTheme.bodyText1,
+      ),
     );
   }
 }

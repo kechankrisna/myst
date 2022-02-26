@@ -5,9 +5,7 @@ void main() async {
 
   await ApplicationService.ensureSharedPreferences();
 
-  final authenticationController = AuthenticationController();
-
-  ///
+  var authenticationController = AuthenticationController();
 
   runApp(MyApp(authenticationController: authenticationController));
 }
@@ -21,17 +19,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<AuthenticationController>.value(
-          value: authenticationController,
+        ChangeNotifierProvider<AuthenticationController>(
+          create: (_) => authenticationController,
         ),
         Provider<MyRouter>(
           lazy: false,
-          create: (BuildContext createContext) =>
-              MyRouter(authenticationController),
+          create: (_) => MyRouter(authenticationController),
         ),
       ],
       child: Builder(builder: (context) {
         final router = Provider.of<MyRouter>(context, listen: false).router;
+
+        /// final router = MyRouter(authenticationController).router;
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           title:

@@ -5,10 +5,12 @@ const String loginRouteName = "login";
 const String loginRoutePath = "/login";
 const String registerRouteName = "register";
 const String registerRoutePath = "/register";
+const String apiRouteName = "api";
+const String apiRoutePath = "/api";
+
+/// api routes
 const String dashboardRouteName = "dashboard";
-const String dashboardRoutePath = "/dashboard";
-
-
+const String dashboardRoutePath = "dashboard";
 
 /// pulic
 const String postRouteName = "posts";

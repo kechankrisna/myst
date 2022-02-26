@@ -17,7 +17,10 @@ class AuthenticationController extends ChangeNotifier
 
   bool get isLoggedIn => AuthenticationService.isLoggedIn;
 
-  AuthenticationController();
+  AuthenticationController() {
+    name = "";
+    token = "";
+  }
 
   login({required String name, required String token}) async {
     /// assum if always true
@@ -32,6 +35,14 @@ class AuthenticationController extends ChangeNotifier
     notifyListeners();
   }
 
+  loadProfile() async {
+    var result = await AuthenticationService.profile();
+    name = result['name'];
+    token = result['token'];
+    printGreen("name $name and token $token");
+    notifyListeners();
+  }
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
@@ -39,7 +50,8 @@ class AuthenticationController extends ChangeNotifier
     /// list all the properties of your class here.
     /// See the documentation of debugFillProperties for more information.
     /// TODO: implement add
-    properties.add(StringProperty('AuthenticationController', null));
+    properties.add(StringProperty('name', name));
+    properties.add(StringProperty('token', token));
   }
 
   @override

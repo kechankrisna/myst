@@ -14,7 +14,7 @@ class AuthenticationService {
     final prefs = ApplicationService.preferences!;
     await Future.delayed(Duration(milliseconds: 300));
     await prefs.setString(userNameKey, name);
-    await prefs.setString("token", token);
+    await prefs.setString(userTokenKey, token);
     return true;
   }
 
@@ -26,12 +26,13 @@ class AuthenticationService {
     return true;
   }
 
-  static Future<String?> profile() async {
+  static Future<Map<String, dynamic>> profile() async {
     final prefs = ApplicationService.preferences!;
     await Future.delayed(Duration(milliseconds: 300));
 
     var name = prefs.getString(userNameKey);
-    return name;
+    var token = prefs.getString(userTokenKey);
+    return {"name": name, "token": token};
   }
 
   static get isLoggedIn =>

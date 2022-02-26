@@ -28,14 +28,27 @@ import 'widgets/dashboard_activate_console.dart';
 ///
 /// `Example`:
 // TODO: Implement the DashboardLayout
-class DashboardLayout extends StatelessWidget {
+class DashboardLayout extends StatefulWidget {
   final Widget child;
   const DashboardLayout({Key? key, required this.child}) : super(key: key);
+
+  @override
+  State<DashboardLayout> createState() => _DashboardLayoutState();
+}
+
+class _DashboardLayoutState extends State<DashboardLayout> {
+  @override
+  void initState() {
+    context.read<AuthenticationController>().loadProfile();
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     var statusBarHeight = MediaQuery.of(context).padding.top;
     var appBarHeight = kToolbarHeight;
+
     return ChangeNotifierProvider(
       create: (_) => DashboardLayoutController(),
       child: AdaptivePlatformWidget(
@@ -54,7 +67,7 @@ class DashboardLayout extends StatelessWidget {
               child: DashboardLayoutDrawer(),
             ),
           ),
-          body: child,
+          body: widget.child,
           bottomNavigationBar: _DashboardLayoutBottomBar(),
         ),
       ),

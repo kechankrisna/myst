@@ -134,7 +134,7 @@ class DashboardTrafficReportCardController extends ChangeNotifier {
   }
 
   load() async {
-    await Future.delayed(const Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 2000));
     generateMock();
   }
 

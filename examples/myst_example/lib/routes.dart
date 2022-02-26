@@ -1,17 +1,17 @@
 /// Application route handler
-
 import 'package:myst_example/core.dart';
 
 /// TODO: handle router in the neat way
 
 class MyRouter {
-  final AuthenticationController authenticationController;
+  late AuthenticationController authenticationController;
   MyRouter(this.authenticationController);
 
   late final router = GoRouter(
     refreshListenable: authenticationController,
     debugLogDiagnostics: true,
     urlPathStrategy: UrlPathStrategy.path,
+    initialLocation: "/login",
     routes: [
       /// TODO: HomeScreenService.router,
       GoRoute(
@@ -70,15 +70,28 @@ class MyRouter {
 
       /// TODO: DashboardService.router,
       GoRoute(
-        name: dashboardRouteName,
-        path: dashboardRoutePath,
-        pageBuilder: (_, state) => const NoTransitionPage(
-            child: DashboardScreen(key: DashboardScreenService.screenKey)),
+        name: apiRouteName,
+        path: apiRoutePath,
+        pageBuilder: (_, state) => NoTransitionPage(
+            key: state.pageKey,
+            child: const Center(child: CircularProgressIndicator())),
         routes: [
-          /// nested routes
-        ],
+          GoRoute(
+            name: dashboardRouteName,
+            path: dashboardRoutePath,
+            pageBuilder: (_, state) => const NoTransitionPage(
+                child: DashboardScreen(key: DashboardScreenService.screenKey)),
+            routes: [
+              /// nested routes
+            ],
 
-        /// redirect: redirect,
+            /// redirect: redirect,
+          ),
+        ],
+        redirect: (state) {
+          final dashboardLocation = state.namedLocation(dashboardRouteName);
+          return dashboardLocation;
+        },
       ),
     ],
 
@@ -101,6 +114,7 @@ class MyRouter {
 
       final isLoggedIn = authenticationController.isLoggedIn;
       final rootLocation = state.namedLocation(rootRouteName);
+      final apiLocation = state.namedLocation(apiRouteName);
       final dashboardLocation = state.namedLocation(dashboardRouteName);
 
       /// if not logged-in nor in loggin page nor in register page then go to login
@@ -108,9 +122,9 @@ class MyRouter {
         return loginLocation;
       }
 
-      /// if login and but sticted in login or register page, then go to dashboard
+      /// if login and but sticted in login or register page, then go to api dashboard
       if (isLoggedIn && (loggingIn || registeringAccount)) {
-        return dashboardLocation;
+        return apiLocation;
       }
 
       return null;
