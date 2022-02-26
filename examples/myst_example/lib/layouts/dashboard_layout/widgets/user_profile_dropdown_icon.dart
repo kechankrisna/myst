@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:image_network/image_network.dart';
 import 'package:myst_example/core.dart';
 
 class UserProfileDropDownIcon extends StatelessWidget {
@@ -56,18 +58,31 @@ class UserProfileDropDownIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const double kListMenuItemHeight = 30;
+    final imageUrl = "https://i.pravatar.cc/300";
     return PopupMenuButton<void>(
       initialValue: null,
-      child: Container(
-        padding: EdgeInsets.all(12),
-        child: CircleAvatar(
-          child: FadeInImage.assetNetwork(
-              placeholder: placeholder, image: "https://i.pravatar.cc/300"),
-
-          /// child: AdaptiveImage(
-          ///   url: 'https://i.pravatar.cc/300',
-          ///   width: 100,
-          /// ),
+      child: CircleAvatar(
+        child: ImageNetwork(
+          image: imageUrl,
+          imageCache: CachedNetworkImageProvider(imageUrl),
+          height: 100,
+          width: 100,
+          duration: 1500,
+          curve: Curves.easeIn,
+          onPointer: true,
+          debugPrint: true,
+          fullScreen: false,
+          fitAndroidIos: BoxFit.cover,
+          fitWeb: BoxFitWeb.cover,
+          onLoading: const CircularProgressIndicator(
+            color: Colors.indigoAccent,
+          ),
+          onError: const Icon(
+            Icons.error,
+            color: Colors.red,
+          ),
+          borderRadius: BorderRadius.circular(70),
+          onTap: null,
         ),
       ),
       constraints: BoxConstraints(maxWidth: 300),
@@ -88,9 +103,31 @@ class UserProfileDropDownIcon extends StatelessWidget {
                     child: AspectRatio(
                       aspectRatio: 1,
                       child: CircleAvatar(
-                          child: FadeInImage.assetNetwork(
-                              placeholder: placeholder,
-                              image: "https://i.pravatar.cc/300")),
+                        child: ImageNetwork(
+                          image: imageUrl,
+                          imageCache: CachedNetworkImageProvider(imageUrl),
+                          height: 150,
+                          width: 150,
+                          duration: 1500,
+                          curve: Curves.easeIn,
+                          onPointer: true,
+                          debugPrint: false,
+                          fullScreen: false,
+                          fitAndroidIos: BoxFit.cover,
+                          fitWeb: BoxFitWeb.cover,
+                          onLoading: const CircularProgressIndicator(
+                            color: Colors.indigoAccent,
+                          ),
+                          onError: const Icon(
+                            Icons.error,
+                            color: Colors.red,
+                          ),
+                          borderRadius: BorderRadius.circular(70),
+                          onTap: () {
+                            printCyan("hello bro");
+                          },
+                        ),
+                      ),
                     ),
                   ),
                   Flexible(
