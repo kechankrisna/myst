@@ -47,6 +47,8 @@ dependencies:
   syncfusion_flutter_charts: ^19.4.53
   data_table_2: ^2.2.1
   shared_preferences: ^2.0.13
+  image_network: ^2.4.0
+  cached_network_image: ^3.2.0
 
 dev_dependencies:
   flutter_test:
