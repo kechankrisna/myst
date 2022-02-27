@@ -8,6 +8,14 @@ class TemplateScreenHtmlEditor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return AdaptiveBuilder(
+      builder: builder,
+      xsBuilder: xsBuilder,
+      smBuilder: xsBuilder,
+    );
+  }
+
+  Widget builder(BuildContext context) {
     return Row(
       children: [
         Expanded(
@@ -17,6 +25,23 @@ class TemplateScreenHtmlEditor extends StatelessWidget {
           child: TemplateScreenViewer(),
         ),
       ],
+    );
+  }
+
+  Widget xsBuilder(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          AspectRatio(
+            aspectRatio: 1,
+            child: TemplateScreenEditor(),
+          ),
+          AspectRatio(
+            aspectRatio: 1,
+            child: TemplateScreenViewer(),
+          ),
+        ],
+      ),
     );
   }
 }
