@@ -1,8 +1,8 @@
 import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter_highlight/theme_map.dart';
 import 'package:flutter_highlight/themes/vs2015.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:highlight/highlight.dart';
+import 'package:highlight/languages/all.dart';
 import 'package:highlight/languages/xml.dart';
 import 'package:myst_example/core.dart';
 
@@ -10,13 +10,20 @@ class TemplateScreenController extends ChangeNotifier {
   late String inputString;
   late String htmlContent;
   late String error;
+  late String themeName;
+  late String languageName;
   late CodeController controller;
+
+  static final List<String> themes = [...themeMap.keys.toList()];
+
+  static final Map<String, Mode> languages = allLanguages;
 
   TemplateScreenController() {
     inputString = "";
     htmlContent = "";
     error = "";
-
+    themeName = "vs2015";
+    languageName = "xml";
     controller = CodeController(
       language: xml,
       theme: vs2015Theme,
@@ -29,22 +36,21 @@ class TemplateScreenController extends ChangeNotifier {
         r"\{%.*?\%}":
             TextStyle(fontWeight: FontWeight.bold, color: Colors.orange),
       },
-      modifiers: [
-        /// const IntendModifier(),
-        /// const CloseBlockModifier(),
-
-        /// const TabModifier(),
-      ],
+      modifiers: [],
     );
   }
 
   changeTheme(String key) {
-    /// controller.theme;
+    var theme = themeMap[key];
+    themeName = key;
+    assert(theme != null);
+    controller = controller.copyWith(theme: theme);
     notifyListeners();
   }
 
-  changeLanguage(Mode vaue) {
-    controller.language;
+  changeLanguage(Mode language, String name) {
+    languageName = name;
+    controller = controller.copyWith(language: language);
     notifyListeners();
   }
 
@@ -90,5 +96,31 @@ class TemplateScreenController extends ChangeNotifier {
   void dispose() {
     controller.dispose();
     super.dispose();
+  }
+}
+
+extension on CodeController {
+  CodeController copyWith({
+    String? text,
+    Mode? language,
+    Map<String, TextStyle>? theme,
+    Map<String, TextStyle>? patternMap,
+    Map<String, TextStyle>? stringMap,
+    EditorParams? params,
+    List<CodeModifier>? modifiers,
+    bool? webSpaceFix,
+    void Function(String)? onChange,
+  }) {
+    return CodeController(
+      text: text ?? this.text,
+      language: language ?? this.language,
+      theme: theme ?? this.theme,
+      patternMap: patternMap ?? this.patternMap,
+      stringMap: stringMap ?? this.stringMap,
+      params: params ?? this.params,
+      modifiers: modifiers ?? this.modifiers,
+      webSpaceFix: webSpaceFix ?? this.webSpaceFix,
+      onChange: this.onChange,
+    );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:highlight/highlight_core.dart';
 import 'package:myst_example/core.dart';
 import 'package:screenshot/screenshot.dart';
 
@@ -46,14 +47,32 @@ class TemplateScreenHtmlEditor extends StatelessWidget {
   }
 }
 
-class TemplateScreenEditor extends StatefulWidget {
+class TemplateScreenEditor extends StatelessWidget {
   const TemplateScreenEditor({Key? key}) : super(key: key);
 
-  @override
-  State<TemplateScreenEditor> createState() => _TemplateScreenEditorState();
+  Widget build(BuildContext context) {
+    printGreen("build TemplateScreenEditor");
+    return Column(
+      children: [
+        ChangeThemeListTile(),
+        Expanded(
+          child: SingleChildScrollView(
+            child: TemplateCodeField(),
+          ),
+        ),
+      ],
+    );
+  }
 }
 
-class _TemplateScreenEditorState extends State<TemplateScreenEditor> {
+class TemplateCodeField extends StatefulWidget {
+  const TemplateCodeField({Key? key}) : super(key: key);
+
+  @override
+  State<TemplateCodeField> createState() => _TemplateCodeFieldState();
+}
+
+class _TemplateCodeFieldState extends State<TemplateCodeField> {
   late FocusNode focusNode;
 
   @override
@@ -71,28 +90,72 @@ class _TemplateScreenEditorState extends State<TemplateScreenEditor> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ListTile(
-          title: Text("update your template"),
-          trailing: TextButton.icon(
-            onPressed: () {
-              context.read<TemplateScreenController>().validateInput();
-            },
-            icon: Icon(Icons.preview),
-            label: Text("preview"),
-          ),
-        ),
-        Expanded(
-          child: SingleChildScrollView(
-            child: CodeField(
-              controller: context.read<TemplateScreenController>().controller,
-              minLines: 10,
-              focusNode: focusNode,
-              enabled: true,
-            ),
-          ),
-        ),
+    final controller = context
+        .select<TemplateScreenController, CodeController>((x) => x.controller);
+    return CodeField(
+      key: UniqueKey(),
+      controller: controller,
+      minLines: 10,
+      focusNode: focusNode,
+      enabled: true,
+    );
+  }
+}
+
+class ChangeThemeListTile extends StatelessWidget {
+  const ChangeThemeListTile({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    printGreen("build ChangeThemeListTile");
+    return ListTile(
+      leading: DropdownButton<String>(
+        value: context
+            .select<TemplateScreenController, String>((x) => x.themeName),
+        onChanged: (v) {
+          context.read<TemplateScreenController>().changeTheme(v!);
+        },
+        items: TemplateScreenController.themes
+            .map((e) => DropdownMenuItem(
+                  child: Text("$e"),
+                  value: e,
+                ))
+            .toList(),
+      ),
+      title: _ChangeLanguagePopup(),
+      trailing: TextButton.icon(
+        onPressed: () {
+          context.read<TemplateScreenController>().validateInput();
+        },
+        icon: Icon(Icons.preview),
+        label: Text("preview"),
+      ),
+    );
+  }
+}
+
+class _ChangeLanguagePopup extends StatelessWidget {
+  const _ChangeLanguagePopup({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton(
+      child: ListTile(
+        title: Text("${context.read<TemplateScreenController>().languageName}"),
+      ),
+      itemBuilder: (_) => [
+        ...TemplateScreenController.languages.entries
+            .map(
+              (e) => PopupMenuItem(
+                child: Text("${e.key}"),
+                onTap: () {
+                  context
+                      .read<TemplateScreenController>()
+                      .changeLanguage(e.value, e.key);
+                },
+              ),
+            )
+            .toList()
       ],
     );
   }
