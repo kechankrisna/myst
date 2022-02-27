@@ -36,6 +36,7 @@ class _AdaptiveWebViewState extends State<AdaptiveWebView> {
         ..srcdoc = widget.content
         ..style.width = '100%'
         ..style.height = '100%'
+        ..style.border = 'none'
         ..allowFullscreen = true,
     );
 

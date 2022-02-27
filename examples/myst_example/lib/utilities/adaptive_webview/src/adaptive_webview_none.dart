@@ -1,21 +1,29 @@
-import 'package:flutter/widgets.dart';
+import 'dart:typed_data' show Uint8List;
 
-class AdaptiveWebView extends StatefulWidget {
+import 'package:adaptivex/adaptivex.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:myst_example/core.dart';
+
+class AdaptiveWebView extends StatelessWidget {
   final String? url;
   final String? content;
-  const AdaptiveWebView({ Key? key, this.url, this.content }) : super(key: key);
+  final Function(Uint8List data)? onScreenshot;
+  const AdaptiveWebView({Key? key, this.url, this.content, this.onScreenshot})
+      : super(key: key);
 
-  @override
-  State<AdaptiveWebView> createState() => _AdaptiveWebViewState();
-}
-
-class _AdaptiveWebViewState extends State<AdaptiveWebView> {
   @override
   Widget build(BuildContext context) {
+    /// if (DeviceService.isMobile) {
+    ///   return SafeArea(
+    ///     child: Container(
+    ///       child: Text("data"),
+    ///     ),
+    ///   );
+    /// }
+    printGreen("build AdaptiveWebView");
     return SafeArea(
-      child: Container(
-        child: Text("data"),
-      ),
+      child: Html(data: content),
     );
   }
 }

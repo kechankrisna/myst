@@ -1,17 +1,51 @@
-import 'package:html_editor_enhanced/html_editor.dart';
+import 'package:code_text_field/code_text_field.dart';
+import 'package:flutter_highlight/theme_map.dart';
+import 'package:flutter_highlight/themes/vs2015.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:highlight/highlight.dart';
+import 'package:highlight/languages/xml.dart';
 import 'package:myst_example/core.dart';
 
 class TemplateScreenController extends ChangeNotifier {
   late String inputString;
   late String htmlContent;
-  late HtmlEditorController controller;
   late String error;
+  late CodeController controller;
 
   TemplateScreenController() {
     inputString = "";
     htmlContent = "";
     error = "";
-    controller = HtmlEditorController();
+
+    controller = CodeController(
+      language: xml,
+      theme: vs2015Theme,
+      onChange: onChangeInput,
+      patternMap: {
+        r"\.\.":
+            TextStyle(fontWeight: FontWeight.bold, color: Colors.redAccent),
+        r"\{{.*?\}}":
+            TextStyle(fontWeight: FontWeight.bold, color: Colors.orangeAccent),
+        r"\{%.*?\%}":
+            TextStyle(fontWeight: FontWeight.bold, color: Colors.orange),
+      },
+      modifiers: [
+        /// const IntendModifier(),
+        /// const CloseBlockModifier(),
+
+        /// const TabModifier(),
+      ],
+    );
+  }
+
+  changeTheme(String key) {
+    /// controller.theme;
+    notifyListeners();
+  }
+
+  changeLanguage(Mode vaue) {
+    controller.language;
+    notifyListeners();
   }
 
   onChangeInput(String v) {
@@ -44,6 +78,7 @@ class TemplateScreenController extends ChangeNotifier {
   _onChangeHtml(String v) {
     htmlContent = v;
     notifyListeners();
+    print("Onchanged");
   }
 
   onChangeError(String v) {
@@ -53,7 +88,7 @@ class TemplateScreenController extends ChangeNotifier {
 
   @override
   void dispose() {
-    controller.disable();
+    controller.dispose();
     super.dispose();
   }
 }

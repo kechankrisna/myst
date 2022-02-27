@@ -1,18 +1,21 @@
-/// import 'package:flutter_quill/flutter_quill.dart' as fq;
-import 'package:code_editor/code_editor.dart';
-import 'package:multi_split_view/multi_split_view.dart';
+import 'package:code_text_field/code_text_field.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:myst_example/core.dart';
+import 'package:screenshot/screenshot.dart';
 
 class TemplateScreenHtmlEditor extends StatelessWidget {
   const TemplateScreenHtmlEditor({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MultiSplitView(
-      axis: Axis.horizontal,
+    return Row(
       children: [
-        TemplateScreenEditor(),
-        TemplateScreenViewer(),
+        Expanded(
+          child: TemplateScreenEditor(),
+        ),
+        Expanded(
+          child: TemplateScreenViewer(),
+        ),
       ],
     );
   }
@@ -26,61 +29,46 @@ class TemplateScreenEditor extends StatefulWidget {
 }
 
 class _TemplateScreenEditorState extends State<TemplateScreenEditor> {
+  late FocusNode focusNode;
+
+  @override
+  void initState() {
+    focusNode = FocusNode(canRequestFocus: true);
+    super.initState();
+    focusNode.requestFocus();
+  }
+
+  @override
+  void dispose() {
+    focusNode.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          ListTile(
-            title: Text("update your template"),
+    return Column(
+      children: [
+        ListTile(
+          title: Text("update your template"),
+          trailing: TextButton.icon(
+            onPressed: () {
+              context.read<TemplateScreenController>().validateInput();
+            },
+            icon: Icon(Icons.preview),
+            label: Text("preview"),
           ),
-          Expanded(
-            child: SingleChildScrollView(
-              /// child: fq.QuillEditor(
-              ///   expands: true,
-              ///   controller: fq.QuillController(
-              ///       document: fq.Document(),
-              ///       selection: TextSelection(baseOffset: 0, extentOffset: 1)),
-              ///   scrollable: true,
-              ///   autoFocus: true,
-              ///   readOnly: false,
-              ///   padding: EdgeInsets.zero,
-              ///   focusNode: FocusNode(),
-              ///   scrollController: ScrollController(),
-              /// ),
-
-              child: CodeEditor(
-                model: EditorModel(
-                  files: [], // the files created above
-                  // you can customize the editor as you want
-                  styleOptions: EditorModelStyleOptions(
-                    fontSize: 13,
-                  ),
-                ),
-                onSubmit: (language, content) {
-                  context
-                      .read<TemplateScreenController>()
-                      .onChangeInput(content!);
-                  context.read<TemplateScreenController>().validateInput();
-                },
-              ),
+        ),
+        Expanded(
+          child: SingleChildScrollView(
+            child: CodeField(
+              controller: context.read<TemplateScreenController>().controller,
+              minLines: 10,
+              focusNode: focusNode,
+              enabled: true,
             ),
           ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              TextButton.icon(
-                onPressed: () {
-                  context.read<TemplateScreenController>().validateInput();
-                },
-                icon: Icon(Icons.preview),
-                label: Text("preview"),
-              )
-            ],
-          )
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -93,11 +81,101 @@ class TemplateScreenViewer extends StatefulWidget {
 }
 
 class _TemplateScreenViewerState extends State<TemplateScreenViewer> {
+  late ScreenshotController _controller;
+
+  @override
+  void initState() {
+    _controller = ScreenshotController();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return AdaptiveWebView(
-      content: context
-          .select<TemplateScreenController, String>((c) => c.htmlContent),
+    printGreen("build TemplateScreenViewer");
+
+    /// return Container(
+    ///   child: Column(
+    ///     children: [
+    ///       ListTile(
+    ///         trailing: IconButton(
+    ///           icon: Icon(Icons.screenshot),
+    ///           onPressed: () {
+    ///             double pixelRatio = MediaQuery.of(context).devicePixelRatio;
+
+    ///             var watch = Stopwatch();
+    ///             watch.start();
+    ///             _controller
+    ///                 .capture(
+    ///                     delay: const Duration(seconds: 1),
+    ///                     pixelRatio: pixelRatio)
+    ///                 .then((value) {
+    ///               printGreen("${watch.elapsedMilliseconds} ms");
+    ///               watch.stop();
+
+    ///               showDialog(
+    ///                 context: context,
+    ///                 builder: (_) {
+    ///                   return Dialog(
+    ///                     child: Image.memory(value!),
+    ///                   );
+    ///                 },
+    ///               );
+    ///             });
+    ///           },
+    ///         ),
+    ///       ),
+    ///       Expanded(
+    ///         child: Screenshot(
+    ///           child: SingleChildScrollView(
+    ///             child: AdaptiveWebView(
+    ///               key: UniqueKey(),
+    ///               content: context.select<TemplateScreenController, String>(
+    ///                   (c) => c.htmlContent),
+    ///             ),
+    ///           ),
+    ///           controller: _controller,
+    ///         ),
+    ///       ),
+    ///     ],
+    ///   ),
+    /// );
+    return Scaffold(
+      body: Screenshot(
+        child: SingleChildScrollView(
+          child: Html(
+            shrinkWrap: true,
+            key: UniqueKey(),
+            data: context
+                .select<TemplateScreenController, String>((c) => c.htmlContent),
+          ),
+
+          /// child: AdaptiveWebView(
+          ///   content: context.select<TemplateScreenController, String>(
+          ///       (c) => c.htmlContent),
+          /// ),
+        ),
+        controller: _controller,
+      ),
+      floatingActionButton: IconButton(
+        icon: Icon(Icons.screenshot),
+        onPressed: () {
+          var watch = Stopwatch();
+          watch.start();
+          _controller.capture().then((value) {
+            printGreen("${watch.elapsedMilliseconds} ms");
+            watch.stop();
+
+            showDialog(
+              context: context,
+              builder: (_) {
+                return Dialog(
+                  child: Image.memory(value!),
+                );
+              },
+            );
+          });
+        },
+      ),
     );
   }
 }
