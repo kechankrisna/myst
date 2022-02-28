@@ -21,6 +21,13 @@ class ApiLayoutSideBar extends StatelessWidget {
         },
       ),
       ListTile(
+        leading: Icon(MdiIcons.walk),
+        title: Text("RoadMap"),
+        onTap: () {
+          context.goNamed(roadMapRouteName);
+        },
+      ),
+      ListTile(
         leading: Icon(MdiIcons.library),
         title: Text("Libary"),
         onTap: () {},
@@ -74,7 +81,7 @@ class ApiLayoutSideBar extends StatelessWidget {
       ),
       offset: Offset(0, kToolbarHeight),
       padding: EdgeInsets.zero,
-      enableFeedback: false,
+      enableFeedback: true,
       itemBuilder: (_) => [
         PopupMenuItem(
           enabled: false,
@@ -82,6 +89,7 @@ class ApiLayoutSideBar extends StatelessWidget {
           child: Container(
             height: height - ((kToolbarHeight * 3) + 16),
             child: SingleChildScrollView(
+              primary: false,
               child: Column(
                 children: ApiLayoutSideBar.getMenus(context),
               ),

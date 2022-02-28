@@ -2,7 +2,6 @@ import 'package:myst_example/core.dart';
 import 'widgets/dashboard_filter_product_table.dart';
 import 'widgets/dashboard_select_time_frame_option.dart';
 import 'widgets/dashboard_traffic_report_card.dart';
-import '../../../layouts/api_layout/widgets/api_layout_sidebar.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({Key? key}) : super(key: key);

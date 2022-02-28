@@ -80,7 +80,7 @@ class MoreOptionDropDownIcon extends StatelessWidget {
           PopupMenuItem(
               child: Text("Activate cloud sheel"),
               onTap: () {
-                context.read<BackendLayoutController>().openConsole();
+                context.read<BackendLayoutController>().toggleConsole();
               }),
           PopupMenuDivider()
         ],

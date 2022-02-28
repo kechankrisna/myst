@@ -72,38 +72,74 @@ class DashboardLayoutDrawer extends StatelessWidget {
               );
             },
           ),
-          PopupMenuButton(
-            child: ListTile(
-              title: Text("Marketplace"),
-              leading: Icon(MdiIcons.basketPlusOutline),
-              onTap: null,
-            ),
-            constraints: BoxConstraints(
-              maxWidth: context.deviceWidth - kDrawerWidth,
-              maxHeight: context.deviceHeight - kToolbarHeight,
-            ),
-            offset: Offset(kDrawerWidth, kToolbarHeight),
-            padding: EdgeInsets.zero,
-            itemBuilder: (_) => [
-              PopupMenuItem(
-                padding: EdgeInsets.zero,
-                enabled: false,
-                child: Container(
-                  width: context.deviceWidth - kDrawerWidth,
-                  height: context.deviceHeight - kToolbarHeight,
-                  child: MarketDrawerContainer(),
+          AdaptiveBuilder(
+            builder: (_) {
+              return PopupMenuButton(
+                child: ListTile(
+                  title: Text("Marketplace"),
+                  leading: Icon(MdiIcons.basketPlusOutline),
+                  onTap: null,
                 ),
-              ),
-            ],
+                constraints: BoxConstraints(
+                  maxWidth: context.deviceWidth - kDrawerWidth,
+                  maxHeight: context.deviceHeight - kToolbarHeight,
+                ),
+                offset: Offset(kDrawerWidth, kToolbarHeight),
+                padding: EdgeInsets.zero,
+                itemBuilder: (_) => [
+                  PopupMenuItem(
+                    padding: EdgeInsets.zero,
+                    enabled: false,
+                    child: Container(
+                      width: context.deviceWidth - kDrawerWidth,
+                      height: context.deviceHeight - kToolbarHeight,
+                      child: MarketDrawerContainer(),
+                    ),
+                  ),
+                ],
+              );
+            },
+            smBuilder: (_) {
+              return ListTile(
+                title: Text("Marketplace"),
+                leading: Icon(MdiIcons.basketPlusOutline),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) => Scaffold(
+                            appBar: AppBar(
+                              title: Text("markets"),
+                            ),
+                            body: MarketDrawerContainer(),
+                          )));
+                },
+              );
+            },
           ),
           ListTile(
             title: Text("Marketplace"),
             leading: Icon(MdiIcons.basketPlusOutline),
             onTap: () {
-              showPopover(
-                context: context,
-                bodyBuilder: (_) => Container(),
+              /// container is widget
+              final child = Container(
+                child: Center(
+                  child: Text("i am nested"),
+                ),
               );
+              if (!context.isXSS) {
+                showPopover(
+                  context: context,
+                  bodyBuilder: (_) => child,
+                  direction: PopoverDirection.right,
+                );
+              } else {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (_) => Scaffold(
+                          appBar: AppBar(
+                            title: Text("markets"),
+                          ),
+                          body: child,
+                        )));
+              }
             },
           ),
           Divider(height: 1),

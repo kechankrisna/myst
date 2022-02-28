@@ -1,5 +1,4 @@
 import 'package:myst_example/core.dart';
-import '../backend_layout_controller.dart';
 
 class DashboardActivateConsole extends StatelessWidget {
   const DashboardActivateConsole({Key? key}) : super(key: key);
@@ -16,7 +15,7 @@ class DashboardActivateConsole extends StatelessWidget {
       onPressed: activateConsole
           ? null
           : () {
-              context.read<BackendLayoutController>().openConsole();
+              context.read<BackendLayoutController>().toggleConsole();
             },
     );
   }

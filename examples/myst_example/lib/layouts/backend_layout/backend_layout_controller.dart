@@ -22,6 +22,12 @@ class BackendLayoutController extends ChangeNotifier {
     subDrawerDisplay = false;
   }
 
+  toggleConsole() {
+    activateConsole = !activateConsole;
+    notifyListeners();
+    service.setActivateConsole(activateConsole);
+  }
+
   openConsole() {
     activateConsole = true;
     notifyListeners();

@@ -11,8 +11,8 @@ const String apiRoutePath = "/api";
 /// api routes
 const String dashboardRouteName = "dashboard";
 const String dashboardRoutePath = "dashboard";
-
-/// api routes
+const String roadMapRouteName = "roadmap";
+const String roadMapRoutePath = "roadmap";
 const String templateRouteName = "template";
 const String templateRoutePath = "template";
 

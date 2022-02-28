@@ -88,6 +88,25 @@ class MyRouter {
             /// redirect: redirect,
           ),
           GoRoute(
+            name: roadMapRouteName,
+            path: roadMapRoutePath,
+            pageBuilder: (_, state) {
+              var index = state.queryParams.containsKey("index")
+                  ? state.queryParams["index"]
+                  : null;
+              return NoTransitionPage(
+                  child: RoadMapScreen(
+                key: RoadMapScreen.screenKey,
+                index: index,
+              ));
+            },
+            routes: [
+              /// nested routes
+            ],
+
+            /// redirect: redirect,
+          ),
+          GoRoute(
             name: templateRouteName,
             path: templateRoutePath,
             pageBuilder: (_, state) => const NoTransitionPage(
