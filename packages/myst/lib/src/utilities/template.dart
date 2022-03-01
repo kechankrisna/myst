@@ -29,6 +29,176 @@ const String mystYamlTemplate = """configs:
     rewrite: false
     included: [".*."]""";
 
+/// `appTemplate`
+
+/// this will be use in order to create app.dart for export and import
+const String appTemplate = """
+import 'package:myst_example/core.dart';
+
+class MyApp extends StatelessWidget {
+  
+  /// final AuthenticationController authenticationController;
+  const MyApp({
+    Key? key,
+    /// required this.authenticationController,
+  }) : super(key: key);
+
+  static const String title = "MyApp";
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+      providers: [
+        /// ChangeNotifierProvider<AuthenticationController>(
+        ///   create: (_) => authenticationController,
+        /// ),
+        /// Provider<MyRouter>(
+        ///   lazy: false,
+        ///   create: (_) => MyRouter(authenticationController),
+        /// ),
+      ],
+      child: Builder(builder: (context) {
+        final router = Provider.of<MyRouter>(context, listen: false).router;
+
+        /// final router = MyRouter(authenticationController).router;
+        return MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          title: MyApp.title,
+          theme: ThemeData(primarySwatch: Colors.blue),
+          routeInformationParser: router.routeInformationParser,
+          routerDelegate: router.routerDelegate,
+        );
+      }),
+    );
+  }
+}
+""";
+
+/// `routerTemplate`
+
+/// this will be use in order to create router.dart for export and import
+const String routerTemplate = """
+/// Application route handler
+import 'package:myst_example/core.dart';
+
+class MyRouter {
+  /// late AuthenticationController authenticationController;
+  MyRouter(
+      /// this.authenticationController,
+      );
+
+  late final router = GoRouter(
+    /// refreshListenable: authenticationController,
+    debugLogDiagnostics: true,
+    urlPathStrategy: UrlPathStrategy.path,
+    initialLocation: "/login",
+    routes: [
+      // TODO: HomeScreen.router,
+      GoRoute(
+        name: rootRouteName,
+        path: rootRoutePath,
+        pageBuilder: (_, state) => NoTransitionPage(
+            key: state.pageKey,
+            child: const HomeScreen(key: HomeScreen.screenKey)),
+        routes: [
+          /// nested routes
+        ],
+
+        /// redirect: redirect,
+      ),
+
+      // TODO: LoginScreen.router,
+      /// GoRoute(
+      ///   name: loginRouteName,
+      ///   path: loginRoutePath,
+      ///   pageBuilder: (_, state) => NoTransitionPage(
+      ///       key: state.pageKey,
+      ///       child: const LoginScreen(key: LoginScreenService.screenKey)),
+      ///   routes: [
+      ///     /// nested routes
+      ///   ],
+
+      ///   /// redirect: redirect,
+      /// ),
+
+      // TODO: RegisterScreen.router,
+      /// GoRoute(
+      ///   name: registerRouteName,
+      ///   path: registerRoutePath,
+      ///   pageBuilder: (_, state) => NoTransitionPage(
+      ///       key: state.pageKey,
+      ///       child: const RegisterScreen(key: RegisterScreenService.screenKey)),
+      ///   routes: [
+      ///     /// nested routes
+      ///   ],
+
+      ///   /// redirect: redirect,
+      /// ),
+
+      // TODO: DashboardScreen.router,
+      /// GoRoute(
+      ///   name: apiRouteName,
+      ///   path: apiRoutePath,
+      ///   pageBuilder: (_, state) => NoTransitionPage(
+      ///       key: state.pageKey,
+      ///       child: const Center(child: CircularProgressIndicator())),
+      ///   routes: [
+      ///     GoRoute(
+      ///       name: dashboardRouteName,
+      ///       path: dashboardRoutePath,
+      ///       pageBuilder: (_, state) => const NoTransitionPage(
+      ///           child: DashboardScreen(key: DashboardScreen.screenKey)),
+      ///       routes: [
+      ///         /// nested routes
+      ///       ],
+
+      ///       /// redirect: redirect,
+      ///     ),
+      ///   ],
+      ///   redirect: (state) {
+      ///     final dashboardLocation = state.namedLocation(dashboardRouteName);
+      ///     return dashboardLocation;
+      ///   },
+      /// ),
+    ],
+
+    /// handle error
+    errorBuilder: (context, state) => Scaffold(
+      body: Center(
+        child: Text(state.error.toString()),
+      ),
+    ),
+
+    // TODO: handle redirect or middlewar
+    redirect: (state) {
+      /// if user is in login screen
+      /// final loginLocation = state.namedLocation(loginRouteName);
+      /// final loggingIn = state.subloc == loginLocation;
+
+      /// /// if user is in register screen
+      /// final registerAccountLocation = state.namedLocation(registerRouteName);
+      /// final registeringAccount = state.subloc == registerAccountLocation;
+
+      /// final isLoggedIn = authenticationController.isLoggedIn;
+      /// final rootLocation = state.namedLocation(rootRouteName);
+
+      /// /// if not logged-in nor in loggin page nor in register page then go to login
+      /// if (!isLoggedIn && !loggingIn && !registeringAccount) {
+      ///   return loginLocation;
+      /// }
+
+      /// /// if login and but sticted in login or register page, then go to api dashboard
+      /// if (isLoggedIn && (loggingIn || registeringAccount)) {
+      ///   return rootLocation;
+      /// }
+
+      return null;
+    },
+  );
+}
+""";
+
+
 /// ###`testTemplate`
 ///
 /// default test template which can be load into file in test directory
