@@ -1,7 +1,7 @@
 const String mystYamlTemplate = """configs:
-  rewrite: true
+  rewrite: false
   model:
-    rewrite: true
+    rewrite: false
     included: [".*."]
   interface:
     rewrite: true
@@ -33,7 +33,7 @@ const String mystYamlTemplate = """configs:
 
 /// this will be use in order to create app.dart for export and import
 const String appTemplate = """
-import 'package:myst_example/core.dart';
+import 'core.dart';
 
 class MyApp extends StatelessWidget {
   
@@ -79,7 +79,7 @@ class MyApp extends StatelessWidget {
 /// this will be use in order to create router.dart for export and import
 const String routerTemplate = """
 /// Application route handler
-import 'package:myst_example/core.dart';
+import 'core.dart';
 
 class MyRouter {
   /// late AuthenticationController authenticationController;
@@ -94,18 +94,18 @@ class MyRouter {
     initialLocation: "/login",
     routes: [
       // TODO: HomeScreen.router,
-      GoRoute(
-        name: rootRouteName,
-        path: rootRoutePath,
-        pageBuilder: (_, state) => NoTransitionPage(
-            key: state.pageKey,
-            child: const HomeScreen(key: HomeScreen.screenKey)),
-        routes: [
-          /// nested routes
-        ],
+      /// GoRoute(
+      ///   name: rootRouteName,
+      ///   path: rootRoutePath,
+      ///   pageBuilder: (_, state) => NoTransitionPage(
+      ///       key: state.pageKey,
+      ///       child: const HomeScreen(key: HomeScreen.screenKey)),
+      ///   routes: [
+      ///     /// nested routes
+      ///   ],
 
-        /// redirect: redirect,
-      ),
+      ///   /// redirect: redirect,
+      /// ),
 
       // TODO: LoginScreen.router,
       /// GoRoute(
@@ -198,6 +198,77 @@ class MyRouter {
 }
 """;
 
+/// `authenticationConfigTemplate`
+///
+/// Authentication configuration or constants\n
+const String authenticationConfigTemplate =
+    """/// Authentication configuration or constants\n""";
+
+/// ### `applicationConfigTemplate`
+///
+/// Application configuration including themes or constants
+const String applicationConfigTemplate =
+    """/// Application configuration including themes or constants\n
+import 'package:flutter/material.dart';
+/// `lightTheme`
+/// 
+/// use this to customize your normal theme
+final ThemeData lightTheme = ThemeData();
+
+/// `darkTheme`
+/// 
+/// use this to customize your dark mode theme
+final ThemeData darkTheme = ThemeData.dark();
+
+/// `languageKey`
+/// 
+/// use this key into shared preference to save or get lang cache
+const String languageKey = "lang";
+
+/// `themeKey`
+/// 
+/// use this key into shared preference to save or get theme cache
+const String themeKey = "theme";
+
+/// `placeholder`
+/// 
+/// place holder represent the local asset image as place holder
+const String placeholder = "assets/images/loading.png";
+""";
+
+/// ### `layoutConfigTemplate`
+///
+/// Layout screen configuration or constants
+const String layoutConfigTemplate =
+    """/// Layout screen configuration or constants\n
+/// `kDrawerWidth`
+/// 
+/// will be used to set the drawer width for your layout
+const kDrawerWidth = 300.0;
+""";
+
+/// `routerConfigTemplate`
+///
+/// Any router configuration or constants
+const String routerConfigTemplate =
+    """/// Any router configuration or constants\n
+/// route config name and path
+const String rootRouteName = "root";
+const String rootRoutePath = "/";
+const String loginRouteName = "login";
+const String loginRoutePath = "/login";
+const String registerRouteName = "register";
+const String registerRoutePath = "/register";""";
+
+/// `configTemplate`
+///
+/// Export the configuration
+const String configTemplate =
+    """/// Export the configuration\n\n///library configs;\n
+export 'application_config.dart';
+export 'layout_config.dart';
+export 'authentication_config.dart';
+export 'router_config.dart';""";
 
 /// ###`testTemplate`
 ///
@@ -637,4 +708,83 @@ void main() {
     });
   });
 }
+""";
+
+/// `screenControllerLayout`
+///
+const String screenControllerTemplate = """
+/// ### `className`
+/// 
+/// `Description`:
+/// 
+/// `Example`:
+// TODO: Implement controller
+class classNameController extends ChangeNotifier with DiagnosticableTreeMixin implements ReassembleHandler{
+  
+  classNameController(){
+    
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    /// list all the properties of your class here.
+    /// See the documentation of debugFillProperties for more information.
+    /// TODO: implement add
+    properties.add(StringProperty('className', null));
+  }
+
+  @override
+  void reassemble() {
+     /// TODO: reassemble
+    print('Did hot-reload className');
+  }
+
+  @override
+  void dispose() {
+    /// TODO: dispose
+    super.dispose();
+  }
+}""";
+
+/// `screenLayout`
+///
+const String screenTemplate = """
+/// ### `className`
+///
+/// `Description`:
+///
+/// `Example`:
+// TODO: Implement the className
+class className extends StatelessWidget {
+  final Widget child;
+  const className({Key? key, required this.child}) : super(key: key);
+
+  static const Key pageKey = ValueKey("className");
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => classNameController(),
+      child: AdaptivePlatformWidget(child: child),
+    );
+  }
+}""";
+
+/// `screenServiceTemplate`
+///
+///
+const String screenServiceTemplate = """
+class classNameService {
+
+}
+""";
+
+/// `screenCoreTemplate`
+///
+///
+const String screenCoreTemplate = """
+export 'fileName_service.dart';
+export 'fileName_controller.dart';
+export 'fileName.dart';
 """;

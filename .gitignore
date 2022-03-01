@@ -17,3 +17,4 @@ examples/**/ios/
 examples/**/web/
 examples/**/macos/
 examples/**/windows/
+.firebase
