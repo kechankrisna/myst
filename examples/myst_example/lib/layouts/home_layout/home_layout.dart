@@ -82,7 +82,7 @@ List<ListTile> drawers(BuildContext context) => [
       ListTile(
         leading: const Icon(Icons.home),
         title: const Text("home"),
-        onTap: () => context.goNamed(HomeScreenService.router.name!),
+        onTap: () => context.goNamed(rootRouteName),
       ),
       ListTile(
         leading: const Icon(Icons.dashboard_customize),
