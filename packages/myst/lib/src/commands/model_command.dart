@@ -101,8 +101,9 @@ class ModelCommand extends Command
     final _parentLibPath = path.join(libraryPath, parentDir, "$parentDir.dart");
 
     /// current new file path
-    final _filePath =
-        path.join(libraryPath, parentDir, dirName, "$fileName.dart");
+    final _filePath = dirName != null
+        ? path.join(libraryPath, parentDir, dirName, "$fileName.dart")
+        : path.join(libraryPath, parentDir, "$fileName.dart");
 
     FileCreator(_filePath, contents: contents, rewrite: rewrite);
 
@@ -149,8 +150,9 @@ class ModelCommand extends Command
     }
 
     /// current new file path
-    final _filePath =
-        path.join(testPath, parentDir, dirName, "${fileName}_test.dart");
+    final _filePath = dirName != null
+        ? path.join(testPath, parentDir, dirName, "${fileName}_test.dart")
+        : path.join(testPath, parentDir, "${fileName}_test.dart");
 
     /// write content
     FileCreator(_filePath, contents: contents, rewrite: rewrite).run();
