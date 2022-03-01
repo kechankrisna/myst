@@ -90,6 +90,23 @@ mixin YamlInformation {
 
   late bool rewrite;
 
+  Map<String, YamlMap?> get mystYaml {
+    return {
+      "configs": mystConfig,
+      "models": modelConfig,
+      "controllers": controllerConfig,
+      "services": serviceConfig,
+      "interfaces": interfaceConfig,
+      "widgets": widgetConfig,
+      "utilities": utilityConfig,
+      "screens": screenConfig,
+      "extensions": extensionConfig,
+      "layouts": layoutConfig,
+      /// "route": routeConfig,
+      /// "provider": providerConfig,
+    };
+  }
+
   ensureYamlInitialized() {
     pubspec = io.File('pubspec.yaml');
     if (!pubspec.existsSync()) {

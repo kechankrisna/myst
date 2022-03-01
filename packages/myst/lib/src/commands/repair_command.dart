@@ -3,6 +3,7 @@ import 'package:myst/myst.dart';
 import 'package:printx/printx.dart';
 import 'dart:io' as io;
 import 'package:path/path.dart' as path;
+import 'package:yaml/yaml.dart';
 
 class RepairCommand extends Command with YamlInformation {
   @override
@@ -57,6 +58,7 @@ class RepairCommand extends Command with YamlInformation {
       if (flutter) ...[ApplicationConfig.widgets, ApplicationConfig.providers]
     ];
     List<String> _paths = (structures.map((e) => e.path).toList());
+
     bool existDir = dirName == null
         ? false
         : (dirName!.endsWith("s")
@@ -72,6 +74,23 @@ class RepairCommand extends Command with YamlInformation {
     for (var directory in skelentons) {
       final _innerLibPath = path.join(libraryPath, directory.path);
       var createdDir = DirectoryCreator(_innerLibPath).run();
+
+      YamlMap? directoryConfig = mystYaml[directory.path];
+      List<RegExp> includedRegex = [];
+      List<RegExp> excludedRegex = [];
+      if (directoryConfig != null) {
+        if (directoryConfig.containsKey("included") == true) {
+          includedRegex = (directoryConfig['included'] as YamlList)
+              .map((e) => RegExp(e))
+              .toList();
+        }
+        if (directoryConfig.containsKey("excluded") == true) {
+          excludedRegex = (directoryConfig['excluded'] as YamlList)
+              .map((e) => RegExp(e))
+              .toList();
+        }
+      }
+
       if (createdDir) {
         var missExports = <String>[];
 
@@ -79,8 +98,19 @@ class RepairCommand extends Command with YamlInformation {
 
         for (var f in (await scan.toList())) {
           var _path = f.path.split(RegExp("$_innerLibPath/")).last;
+
           if (_path != "${directory.path}.dart") {
-            missExports.add(_path);
+            /// if any include expression exist then check otherwise true all
+            /// and check with exclude expression if exist
+            bool _canBeIncluded = (includedRegex.isEmpty
+                    ? true
+                    : (includedRegex
+                        .where((regex) => _path.contains(regex))
+                        .isNotEmpty)) &&
+                (excludedRegex.where((regex) => _path.contains(regex)).isEmpty);
+            if (_canBeIncluded) {
+              missExports.add(_path);
+            }
           }
         }
 
