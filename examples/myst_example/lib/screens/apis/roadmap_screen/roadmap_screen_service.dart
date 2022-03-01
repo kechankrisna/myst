@@ -1,8 +1,8 @@
 import 'package:myst_example/core.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'widgets/roadmap_screen_stepper.dart';
 
 class RoadMapScreenService {
-  late SharedPreferences prefs = ApplicationService.preferences!;
+  final prefs = ApplicationService.preferences!;
 
   RoadMapScreenService();
 
