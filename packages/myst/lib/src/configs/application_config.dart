@@ -1,14 +1,18 @@
 import 'package:myst/myst.dart';
 
 class ApplicationConfig {
-  /// routes handler
-  static FileCreator get routes => FileCreator("routes.dart",
-      contents: "/// Application route handler\n\nlibrary routes;\n");
+  /// router handler
+  static FileCreator get router =>
+      FileCreator("router.dart", contents: routerTemplate);
+
+  /// app handler
+  static FileCreator get app => FileCreator("app.dart", contents: appTemplate);
 
   /// application core
   static FileCreator get core =>
       FileCreator("core.dart", contents: """/// Application core file \n
-export 'routes.dart';
+export 'router.dart';
+export 'app.dart';
 export 'configs/configs.dart';
 export 'controllers/controllers.dart';
 export 'extensions/extensions.dart';
@@ -25,8 +29,26 @@ export 'widgets/widgets.dart';\n""");
   static DirectoryCreator get configs => DirectoryCreator(
         "configs",
         inners: [
-          FileCreator("configs.dart",
-              contents: "/// Application configuration\n\nlibrary configs;\n")
+          FileCreator(
+            "application_config.dart",
+            contents: applicationConfigTemplate,
+          ),
+          FileCreator(
+            "layout_config.dart",
+            contents: layoutConfigTemplate,
+          ),
+          FileCreator(
+            "authentication_config.dart",
+            contents: authenticationConfigTemplate,
+          ),
+          FileCreator(
+            "router_config.dart",
+            contents: routerConfigTemplate,
+          ),
+          FileCreator(
+            "configs.dart",
+            contents: configTemplate,
+          ),
         ],
       );
 
@@ -36,7 +58,7 @@ export 'widgets/widgets.dart';\n""");
         inners: [
           FileCreator("controllers.dart",
               contents:
-                  "/// Data featching controller\n\nlibrary controllers;\n")
+                  "/// Data featching controller\n\n/// library controllers;\n")
         ],
       );
 
@@ -46,7 +68,7 @@ export 'widgets/widgets.dart';\n""");
         inners: [
           FileCreator("extensions.dart",
               contents:
-                  "/// Extra more extesion on dart code\n\nlibrary extensions;\n")
+                  "/// Extra more extesion on dart code\n\n/// library extensions;\n")
         ],
       );
 
@@ -56,7 +78,7 @@ export 'widgets/widgets.dart';\n""");
         inners: [
           FileCreator("interfaces.dart",
               contents:
-                  "/// For base class or abstraction\n\nlibrary interfaces;\n")
+                  "/// For base class or abstraction\n\n/// library interfaces;\n")
         ],
       );
 
@@ -66,7 +88,7 @@ export 'widgets/widgets.dart';\n""");
         inners: [
           FileCreator("layouts.dart",
               contents:
-                  "/// Application overlay or layouts\n\nlibrary layouts;\n")
+                  "/// Application overlay or layouts\n\n/// library layouts;\n")
         ],
       );
 
@@ -75,7 +97,7 @@ export 'widgets/widgets.dart';\n""");
         "models",
         inners: [
           FileCreator("models.dart",
-              contents: "/// Application data models\n\nlibrary models;\n")
+              contents: "/// Application data models\n\n/// library models;\n")
         ],
       );
 
@@ -85,7 +107,7 @@ export 'widgets/widgets.dart';\n""");
         inners: [
           FileCreator("providers.dart",
               contents:
-                  "/// Application state management\n\nlibrary providers;\n")
+                  "/// Application state management\n\n/// library providers;\n")
         ],
       );
 
@@ -95,7 +117,7 @@ export 'widgets/widgets.dart';\n""");
         inners: [
           FileCreator("screens.dart",
               contents:
-                  "/// Application screens or pages\n\nlibrary screens;\n")
+                  "/// Application screens or pages\n\n/// library screens;\n")
         ],
       );
 
@@ -105,7 +127,7 @@ export 'widgets/widgets.dart';\n""");
         inners: [
           FileCreator("services.dart",
               contents:
-                  "/// Application services for handle background or as helper\n\nlibrary services;\n")
+                  "/// Application services for handle background or as helper\n\n/// library services;\n")
         ],
       );
 
@@ -115,7 +137,7 @@ export 'widgets/widgets.dart';\n""");
         inners: [
           FileCreator("utilities.dart",
               contents:
-                  "/// Application utilities which mix the function\n\nlibrary utilities;\n")
+                  "/// Application utilities which mix the function\n\n/// library utilities;\n")
         ],
       );
 
@@ -125,7 +147,7 @@ export 'widgets/widgets.dart';\n""");
         inners: [
           FileCreator("widgets.dart",
               contents:
-                  "/// Application utilities which mix the function\n\nlibrary widgets;\n")
+                  "/// Application utilities which mix the function\n\n/// library widgets;\n")
         ],
       );
 

@@ -44,8 +44,11 @@ class InitCommand extends Command with YamlInformation {
     /// generate lib directory and test
     await generateLibDirectory();
 
-    /// generate the route
-    await generateRoutesLib();
+    /// generate the router file
+    await generateRouterLib();
+
+    /// generate the app file
+    await generateAppLib();
 
     /// generate the core
     await generateCoreLib();
@@ -155,14 +158,14 @@ class InitCommand extends Command with YamlInformation {
     }
   }
 
-  /// generate the routes.dart in lib and routes_test.dart in test
-  Future<void> generateRoutesLib() async {
-    final _routePath = path.join(libraryPath, ApplicationConfig.routes.path);
-    final _testFileName = ApplicationConfig.routes.path
+  /// generate the router.dart in lib and router_test.dart in test
+  Future<void> generateRouterLib() async {
+    final _routePath = path.join(libraryPath, ApplicationConfig.router.path);
+    final _testFileName = ApplicationConfig.router.path
         .replaceAll(RegExp(r'.dart'), '_test.dart');
     final _routeTestFilePath = path.join(testPath, _testFileName);
     var created = FileCreator(_routePath,
-            contents: ApplicationConfig.routes.contents, rewrite: rewrite)
+            contents: ApplicationConfig.router.contents, rewrite: rewrite)
         .run();
     if (created) {
       var contents = flutter
@@ -171,6 +174,24 @@ class InitCommand extends Command with YamlInformation {
           : testTemplate;
       FileCreator(_routeTestFilePath, contents: contents, rewrite: rewrite)
           .run();
+    }
+  }
+
+  /// generate the app.dart in lib and app_test.dart in test
+  Future<void> generateAppLib() async {
+    final _appPath = path.join(libraryPath, ApplicationConfig.app.path);
+    final _testFileName =
+        ApplicationConfig.app.path.replaceAll(RegExp(r'.dart'), '_test.dart');
+    final _appTestFilePath = path.join(testPath, _testFileName);
+    var created = FileCreator(_appPath,
+            contents: ApplicationConfig.app.contents, rewrite: rewrite)
+        .run();
+    if (created) {
+      var contents = flutter
+          ? testTemplate.replaceAll(RegExp(r'package:test/test.dart'),
+              'package:flutter_test/flutter_test.dart')
+          : testTemplate;
+      FileCreator(_appTestFilePath, contents: contents, rewrite: rewrite).run();
     }
   }
 
