@@ -19,7 +19,7 @@ class MyRouter {
         path: rootRoutePath,
         pageBuilder: (_, state) => NoTransitionPage(
             key: state.pageKey,
-            child: const HomeScreen(key: HomeScreenService.screenKey)),
+            child: const HomeScreen(key: HomeScreen.screenKey)),
         routes: [
           /// nested routes
         ],

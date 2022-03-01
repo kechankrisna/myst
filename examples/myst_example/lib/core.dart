@@ -1,6 +1,7 @@
 /// Application core file
 
-export 'routes.dart';
+export 'router.dart';
+export 'app.dart';
 export 'configs/configs.dart';
 export 'controllers/controllers.dart';
 export 'extensions/extensions.dart';

@@ -5,6 +5,10 @@ import 'widgets/home_screen_macos.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
+  static const Key screenKey = ValueKey("HomeScreen");
+
+  static const String title = "home";
+
   @override
   Widget build(BuildContext context) {
     return AdaptivePlatformWidget(
