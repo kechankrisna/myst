@@ -2,22 +2,32 @@ const String mystYamlTemplate = """configs:
   rewrite: true
   model:
     rewrite: true
+    included: [".*."]
   interface:
     rewrite: true
+    included: [".*."]
   controller:
     rewrite: false
+    included: [".*."]
   extension:
     rewrite: false
+    included: [".*."]
   layout:
     rewrite: false
+    included: [".*._core.dart"]
   screen:
     rewrite: false
+    included: [".*._core.dart"]
   service:
     rewrite: false
+    included: [".*."]
   utility:
     rewrite: false
+    included: [".*."]
+    excluded: [".*.(src)"]
   widget:
-    rewrite: false""";
+    rewrite: false
+    included: [".*."]""";
 
 /// ###`testTemplate`
 ///
