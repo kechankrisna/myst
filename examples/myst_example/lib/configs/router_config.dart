@@ -1,3 +1,5 @@
+/// Any router configuration or constants
+
 /// route config name and path
 const String rootRouteName = "root";
 const String rootRoutePath = "/";
