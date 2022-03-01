@@ -4,6 +4,11 @@ import 'widgets/register_screen_scaffold.dart';
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({Key? key}) : super(key: key);
 
+  ///
+  static const Key screenKey = ValueKey("RegisterScreen");
+
+  static const String title = "register";
+
   @override
   Widget build(BuildContext context) {
     return AdaptivePlatformWidget(

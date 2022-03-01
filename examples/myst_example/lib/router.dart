@@ -33,7 +33,7 @@ class MyRouter {
         path: loginRoutePath,
         pageBuilder: (_, state) => NoTransitionPage(
             key: state.pageKey,
-            child: const LoginScreen(key: LoginScreenService.screenKey)),
+            child: const LoginScreen(key: LoginScreen.screenKey)),
         routes: [
           /// nested routes
         ],
@@ -47,7 +47,7 @@ class MyRouter {
         path: registerRoutePath,
         pageBuilder: (_, state) => NoTransitionPage(
             key: state.pageKey,
-            child: const RegisterScreen(key: RegisterScreenService.screenKey)),
+            child: const RegisterScreen(key: RegisterScreen.screenKey)),
         routes: [
           /// nested routes
         ],
