@@ -235,6 +235,14 @@ class InitCommand extends Command with YamlInformation {
       contents += "\nexport 'package:printx/printx.dart';";
     }
 
+    /// handle material_design_icons_flutter
+    if (!mdi) {
+      await Shell().run("flutter pub add material_design_icons_flutter");
+      contents += "\nexport 'package:material_design_icons_flutter/material_design_icons_flutter.dart';";
+    } else if (mdi) {
+      contents += "\nexport 'package:material_design_icons_flutter/material_design_icons_flutter.dart';";
+    }
+
     /// if one of them are not exist yet
     if (!go_router || !provider) {
       await Shell().run("flutter pub get");

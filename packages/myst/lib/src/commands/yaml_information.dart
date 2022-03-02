@@ -85,6 +85,9 @@ mixin YamlInformation {
   // if current project using printx
   late bool printx;
 
+  // if current project using material_design_icons_flutter
+  late bool mdi;
+
   // if current project using integration_test
   late bool integration_test;
 
@@ -171,6 +174,9 @@ mixin YamlInformation {
 
     /// check if current project using printx
     printx = dependencies.nodes.containsKey("printx");
+
+    /// check if current project using material_design_icons_flutter
+    mdi = dependencies.nodes.containsKey("material_design_icons_flutter");
 
     /// check if current project using integration_test
     integration_test = dev_dependencies.nodes.containsKey("integration_test");
