@@ -1,0 +1,32 @@
+configs:
+  rewrite: false
+  model:
+    rewrite: false
+    included: [".*."]
+  interface:
+    rewrite: true
+    included: [".*."]
+  controller:
+    rewrite: false
+    included: [".*."]
+  extension:
+    rewrite: false
+    included: [".*."]
+  layout:
+    rewrite: false
+    included: [".*._core.dart"]
+    template: "mvc"
+  screen:
+    rewrite: false
+    included: [".*._core.dart"]
+    template: "mvc"
+  service:
+    rewrite: false
+    included: [".*."]
+  utility:
+    rewrite: false
+    included: [".*."]
+    excluded: [".*.(src)"]
+  widget:
+    rewrite: false
+    included: [".*."]
