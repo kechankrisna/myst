@@ -5,14 +5,14 @@ import 'package:printx/printx.dart';
 import 'dart:io' as io;
 import 'package:path/path.dart' as path;
 
-class LayoutCommand extends Command
+class ScreenCommand extends Command
     with YamlInformation
     implements GenerateClassInterface {
   @override
-  String get description => "generate layout in lib/layouts and test/layouts";
+  String get description => "generate screen in lib/screens and test/screens";
 
   @override
-  String get name => "layout";
+  String get name => "screen";
 
   /// input from user and print help if null
   late String? inputName;
@@ -29,14 +29,14 @@ class LayoutCommand extends Command
   /// template from user and print help if null
   late String? templateName;
 
-  final String parentDir = "layouts";
+  final String parentDir = "screens";
 
   @override
-  List<String> get aliases => ['l'];
+  List<String> get aliases => ['sc'];
 
   /// Xtension
 
-  LayoutCommand() {
+  ScreenCommand() {
     argParser.addOption("name",
         callback: (v) => inputName = className = v,
         help: "please enter the class name correctly");
@@ -75,18 +75,18 @@ class LayoutCommand extends Command
     ensureYamlInitialized();
 
     /// split rewrite config if exist in myst.yaml
-    if (layoutConfig != null) {
-      if (layoutConfig!.containsKey("rewrite") == true) {
-        rewrite = layoutConfig!['rewrite'];
+    if (screenConfig != null) {
+      if (screenConfig!.containsKey("rewrite") == true) {
+        rewrite = screenConfig!['rewrite'];
       }
 
-      if (layoutConfig!.containsKey("template") == true) {
-        templateName = layoutConfig!['template'];
+      if (screenConfig!.containsKey("template") == true) {
+        templateName = screenConfig!['template'];
       }
     }
 
     final watch = Stopwatch()..start();
-    PrintX.cool("layout start");
+    PrintX.cool("screen start");
 
     /// in case user don't want to type --name then take the first input instead
     if (argResults!.arguments.isNotEmpty) {
@@ -99,7 +99,7 @@ class LayoutCommand extends Command
       /// printBlue("${argResults!.options}");
       /// printGreen([inputName, className, fileName]);
 
-      /// generate layout class in lib/layouts
+      /// generate screen class in lib/screens
       if (templateName == "mvc") {
         ///
         generateScreenLibFiles();
@@ -108,14 +108,14 @@ class LayoutCommand extends Command
       } else {
         generateLib();
 
-        /// generate layout test class in test/layouts
+        /// generate screen test class in test/screens
         generateTest();
       }
     } else {
       printCyan(usage);
     }
 
-    PrintX.cool("layout finished in (${watch.elapsedMilliseconds} ms)");
+    PrintX.cool("screen finished in (${watch.elapsedMilliseconds} ms)");
     watch.stop();
   }
 

@@ -29,6 +29,21 @@ const String mystYamlTemplate = """configs:
     rewrite: false
     included: [".*."]""";
 
+/// `mainTemplate`
+/// 
+/// this will be used to create or override main.dart content
+const String mainTemplate = """
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  /// await ApplicationService.ensureSharedPreferences();
+
+  var authenticationController = AuthenticationController();
+
+  runApp(MyApp(authenticationController: authenticationController));
+}
+""";
+
 /// `appTemplate`
 
 /// this will be use in order to create app.dart for export and import
@@ -37,10 +52,11 @@ import 'core.dart';
 
 class MyApp extends StatelessWidget {
   
-  /// final AuthenticationController authenticationController;
+  final AuthenticationController authenticationController;
+
   const MyApp({
     Key? key,
-    /// required this.authenticationController,
+    required this.authenticationController,
   }) : super(key: key);
 
   static const String title = "MyApp";
@@ -49,18 +65,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        /// ChangeNotifierProvider<AuthenticationController>(
-        ///   create: (_) => authenticationController,
-        /// ),
-        /// Provider<MyRouter>(
-        ///   lazy: false,
-        ///   create: (_) => MyRouter(authenticationController),
-        /// ),
+        ChangeNotifierProvider<AuthenticationController>(
+          create: (_) => authenticationController,
+        ),
+        Provider<MyRouter>(
+          lazy: false,
+          create: (_) => MyRouter(authenticationController),
+        ),
       ],
       child: Builder(builder: (context) {
         final router = Provider.of<MyRouter>(context, listen: false).router;
-
-        /// final router = MyRouter(authenticationController).router;
+        
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           title: MyApp.title,
@@ -78,88 +93,85 @@ class MyApp extends StatelessWidget {
 
 /// this will be use in order to create router.dart for export and import
 const String routerTemplate = """
-/// Application route handler
-import 'core.dart';
-
 class MyRouter {
-  /// late AuthenticationController authenticationController;
-  MyRouter(
-      /// this.authenticationController,
-      );
+  
+  late AuthenticationController authenticationController;
+
+  MyRouter(this.authenticationController);
 
   late final router = GoRouter(
-    /// refreshListenable: authenticationController,
+    refreshListenable: authenticationController,
     debugLogDiagnostics: true,
     urlPathStrategy: UrlPathStrategy.path,
-    initialLocation: "/login",
+    initialLocation: rootRoutePath,
     routes: [
       // TODO: HomeScreen.router,
-      /// GoRoute(
-      ///   name: rootRouteName,
-      ///   path: rootRoutePath,
-      ///   pageBuilder: (_, state) => NoTransitionPage(
-      ///       key: state.pageKey,
-      ///       child: const HomeScreen(key: HomeScreen.screenKey)),
-      ///   routes: [
-      ///     /// nested routes
-      ///   ],
+      GoRoute(
+        name: rootRouteName,
+        path: rootRoutePath,
+        pageBuilder: (_, state) => NoTransitionPage(
+            key: state.pageKey,
+            child: const HomeScreen(key: HomeScreen.pageKey)),
+        routes: [
+          /// nested routes
+        ],
 
-      ///   /// redirect: redirect,
-      /// ),
+        /// redirect: redirect,
+      ),
 
       // TODO: LoginScreen.router,
-      /// GoRoute(
-      ///   name: loginRouteName,
-      ///   path: loginRoutePath,
-      ///   pageBuilder: (_, state) => NoTransitionPage(
-      ///       key: state.pageKey,
-      ///       child: const LoginScreen(key: LoginScreenService.screenKey)),
-      ///   routes: [
-      ///     /// nested routes
-      ///   ],
+      GoRoute(
+        name: loginRouteName,
+        path: loginRoutePath,
+        pageBuilder: (_, state) => NoTransitionPage(
+            key: state.pageKey,
+            child: const LoginScreen(key: LoginScreen.pageKey)),
+        routes: [
+          /// nested routes
+        ],
 
-      ///   /// redirect: redirect,
-      /// ),
+        /// redirect: redirect,
+      ),
 
       // TODO: RegisterScreen.router,
-      /// GoRoute(
-      ///   name: registerRouteName,
-      ///   path: registerRoutePath,
-      ///   pageBuilder: (_, state) => NoTransitionPage(
-      ///       key: state.pageKey,
-      ///       child: const RegisterScreen(key: RegisterScreenService.screenKey)),
-      ///   routes: [
-      ///     /// nested routes
-      ///   ],
+      GoRoute(
+        name: registerRouteName,
+        path: registerRoutePath,
+        pageBuilder: (_, state) => NoTransitionPage(
+            key: state.pageKey,
+            child: const RegisterScreen(key: RegisterScreen.pageKey)),
+        routes: [
+          /// nested routes
+        ],
 
-      ///   /// redirect: redirect,
-      /// ),
+        /// redirect: redirect,
+      ),
 
       // TODO: DashboardScreen.router,
-      /// GoRoute(
-      ///   name: apiRouteName,
-      ///   path: apiRoutePath,
-      ///   pageBuilder: (_, state) => NoTransitionPage(
-      ///       key: state.pageKey,
-      ///       child: const Center(child: CircularProgressIndicator())),
-      ///   routes: [
-      ///     GoRoute(
-      ///       name: dashboardRouteName,
-      ///       path: dashboardRoutePath,
-      ///       pageBuilder: (_, state) => const NoTransitionPage(
-      ///           child: DashboardScreen(key: DashboardScreen.screenKey)),
-      ///       routes: [
-      ///         /// nested routes
-      ///       ],
+      GoRoute(
+        name: adminRouteName,
+        path: adminRoutePath,
+        pageBuilder: (_, state) => NoTransitionPage(
+            key: state.pageKey,
+            child: const Center(child: CircularProgressIndicator())),
+        routes: [
+          GoRoute(
+            name: dashboardRouteName,
+            path: dashboardRoutePath,
+            pageBuilder: (_, state) => const NoTransitionPage(
+                child: DashboardScreen(key: DashboardScreen.pageKey)),
+            routes: [
+              /// nested routes
+            ],
 
-      ///       /// redirect: redirect,
-      ///     ),
-      ///   ],
-      ///   redirect: (state) {
-      ///     final dashboardLocation = state.namedLocation(dashboardRouteName);
-      ///     return dashboardLocation;
-      ///   },
-      /// ),
+            /// redirect: redirect,
+          ),
+        ],
+        redirect: (state) {
+          final dashboardLocation = state.namedLocation(dashboardRouteName);
+          return dashboardLocation;
+        },
+      ),
     ],
 
     /// handle error
@@ -253,18 +265,24 @@ const kDrawerWidth = 300.0;
 const String routerConfigTemplate =
     """/// Any router configuration or constants\n
 /// route config name and path
+/// 
 const String rootRouteName = "root";
 const String rootRoutePath = "/";
 const String loginRouteName = "login";
 const String loginRoutePath = "/login";
 const String registerRouteName = "register";
-const String registerRoutePath = "/register";""";
+const String registerRoutePath = "/register";
+const String adminRouteName = "admin";
+const String adminRoutePath = "/admin";
+const String dashboardRouteName = "dashboard";
+const String dashboardRoutePath = "dashboard";""";
 
 /// `configTemplate`
 ///
 /// Export the configuration
 const String configTemplate =
     """/// Export the configuration\n\n///library configs;\n
+
 export 'application_config.dart';
 export 'layout_config.dart';
 export 'authentication_config.dart';
@@ -515,7 +533,7 @@ void main() {
       await tester.pumpAndSettle();
 
       /// TODO: implement find
-      /// final titleFinder = find.text("counter");
+      /// final titleFinder = find.text("sample");
       /// final incrementFinder = find.byKey(CounterScreen.incrementkey);
       /// await tester.pumpAndSettle();
       
@@ -679,7 +697,7 @@ void main() {
     setUp(() {
       app = MaterialApp(
         home: className(
-          child: const Text("hello"),
+          child: const Text("sample"),
         ),
       );
     });
@@ -693,7 +711,7 @@ void main() {
       await tester.pumpAndSettle();
 
       /// TODO: implement find
-      /// final titleFinder = find.text("counter");
+      /// final titleFinder = find.text("sample");
       /// final incrementFinder = find.byKey(CounterScreen.incrementkey);
       /// await tester.pumpAndSettle();
       
@@ -757,8 +775,8 @@ const String screenTemplate = """
 /// `Example`:
 // TODO: Implement the className
 class className extends StatelessWidget {
-  final Widget child;
-  const className({Key? key, required this.child}) : super(key: key);
+  final Widget? child;
+  const className({Key? key, this.child}) : super(key: key);
 
   static const Key pageKey = ValueKey("className");
 
@@ -766,7 +784,7 @@ class className extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => classNameController(),
-      child: AdaptivePlatformWidget(child: child),
+      child: AdaptivePlatformWidget(child: child ?? Scaffold(body: Center(child:Text("className")))),
     );
   }
 }""";

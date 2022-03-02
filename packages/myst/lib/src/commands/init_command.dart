@@ -46,12 +46,27 @@ class InitCommand extends Command with YamlInformation {
 
     /// generate the router file
     await generateRouterLib();
+    
+    /// generate the main file
+    await generateMainLib();
 
     /// generate the app file
     await generateAppLib();
 
     /// generate the core
     await generateCoreLib();
+
+    /// generate the application_service and authentication_service
+    await generateDefaultService();
+
+    /// generate the application_controller and authentication_controller
+    await generateDefaultController();
+
+    /// generate the home_screen, login_screen, register_screen, dashboard_screen
+    await generateDefaultScreen();
+
+    /// gererate the home_layout and dashboard layout
+    await generateDefaultLayout();
 
     PrintX.cool("init finished in (${watch.elapsedMilliseconds} ms)");
     watch.stop();
@@ -164,15 +179,41 @@ class InitCommand extends Command with YamlInformation {
     final _testFileName = ApplicationConfig.router.path
         .replaceAll(RegExp(r'.dart'), '_test.dart');
     final _routeTestFilePath = path.join(testPath, _testFileName);
+    String fileHeadContent =
+        """/// Application route handler\nimport 'package:$projectName/core.dart';\n\n""";
     var created = FileCreator(_routePath,
-            contents: ApplicationConfig.router.contents, rewrite: rewrite)
+            contents: fileHeadContent + ApplicationConfig.router.contents!,
+            rewrite: rewrite)
+        .run();
+    if (created) {
+      /// then create a test for route
+      var contents = flutter
+          ? testTemplate.replaceAll(RegExp(r'package:test/test.dart'),
+              'package:flutter_test/flutter_test.dart')
+          : testTemplate;
+      FileCreator(_routeTestFilePath, contents: contents, rewrite: rewrite)
+          .run();
+    }
+  }
+
+  /// generate the main.dart in lib and app_test.dart in test
+  Future<void> generateMainLib() async {
+    final _mainPath = path.join(libraryPath, ApplicationConfig.main.path);
+    final _testFileName =
+        ApplicationConfig.main.path.replaceAll(RegExp(r'.dart'), '_test.dart');
+    final _mainTestFilePath = path.join(testPath, _testFileName);
+    String _fileHeadContent =
+        """import 'package:$projectName/core.dart';\n\n""";
+    var created = FileCreator(_mainPath,
+            contents: _fileHeadContent + ApplicationConfig.main.contents!,
+            rewrite: rewrite)
         .run();
     if (created) {
       var contents = flutter
           ? testTemplate.replaceAll(RegExp(r'package:test/test.dart'),
               'package:flutter_test/flutter_test.dart')
           : testTemplate;
-      FileCreator(_routeTestFilePath, contents: contents, rewrite: rewrite)
+      FileCreator(_mainTestFilePath, contents: contents, rewrite: rewrite)
           .run();
     }
   }
@@ -238,9 +279,11 @@ class InitCommand extends Command with YamlInformation {
     /// handle material_design_icons_flutter
     if (!mdi) {
       await Shell().run("flutter pub add material_design_icons_flutter");
-      contents += "\nexport 'package:material_design_icons_flutter/material_design_icons_flutter.dart';";
+      contents +=
+          "\nexport 'package:material_design_icons_flutter/material_design_icons_flutter.dart';";
     } else if (mdi) {
-      contents += "\nexport 'package:material_design_icons_flutter/material_design_icons_flutter.dart';";
+      contents +=
+          "\nexport 'package:material_design_icons_flutter/material_design_icons_flutter.dart';";
     }
 
     /// if one of them are not exist yet
@@ -248,6 +291,30 @@ class InitCommand extends Command with YamlInformation {
       await Shell().run("flutter pub get");
     }
     FileCreator(_corePath, contents: contents, rewrite: rewrite).run();
+  }
+
+  /// generate home screen
+  Future<void> generateDefaultScreen() async {
+    await Shell().run("flutter pub run myst screen home_screen");
+    await Shell().run("flutter pub run myst screen login_screen");
+    await Shell().run("flutter pub run myst screen register_screen");
+    await Shell().run("flutter pub run myst screen dashboard_screen");
+  }
+
+  Future<void> generateDefaultLayout() async {
+    await Shell().run("flutter pub run myst layout home_layout");
+    await Shell().run("flutter pub run myst layout backend_layout");
+  }
+
+  Future<void> generateDefaultService() async {
+    await Shell().run("flutter pub run myst service application_service");
+    await Shell().run("flutter pub run myst service authentication_service");
+  }
+
+  Future<void> generateDefaultController() async {
+    await Shell().run("flutter pub run myst controller application_controller");
+    await Shell()
+        .run("flutter pub run myst controller authentication_controller");
   }
 
   /// print the welcome message

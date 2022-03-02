@@ -57,6 +57,9 @@ void main(List<String> arguments) {
   /// add layout command to generate layout and its test
   runner.addCommand(myst.LayoutCommand());
 
+  /// add layout command to generate screen and its test
+  runner.addCommand(myst.ScreenCommand());
+
   /// add widget command to generate widget and its test
   runner.addCommand(myst.WidgetCommand());
 

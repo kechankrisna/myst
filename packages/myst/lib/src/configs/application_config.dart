@@ -1,11 +1,14 @@
 import 'package:myst/myst.dart';
 
 class ApplicationConfig {
-  /// router handler
+  /// router.dart handler
   static FileCreator get router =>
       FileCreator("router.dart", contents: routerTemplate);
+  
+  /// main.dart handler
+  static FileCreator get main => FileCreator("main.dart", contents: mainTemplate);
 
-  /// app handler
+  /// app.dart handler
   static FileCreator get app => FileCreator("app.dart", contents: appTemplate);
 
   /// application core
