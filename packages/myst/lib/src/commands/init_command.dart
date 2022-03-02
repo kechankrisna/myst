@@ -298,12 +298,14 @@ class InitCommand extends Command with YamlInformation {
     await Shell().run("flutter pub run myst screen home_screen");
     await Shell().run("flutter pub run myst screen login_screen");
     await Shell().run("flutter pub run myst screen register_screen");
-    await Shell().run("flutter pub run myst screen dashboard_screen");
+    await Shell().run("flutter pub run myst screen reset_screen");
+    await Shell().run("flutter pub run myst screen dashboard_screen --dir=admin");
+    await Shell().run("flutter pub run myst screen profile_screen --dir=admin");
   }
 
   Future<void> generateDefaultLayout() async {
     await Shell().run("flutter pub run myst layout home_layout");
-    await Shell().run("flutter pub run myst layout backend_layout");
+    await Shell().run("flutter pub run myst layout admin_layout");
   }
 
   Future<void> generateDefaultService() async {

@@ -148,28 +148,40 @@ class ScreenCommand extends Command
 
     /// if user input directory name,
     /// then create the new sub directory if not exists
-    dirName ??= fileName;
-    DirectoryCreator(path.join(libraryPath, parentDir, dirName)).run();
-    DirectoryCreator(path.join(libraryPath, parentDir, dirName, "widgets"))
-        .run();
+    if (dirName != null) {
+      DirectoryCreator(path.join(libraryPath, parentDir, dirName)).run();
+      DirectoryCreator(path.join(libraryPath, parentDir, dirName, fileName))
+          .run();
+      DirectoryCreator(
+              path.join(libraryPath, parentDir, dirName, fileName, "widgets"))
+          .run();
+    } else {
+      DirectoryCreator(path.join(libraryPath, parentDir, fileName)).run();
+      DirectoryCreator(path.join(libraryPath, parentDir, fileName, "widgets"))
+          .run();
+    }
 
     /// current file parent path
     final _parentLibPath = path.join(libraryPath, parentDir, "$parentDir.dart");
 
     /// current new file paths
     final _screenfilePath = dirName != null
-        ? path.join(libraryPath, parentDir, dirName, "$fileName.dart")
-        : path.join(libraryPath, parentDir, "$fileName.dart");
+        ? path.join(libraryPath, parentDir, dirName, fileName, "$fileName.dart")
+        : path.join(libraryPath, parentDir, fileName, "$fileName.dart");
     final _servicefilePath = dirName != null
-        ? path.join(libraryPath, parentDir, dirName, "${fileName}_service.dart")
-        : path.join(libraryPath, parentDir, "${fileName}_service.dart");
+        ? path.join(libraryPath, parentDir, dirName, fileName,
+            "${fileName}_service.dart")
+        : path.join(
+            libraryPath, parentDir, fileName, "${fileName}_service.dart");
     final _controllerfilePath = dirName != null
-        ? path.join(
-            libraryPath, parentDir, dirName, "${fileName}_controller.dart")
-        : path.join(libraryPath, parentDir, "${fileName}_controller.dart");
+        ? path.join(libraryPath, parentDir, dirName, fileName,
+            "${fileName}_controller.dart")
+        : path.join(
+            libraryPath, parentDir, fileName, "${fileName}_controller.dart");
     final _corefilePath = dirName != null
-        ? path.join(libraryPath, parentDir, dirName, "${fileName}_core.dart")
-        : path.join(libraryPath, parentDir, "${fileName}_core.dart");
+        ? path.join(
+            libraryPath, parentDir, dirName, fileName, "${fileName}_core.dart")
+        : path.join(libraryPath, parentDir, fileName, "${fileName}_core.dart");
 
     /// write content
     ///
@@ -188,7 +200,9 @@ class ScreenCommand extends Command
     var content = io.File(_parentLibPath).readAsStringSync();
     var exist = content.contains(RegExp("${fileName}_core.dart"));
     if (!exist) {
-      content += "\nexport '$dirName/${fileName}_core.dart';";
+      content += dirName == null
+          ? "\nexport '$fileName/${fileName}_core.dart';"
+          : "\nexport '$dirName/$fileName/${fileName}_core.dart';";
 
       /// force to rewrite
       FileCreator(_parentLibPath, contents: content, rewrite: true).run();
@@ -234,22 +248,33 @@ class ScreenCommand extends Command
 
     /// if user input directory name,
     /// then create the new sub directory if not exists
-    dirName ??= fileName;
-    DirectoryCreator(path.join(testPath, parentDir, dirName)).run();
-    DirectoryCreator(path.join(testPath, parentDir, dirName, "widgets")).run();
+    if (dirName != null) {
+      DirectoryCreator(path.join(testPath, parentDir, dirName)).run();
+      DirectoryCreator(path.join(testPath, parentDir, dirName, fileName)).run();
+      DirectoryCreator(
+              path.join(testPath, parentDir, dirName, fileName, "widgets"))
+          .run();
+    } else {
+      DirectoryCreator(path.join(testPath, parentDir, fileName)).run();
+      DirectoryCreator(path.join(testPath, parentDir, fileName, "widgets"))
+          .run();
+    }
 
     /// current new file path
     final _screenFilePath = dirName != null
-        ? path.join(testPath, parentDir, dirName, "${fileName}_test.dart")
-        : path.join(testPath, parentDir, "${fileName}_test.dart");
+        ? path.join(
+            testPath, parentDir, dirName, fileName, "${fileName}_test.dart")
+        : path.join(testPath, parentDir, fileName, "${fileName}_test.dart");
     final _servicefilePath = dirName != null
-        ? path.join(
-            testPath, parentDir, dirName, "${fileName}_service_test.dart")
-        : path.join(testPath, parentDir, "${fileName}_service_test.dart");
+        ? path.join(testPath, parentDir, dirName, fileName,
+            "${fileName}_service_test.dart")
+        : path.join(
+            testPath, parentDir, fileName, "${fileName}_service_test.dart");
     final _controllerfilePath = dirName != null
-        ? path.join(
-            testPath, parentDir, dirName, "${fileName}_controller_test.dart")
-        : path.join(testPath, parentDir, "${fileName}_controller_test.dart");
+        ? path.join(testPath, parentDir, dirName, fileName,
+            "${fileName}_controller_test.dart")
+        : path.join(
+            testPath, parentDir, fileName, "${fileName}_controller_test.dart");
 
     /// write content
     FileCreator(_screenFilePath, contents: screenContents, rewrite: rewrite)

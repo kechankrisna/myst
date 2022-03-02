@@ -133,6 +133,20 @@ class MyRouter {
         /// redirect: redirect,
       ),
 
+      // TODO: ResetScreen.router,
+      GoRoute(
+        name: resetRouteName,
+        path: resetRoutePath,
+        pageBuilder: (_, state) => NoTransitionPage(
+            key: state.pageKey,
+            child: const ResetScreen(key: ResetScreen.pageKey)),
+        routes: [
+          /// nested routes
+        ],
+
+        /// redirect: redirect,
+      ),
+
       // TODO: RegisterScreen.router,
       GoRoute(
         name: registerRouteName,
@@ -166,6 +180,19 @@ class MyRouter {
 
             /// redirect: redirect,
           ),
+
+          GoRoute(
+            name: profileRouteName,
+            path: profileRoutePath,
+            pageBuilder: (_, state) => const NoTransitionPage(
+                child: ProfileScreen(key: ProfileScreen.pageKey)),
+            routes: [
+              /// nested routes
+            ],
+
+            /// redirect: redirect,
+          ),
+
         ],
         redirect: (state) {
           final dashboardLocation = state.namedLocation(dashboardRouteName);
@@ -265,17 +292,21 @@ const kDrawerWidth = 300.0;
 const String routerConfigTemplate =
     """/// Any router configuration or constants\n
 /// route config name and path
-/// 
+
 const String rootRouteName = "root";
 const String rootRoutePath = "/";
 const String loginRouteName = "login";
 const String loginRoutePath = "/login";
 const String registerRouteName = "register";
 const String registerRoutePath = "/register";
+const String resetRouteName = "reset";
+const String resetRoutePath = "/reset";
 const String adminRouteName = "admin";
 const String adminRoutePath = "/admin";
 const String dashboardRouteName = "dashboard";
-const String dashboardRoutePath = "dashboard";""";
+const String dashboardRoutePath = "dashboard";
+const String profileRouteName = "profile";
+const String profileRoutePath = "profile";""";
 
 /// `configTemplate`
 ///
