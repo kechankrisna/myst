@@ -10,18 +10,12 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ApplicationService.setTitle(context, title);
+
     return ChangeNotifierProvider(
       create: (_) => LoginScreenController(),
-      child: AdaptivePlatformWidget(
-        /// child: Scaffold(
-        ///   appBar: AppBar(
-        ///     title: const Text(HomeService.title),
-        ///   ),
-        ///   body: const AdaptivePlatformWidget(
-        ///     child: Center(child: Text("welcome")),
-        ///   ),
-        /// ),
-        child: const LoginScreenScaffold(),
+      child: const AdaptivePlatformWidget(
+        child: LoginScreenScaffold(),
       ),
     );
   }

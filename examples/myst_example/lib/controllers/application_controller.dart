@@ -39,7 +39,7 @@ class ApplicationController extends ChangeNotifier
     notifyListeners();
 
     /// then update in shared key
-    service.saveLanguage(value.languageCode);
+    service.saveLanguage(value.toStringWithSeparator(separator: "_"));
   }
 
   changeTitle(String value) {

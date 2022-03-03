@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:myst_example/core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,10 +16,23 @@ class ApplicationService {
     preferences ??= await SharedPreferences.getInstance();
   }
 
+  /// `setTitle`
+  ///
+  /// allow every page or screen to change current display title
+  static setTitle(BuildContext context, String title) {
+    SystemChrome.setApplicationSwitcherDescription(
+        ApplicationSwitcherDescription(
+      label: title,
+      primaryColor: Theme.of(context).primaryColor.value,
+    ));
+  }
+
+  /// save then current theme into the preference key
   Future<bool> saveTheme(String value) async {
     return await preferences!.setString(themeKey, value);
   }
 
+  /// save the current lang into the preference key
   Future<bool> saveLanguage(String value) async {
     return await preferences!.setString(languageKey, value);
   }
@@ -26,6 +40,7 @@ class ApplicationService {
   ThemeMode get currentTheme => preferences!.getString(themeKey).toThemeMode;
 
   Locale get currentLocale => preferences!.getString(languageKey).toLocale;
+  
 }
 
 extension ApplicationServiceStringExt on String? {
@@ -41,12 +56,9 @@ extension ApplicationServiceStringExt on String? {
   }
 
   Locale get toLocale {
-    switch (this) {
-      case "km":
-        return Locale("km", "KH");
-
-      default:
-        return fallbackLocale;
+    if (this != null) {
+      return Locale(this!.split("_").first, this!.split("_").last);
     }
+    return fallbackLocale;
   }
 }

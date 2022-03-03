@@ -3,6 +3,9 @@ import 'package:myst_example/core.dart';
 class LoginScreenScaffold extends StatelessWidget {
   const LoginScreenScaffold({Key? key}) : super(key: key);
 
+  static const String createAccountText = "create an account";
+  static const String loginAccountText = "login";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,24 +44,41 @@ class LoginScreenScaffold extends StatelessWidget {
                   ),
                 ),
                 Expanded(child: SizedBox()),
-                TextButton(
-                  onPressed: () async {
-                    final name = context.read<LoginScreenController>().name;
-                    final token = context.read<LoginScreenController>().token;
-                    var result = await context
-                        .read<AuthenticationController>()
-                        .login(name: name!, token: token!);
+                Container(
+                  padding: EdgeInsets.all(12),
+                  child: Row(
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          context.goNamed(registerRouteName);
+                        },
+                        child: Text(createAccountText),
+                      ),
+                      Spacer(),
+                      ElevatedButton(
+                        onPressed: () async {
+                          final name =
+                              context.read<LoginScreenController>().name;
+                          final token =
+                              context.read<LoginScreenController>().token;
+                          var result = await context
+                              .read<AuthenticationController>()
+                              .login(name: name!, token: token!);
 
-                    printMagenta("name $name");
-                  },
-                  child: Text("LOGIN"),
+                          printMagenta("name $name");
+                        },
+                        child: Text(loginAccountText),
+                      ),
+                    ],
+                  ),
                 ),
-                TextButton(
-                  onPressed: () async {
-                    context.read<LoginScreenController>().onReset();
-                  },
-                  child: Text("reset"),
-                ),
+
+                /// TextButton(
+                ///   onPressed: () async {
+                ///     context.read<LoginScreenController>().onReset();
+                ///   },
+                ///   child: Text("reset"),
+                /// ),
                 SizedBox(height: 20),
                 SwitchLanguageButton(),
               ],

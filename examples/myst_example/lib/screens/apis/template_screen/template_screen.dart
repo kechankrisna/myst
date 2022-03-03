@@ -10,6 +10,7 @@ class TemplateScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ApplicationService.setTitle(context, title);
     return AdaptivePlatformWidget(
       child: ApiLayout(
         child: ChangeNotifierProvider(

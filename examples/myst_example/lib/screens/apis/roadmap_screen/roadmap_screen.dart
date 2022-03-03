@@ -5,7 +5,7 @@ import 'widgets/roadmap_screen_stepper.dart';
 
 class RoadMapScreen extends StatelessWidget {
   final String? index;
-  const RoadMapScreen({Key? key,  this.index}) : super(key: key);
+  const RoadMapScreen({Key? key, this.index}) : super(key: key);
 
   static const Key screenKey = ValueKey("RoadMapScreen");
 
@@ -13,10 +13,12 @@ class RoadMapScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ApplicationService.setTitle(context, title);
     return AdaptivePlatformWidget(
       child: ApiLayout(
         child: ChangeNotifierProvider(
-          create: (_) => RoadMapScreenController(initialPage: int.tryParse(index ?? '0') ?? 0),
+          create: (_) => RoadMapScreenController(
+              initialPage: int.tryParse(index ?? '0') ?? 0),
           child: const RoadMapScreenScaffold(),
         ),
       ),

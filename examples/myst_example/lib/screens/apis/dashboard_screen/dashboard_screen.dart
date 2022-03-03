@@ -13,6 +13,7 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ApplicationService.setTitle(context, title);
     return AdaptivePlatformWidget(
       child: ApiLayout(
         child: DashboardScreenBody(),
