@@ -39,6 +39,8 @@ class LayoutCommand extends Command
   /// Xtension
 
   LayoutCommand() {
+    dirName = null;
+
     argParser.addOption("name",
         callback: (v) => inputName = className = v,
         help: "please enter the class name correctly");
@@ -172,7 +174,7 @@ class LayoutCommand extends Command
       ..generateLib(
         template:
             "export '${fileName!}_service.dart';\nexport '${fileName!}_controller.dart';\nexport '${fileName!}.dart';",
-        fileName: "${fileName!}_core.dart",
+        fileName: "${fileName!}_core",
         dirNames: [...dirNames, fileName!],
         shouldExport: true,
       )

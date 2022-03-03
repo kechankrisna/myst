@@ -315,18 +315,85 @@ class InitCommand extends Command with YamlInformation {
 
   /// generate home screen
   Future<void> generateDefaultScreen() async {
-    await Shell().run("flutter pub run myst screen home_screen --template=mvc");
-    await Shell().run("flutter pub run myst screen login_screen --template=mvc");
-    await Shell().run("flutter pub run myst screen register_screen --template=mvc");
-    await Shell().run("flutter pub run myst screen reset_screen --template=mvc");
-    await Shell()
-        .run("flutter pub run myst screen dashboard_screen --dir=admin --template=mvc");
-    await Shell().run("flutter pub run myst screen profile_screen --dir=admin --template=mvc");
+    /// home_screen.dart
+    ScreenCommand()
+      ..className = "HomeScreen"
+      ..fileName = "home_screen"
+      ..projectName = projectName
+      ..generateScreenLibFiles()
+      ..generateScreenTestFiles();
+
+    /// login_screen.dart
+    ScreenCommand()
+      ..className = "LoginScreen"
+      ..fileName = "login_screen"
+      ..projectName = projectName
+      ..generateScreenLibFiles()
+      ..generateScreenTestFiles();
+
+    /// register_screen.dart
+    ScreenCommand()
+      ..className = "RegisterScreen"
+      ..fileName = "register_screen"
+      ..projectName = projectName
+      ..generateScreenLibFiles()
+      ..generateScreenTestFiles();
+
+    /// reset_screen.dart
+    ScreenCommand()
+      ..className = "ResetScreen"
+      ..fileName = "reset_screen"
+      ..projectName = projectName
+      ..generateScreenLibFiles()
+      ..generateScreenTestFiles();
+
+    /// dashboard_screen.dart
+    ScreenCommand()
+      ..className = "DashboardScreen"
+      ..fileName = "dashboard_screen"
+      ..projectName = projectName
+      ..dirName = "admin"
+      ..generateScreenLibFiles()
+      ..generateScreenTestFiles();
+
+    /// profile_screen.dart
+    ScreenCommand()
+      ..className = "ProfileScreen"
+      ..fileName = "profile_screen"
+      ..projectName = projectName
+      ..dirName = "admin"
+      ..generateScreenLibFiles()
+      ..generateScreenTestFiles();
+
+    /// await Shell().run("flutter pub run myst screen home_screen --template=mvc");
+    /// await Shell()
+    ///     .run("flutter pub run myst screen login_screen --template=mvc");
+    /// await Shell()
+    ///     .run("flutter pub run myst screen register_screen --template=mvc");
+    /// await Shell()
+    ///     .run("flutter pub run myst screen reset_screen --template=mvc");
+    /// await Shell().run(
+    ///     "flutter pub run myst screen dashboard_screen --dir=admin --template=mvc");
+    /// await Shell().run(
+    ///     "flutter pub run myst screen profile_screen --dir=admin --template=mvc");
   }
 
   Future<void> generateDefaultLayout() async {
-    await Shell().run("flutter pub run myst layout blank_layout --template=mvc");
-    await Shell().run("flutter pub run myst layout admin_layout --template=mvc");
+    /// blank_layout.dart
+    LayoutCommand()
+      ..className = "BlankLayout"
+      ..fileName = "blank_layout"
+      ..projectName = projectName
+      ..generateScreenLibFiles()
+      ..generateScreenTestFiles();
+
+    /// admin_layout.dart
+    LayoutCommand()
+      ..className = "AdminLayout"
+      ..fileName = "admin_layout"
+      ..projectName = projectName
+      ..generateScreenLibFiles()
+      ..generateScreenTestFiles();
   }
 
   Future<void> generateDefaultService() async {
