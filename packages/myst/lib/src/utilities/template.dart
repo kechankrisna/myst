@@ -224,25 +224,25 @@ class MyRouter {
     // TODO: handle redirect or middlewar
     redirect: (state) {
       /// if user is in login screen
-      /// final loginLocation = state.namedLocation(loginRouteName);
-      /// final loggingIn = state.subloc == loginLocation;
+      final loginLocation = state.namedLocation(loginRouteName);
+      final loggingIn = state.subloc == loginLocation;
 
-      /// /// if user is in register screen
-      /// final registerAccountLocation = state.namedLocation(registerRouteName);
-      /// final registeringAccount = state.subloc == registerAccountLocation;
+      /// if user is in register screen
+      final registerAccountLocation = state.namedLocation(registerRouteName);
+      final registeringAccount = state.subloc == registerAccountLocation;
 
-      /// final isLoggedIn = authenticationController.isLoggedIn;
-      /// final rootLocation = state.namedLocation(rootRouteName);
+      final isLoggedIn = authenticationController.isLoggedIn;
+      final rootLocation = state.namedLocation(rootRouteName);
 
-      /// /// if not logged-in nor in loggin page nor in register page then go to login
-      /// if (!isLoggedIn && !loggingIn && !registeringAccount) {
-      ///   return loginLocation;
-      /// }
+      /// if not logged-in nor in loggin page nor in register page then go to login
+      if (!isLoggedIn && !loggingIn && !registeringAccount) {
+        return loginLocation;
+      }
 
-      /// /// if login and but sticted in login or register page, then go to api dashboard
-      /// if (isLoggedIn && (loggingIn || registeringAccount)) {
-      ///   return rootLocation;
-      /// }
+      /// if login and but sticted in login or register page, then go to api dashboard
+      if (isLoggedIn && (loggingIn || registeringAccount)) {
+        return rootLocation;
+      }
 
       return null;
     },

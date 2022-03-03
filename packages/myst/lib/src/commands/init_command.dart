@@ -315,18 +315,18 @@ class InitCommand extends Command with YamlInformation {
 
   /// generate home screen
   Future<void> generateDefaultScreen() async {
-    /// await Shell().run("flutter pub run myst screen home_screen");
-    /// await Shell().run("flutter pub run myst screen login_screen");
-    /// await Shell().run("flutter pub run myst screen register_screen");
-    /// await Shell().run("flutter pub run myst screen reset_screen");
-    /// await Shell()
-    ///     .run("flutter pub run myst screen dashboard_screen --dir=admin");
-    /// await Shell().run("flutter pub run myst screen profile_screen --dir=admin");
+    await Shell().run("flutter pub run myst screen home_screen --template=mvc");
+    await Shell().run("flutter pub run myst screen login_screen --template=mvc");
+    await Shell().run("flutter pub run myst screen register_screen --template=mvc");
+    await Shell().run("flutter pub run myst screen reset_screen --template=mvc");
+    await Shell()
+        .run("flutter pub run myst screen dashboard_screen --dir=admin --template=mvc");
+    await Shell().run("flutter pub run myst screen profile_screen --dir=admin --template=mvc");
   }
 
   Future<void> generateDefaultLayout() async {
-    /// await Shell().run("flutter pub run myst layout home_layout");
-    /// await Shell().run("flutter pub run myst layout admin_layout");
+    await Shell().run("flutter pub run myst layout blank_layout --template=mvc");
+    await Shell().run("flutter pub run myst layout admin_layout --template=mvc");
   }
 
   Future<void> generateDefaultService() async {
