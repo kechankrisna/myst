@@ -46,7 +46,7 @@ class InitCommand extends Command with YamlInformation {
 
     /// generate the router file
     await generateRouterLib();
-    
+
     /// generate the main file
     await generateMainLib();
 
@@ -202,10 +202,10 @@ class InitCommand extends Command with YamlInformation {
     final _testFileName =
         ApplicationConfig.main.path.replaceAll(RegExp(r'.dart'), '_test.dart');
     final _mainTestFilePath = path.join(testPath, _testFileName);
-    String _fileHeadContent =
-        """import 'package:$projectName/core.dart';\n\n""";
+
     var created = FileCreator(_mainPath,
-            contents: _fileHeadContent + ApplicationConfig.main.contents!,
+            contents: ApplicationConfig.main.contents!
+                .replaceAll(RegExp(r"projectName"), projectName!),
             rewrite: rewrite)
         .run();
     if (created) {
@@ -278,12 +278,32 @@ class InitCommand extends Command with YamlInformation {
 
     /// handle material_design_icons_flutter
     if (!mdi) {
-      await Shell().run("flutter pub add material_design_icons_flutter");
+      await Shell().run("flutter pub add material_design_icons_flutter:any");
       contents +=
           "\nexport 'package:material_design_icons_flutter/material_design_icons_flutter.dart';";
     } else if (mdi) {
       contents +=
           "\nexport 'package:material_design_icons_flutter/material_design_icons_flutter.dart';";
+    }
+
+    /// handle easy_localization
+    if (!sharedpref) {
+      await Shell().run("flutter pub add easy_localization:^3.0.1-dev");
+      contents +=
+          "\nexport 'package:easy_localization/easy_localization.dart' hide TextDirection;";
+    } else if (sharedpref) {
+      contents +=
+          "\nexport 'package:easy_localization/easy_localization.dart' hide TextDirection;";
+    }
+
+    /// handle shared_preferences
+    if (!sharedpref) {
+      await Shell().run("flutter pub add shared_preferences:^2.0.13");
+      contents +=
+          "\nexport 'package:shared_preferences/shared_preferences.dart';";
+    } else if (sharedpref) {
+      contents +=
+          "\nexport 'package:shared_preferences/shared_preferences.dart';";
     }
 
     /// if one of them are not exist yet
@@ -299,7 +319,8 @@ class InitCommand extends Command with YamlInformation {
     await Shell().run("flutter pub run myst screen login_screen");
     await Shell().run("flutter pub run myst screen register_screen");
     await Shell().run("flutter pub run myst screen reset_screen");
-    await Shell().run("flutter pub run myst screen dashboard_screen --dir=admin");
+    await Shell()
+        .run("flutter pub run myst screen dashboard_screen --dir=admin");
     await Shell().run("flutter pub run myst screen profile_screen --dir=admin");
   }
 

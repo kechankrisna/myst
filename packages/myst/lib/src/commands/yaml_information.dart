@@ -88,6 +88,12 @@ mixin YamlInformation {
   // if current project using material_design_icons_flutter
   late bool mdi;
 
+  // if current project using easy_localization
+  late bool easy_localization;
+  
+  // if current project using shared_preferences
+  late bool sharedpref;
+
   // if current project using integration_test
   late bool integration_test;
 
@@ -177,6 +183,12 @@ mixin YamlInformation {
 
     /// check if current project using material_design_icons_flutter
     mdi = dependencies.nodes.containsKey("material_design_icons_flutter");
+
+    /// check if current project using easy_localization
+    easy_localization = dependencies.nodes.containsKey("easy_localization");
+
+    /// check if current project using shared_preferences
+    sharedpref = dependencies.nodes.containsKey("shared_preferences");
 
     /// check if current project using integration_test
     integration_test = dev_dependencies.nodes.containsKey("integration_test");
