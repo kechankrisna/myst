@@ -17,7 +17,7 @@ class DirectoryCreator extends DirectoryCreatorInterface {
       bool isNew = false;
       if (!dir.existsSync()) {
         isNew = true;
-        dir.createSync();
+        dir.createSync(recursive: true);
         printGreen("✓ $exactPath");
       } else {
         printYellow("✓ $exactPath");

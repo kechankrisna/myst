@@ -26,7 +26,7 @@ class FileCreator extends FileCreatorInterface {
       var isNew = false;
       if (!file.existsSync()) {
         isNew = true;
-        file.createSync();
+        file.createSync(recursive: true);
         printGreen("✓ $exactPath");
       } else {
         printYellow("✓ $exactPath (${rewrite ? 'rewrite' : 'exist'})");

@@ -2,8 +2,6 @@ import 'package:args/command_runner.dart';
 import 'package:recase/recase.dart';
 import 'package:myst/myst.dart';
 import 'package:printx/printx.dart';
-import 'dart:io' as io;
-import 'package:path/path.dart' as path;
 
 class ControllerCommand extends Command
     with YamlInformation
@@ -26,6 +24,10 @@ class ControllerCommand extends Command
 
   /// directory from user and print help if null
   late String? dirName;
+
+  /// split the dirname input into list of parts
+  List<String> get dirNames =>
+      dirName != null ? [...dirName!.split(RegExp(r"(\\|\/)"))] : [];
 
   final String parentDir = "controllers";
 
@@ -92,74 +94,23 @@ class ControllerCommand extends Command
 
   @override
   void generateLib() async {
-    var contents =
-        "\nimport 'package:flutter/foundation.dart';\nimport 'package:$projectName/core.dart';\n" +
-            controllerTemplate.replaceAll(RegExp(r"className"), className!);
-
-    /// if user input directory name,
-    /// then create the new sub directory if not exists
-    if (dirName != null) {
-      DirectoryCreator(path.join(libraryPath, parentDir, dirName)).run();
-    }
-
-    /// current file parent path
-    final _parentLibPath = path.join(libraryPath, parentDir, "$parentDir.dart");
-
-    /// current new file path
-    final _filePath = dirName != null
-        ? path.join(libraryPath, parentDir, dirName, "$fileName.dart")
-        : path.join(libraryPath, parentDir, "$fileName.dart");
-
-    FileCreator(_filePath, contents: contents, rewrite: rewrite);
-
-    /// write content
-    FileCreator(_filePath, contents: contents, rewrite: rewrite).run();
-
-    /// printCyan(content);
-
-    /// add to its parent lib if none exist
-    var content = io.File(_parentLibPath).readAsStringSync();
-    var exist = content.contains(RegExp("$fileName.dart"));
-    if (!exist) {
-      content += dirName == null
-          ? "\nexport '$fileName.dart';"
-          : "\nexport '$dirName/$fileName.dart';";
-
-      /// force to rewrite
-      FileCreator(_parentLibPath, contents: content, rewrite: true).run();
-    }
+    GenerateFileHelper(
+      parentDir: parentDir,
+      className: className!,
+      projectName: projectName!,
+    ).generateLib(
+        template: controllerTemplate, fileName: fileName!, dirNames: dirNames);
   }
 
   @override
   void generateTest() {
-    /// load content and repllace
-    var contents = controllerTestTemplate
-        .replaceAll(RegExp(r"className"), className!)
-        .replaceAll(RegExp(r"objectName"), className!.camelCase);
-
-    if (flutter) {
-      contents = contents.replaceAll(RegExp(r'package:test/test.dart'),
-          'package:flutter_test/flutter_test.dart');
-    }
-
-    /// add import
-    contents = contents.replaceAll(RegExp(r"_test.dart';"),
-        "_test.dart'; \nimport 'package:$projectName/core.dart';\n");
-
-    /// printCyan(contents);
-
-    /// if user input directory name,
-    /// then create the new sub directory if not exists
-    if (dirName != null) {
-      DirectoryCreator(path.join(testPath, parentDir, dirName)).run();
-    }
-
-    /// current new file path
-    final _filePath = dirName != null
-        ? path.join(testPath, parentDir, dirName, "${fileName}_test.dart")
-        : path.join(testPath, parentDir, "${fileName}_test.dart");
-
-    /// write content
-    FileCreator(_filePath, contents: contents, rewrite: rewrite).run();
+    GenerateFileHelper(
+      parentDir: parentDir,
+      className: className!,
+      projectName: projectName!,
+    ).generateTest(
+        template: controllerTestTemplate,
+        fileName: fileName!,
+        dirNames: dirNames);
   }
 }

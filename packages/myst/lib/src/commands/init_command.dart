@@ -315,29 +315,73 @@ class InitCommand extends Command with YamlInformation {
 
   /// generate home screen
   Future<void> generateDefaultScreen() async {
-    await Shell().run("flutter pub run myst screen home_screen");
-    await Shell().run("flutter pub run myst screen login_screen");
-    await Shell().run("flutter pub run myst screen register_screen");
-    await Shell().run("flutter pub run myst screen reset_screen");
-    await Shell()
-        .run("flutter pub run myst screen dashboard_screen --dir=admin");
-    await Shell().run("flutter pub run myst screen profile_screen --dir=admin");
+    /// await Shell().run("flutter pub run myst screen home_screen");
+    /// await Shell().run("flutter pub run myst screen login_screen");
+    /// await Shell().run("flutter pub run myst screen register_screen");
+    /// await Shell().run("flutter pub run myst screen reset_screen");
+    /// await Shell()
+    ///     .run("flutter pub run myst screen dashboard_screen --dir=admin");
+    /// await Shell().run("flutter pub run myst screen profile_screen --dir=admin");
   }
 
   Future<void> generateDefaultLayout() async {
-    await Shell().run("flutter pub run myst layout home_layout");
-    await Shell().run("flutter pub run myst layout admin_layout");
+    /// await Shell().run("flutter pub run myst layout home_layout");
+    /// await Shell().run("flutter pub run myst layout admin_layout");
   }
 
   Future<void> generateDefaultService() async {
-    await Shell().run("flutter pub run myst service application_service");
-    await Shell().run("flutter pub run myst service authentication_service");
+    /// application_service.dart
+    GenerateFileHelper(
+        parentDir: "services",
+        className: "ApplicationService",
+        projectName: projectName!)
+      ..generateLib(
+          template: applicationServiceTemplate, fileName: "application_service")
+      ..generateTest(
+          template: serviceTemplate, fileName: "application_service");
+
+    /// authentication_service.dart
+    GenerateFileHelper(
+        parentDir: "services",
+        className: "AuthenticationService",
+        projectName: projectName!)
+      ..generateLib(
+          template: authenticationServiceTemplate,
+          fileName: "authentication_service")
+      ..generateTest(
+          template: serviceTemplate, fileName: "authentication_service");
+
+    /// await Shell().run("flutter pub run myst service application_service");
+    /// await Shell().run("flutter pub run myst service authentication_service");
   }
 
   Future<void> generateDefaultController() async {
-    await Shell().run("flutter pub run myst controller application_controller");
-    await Shell()
-        .run("flutter pub run myst controller authentication_controller");
+    /// application_controller.dart
+    GenerateFileHelper(
+        parentDir: "controllers",
+        className: "ApplicationController",
+        projectName: projectName!)
+      ..generateLib(
+          template: applicationControllerTemplate,
+          fileName: "application_controller")
+      ..generateTest(
+          template: controllerTestTemplate, fileName: "application_controller");
+
+    /// authentication_controller.dart
+    GenerateFileHelper(
+        parentDir: "controllers",
+        className: "AuthenticationController",
+        projectName: projectName!)
+      ..generateLib(
+          template: authenticationControllerTemplate,
+          fileName: "authentication_controller")
+      ..generateTest(
+          template: controllerTestTemplate,
+          fileName: "authentication_controller");
+
+    /// await Shell().run("flutter pub run myst controller application_controller");
+    /// await Shell()
+    ///     .run("flutter pub run myst controller authentication_controller");
   }
 
   /// print the welcome message

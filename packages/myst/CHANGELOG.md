@@ -1,3 +1,14 @@
+## 0.0.1+6
+
+- add myst layout and screen for mvc pattern
+- fixed model generator
+- add included and excluded to myst yaml
+- add template to myst yaml
+- fixed app.dart, router.dart, core.dart, main.dart
+- add couple file for config and auto generate default login/reset/register/ 
+- auto init /admin/dashboard and /admin/profile
+- auto create authentication_controller  and application_controller with service
+
 ## 0.0.1+5
 
 - myst repair (re-organized export)

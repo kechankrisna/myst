@@ -30,17 +30,30 @@ const String mystYamlTemplate = """configs:
     included: [".*."]""";
 
 /// `mainTemplate`
-/// 
+///
 /// this will be used to create or override main.dart content
 const String mainTemplate = """
+import 'package:projectName/core.dart';
+
 void main() async {
+  // flutter binding
   WidgetsFlutterBinding.ensureInitialized();
 
-  /// await ApplicationService.ensureSharedPreferences();
+  /// easy localization
+  await EasyLocalization.ensureInitialized();
 
-  var authenticationController = AuthenticationController();
+  /// shared preference
+  await ApplicationService.ensureInitialized();
 
-  runApp(MyApp(authenticationController: authenticationController));
+  final authenticationController = AuthenticationController();
+
+  runApp(EasyLocalization(
+      path: translationsPath,
+      supportedLocales: supportedLocales,
+      fallbackLocale: fallbackLocale,
+      startLocale: startLocale,
+      saveLocale: true,
+      child: MyApp(authenticationController: authenticationController)));
 }
 """;
 
@@ -241,7 +254,28 @@ class MyRouter {
 ///
 /// Authentication configuration or constants\n
 const String authenticationConfigTemplate =
-    """/// Authentication configuration or constants\n""";
+    """/// Authentication configuration or constants\n
+/// `userNameKey`
+///
+/// ### Used to store the user name in cache eg: shared pref or hive
+const String userNameKey = "name";
+
+/// `userEmailKey`
+///
+/// ### Used to store the user email in cache eg: shared pref or hive
+const String userEmailKey = "email";
+
+/// `userTokenKey`
+///
+/// ### Used to store the user token in cache eg: shared pref or hive
+const String userTokenKey = "token";
+
+/// `userTokenTypeKey`
+///
+/// ### Used to store the user token in cache eg: shared pref or hive
+const String userTokenTypeKey = "token_type";
+
+""";
 
 /// ### `applicationConfigTemplate`
 ///
@@ -259,10 +293,10 @@ final ThemeData lightTheme = ThemeData();
 /// use this to customize your dark mode theme
 final ThemeData darkTheme = ThemeData.dark();
 
-/// `languageKey`
+/// `localeKey`
 /// 
 /// use this key into shared preference to save or get lang cache
-const String languageKey = "lang";
+const String localeKey = "lang";
 
 /// `themeKey`
 /// 
@@ -273,6 +307,36 @@ const String themeKey = "theme";
 /// 
 /// place holder represent the local asset image as place holder
 const String placeholder = "assets/images/loading.png";
+
+/// `fallbackLocale`
+///
+const fallbackLocale = Locale('en', 'US');
+
+/// `startLocale`
+///
+///
+const startLocale = Locale('en', 'US');
+
+/// `supportedLocales`
+///
+///
+const supportedLocales = [fallbackLocale, Locale('km', 'KH')];
+
+/// `translationsPath`
+///
+///
+const translationsPath = "assets/translations";
+
+/// `restorationScopeId`
+///
+///
+const restorationScopeId = "app";
+
+/// `appTitle`
+/// 
+/// 
+const appTitle = "Myst Example";
+
 """;
 
 /// ### `layoutConfigTemplate`
@@ -280,10 +344,17 @@ const String placeholder = "assets/images/loading.png";
 /// Layout screen configuration or constants
 const String layoutConfigTemplate =
     """/// Layout screen configuration or constants\n
-/// `kDrawerWidth`
-/// 
-/// will be used to set the drawer width for your layout
-const kDrawerWidth = 300.0;
+/// reference of the left drawer width
+const double kDrawerLeftWidth = 300.0;
+
+/// reference of the right drawer width
+const double kDrawerRightWidth = 300.0;
+
+/// reference of the mini drawer in the left side
+const double kMiniLeftDrawerWidth = 65.0;
+
+/// reference of the mini drawer in the left side
+const double kMiniRightDrawerWidth = 65.0;
 """;
 
 /// `routerConfigTemplate`
@@ -306,7 +377,8 @@ const String adminRoutePath = "/admin";
 const String dashboardRouteName = "dashboard";
 const String dashboardRoutePath = "dashboard";
 const String profileRouteName = "profile";
-const String profileRoutePath = "profile";""";
+const String profileRoutePath = "profile";
+""";
 
 /// `configTemplate`
 ///
@@ -501,7 +573,8 @@ void main() {
 ///
 /// will be used when create a new controller
 /// and its test file
-const String controllerTemplate = """
+const String controllerTemplate =
+    """import 'package:projectName/core.dart';\nimport 'package:flutter/foundation.dart';\n
 /// ### `className`
 /// 
 /// `Description`:
@@ -618,7 +691,9 @@ void main() {
 ///
 /// will be used when create a new layout
 /// and its test file
-const String layoutStatelessTemplate = """
+const String layoutStatelessTemplate =
+    """import 'package:projectName/core.dart';\n
+
 /// ### `className`
 /// 
 /// `Description`:
@@ -626,12 +701,33 @@ const String layoutStatelessTemplate = """
 /// `Example`:
 // TODO: Implement the className
 class className extends StatelessWidget {
-  final Widget child;
-  const className({Key? key, required this.child}) : super(key: key);
+  final Widget? child;
+  const className({Key? key, this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return AdaptivePlatformWidget(child: child);
+    return AdaptivePlatformWidget(child: child ?? Container());
+  }
+}
+""";
+
+const String layoutStatelessNoChildTemplate =
+    """import 'package:projectName/core.dart';\n
+
+/// ### `className`
+/// 
+/// `Description`:
+/// 
+/// `Example`:
+// TODO: Implement the className
+class className extends StatelessWidget {
+  const className({Key? key}) : super(key: key);
+
+  static const Key widgetKey = ValueKey("className");
+
+  @override
+  Widget build(BuildContext context) {
+    return AdaptivePlatformWidget(child: Container());
   }
 }
 """;
@@ -640,7 +736,8 @@ class className extends StatelessWidget {
 ///
 /// will be used when create a new layout
 /// and its test file
-const String layoutStatelessNotifierTemplate = """
+const String layoutStatelessNotifierTemplate =
+    """import 'package:projectName/core.dart';\n
 /// ### `className`
 ///
 /// `Description`:
@@ -648,14 +745,40 @@ const String layoutStatelessNotifierTemplate = """
 /// `Example`:
 // TODO: Implement the className
 class className extends StatelessWidget {
-  final Widget child;
-  const className({Key? key, required this.child}) : super(key: key);
+  final Widget? child;
+  const className({Key? key, this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => classNameState(),
-      child: AdaptivePlatformWidget(child: child),
+      child: AdaptivePlatformWidget(child: child ?? Container()),
+    );
+  }
+}
+
+class classNameState extends ChangeNotifier {}
+""";
+
+
+const String layoutStatelessNotifierNoChildTemplate =
+    """import 'package:projectName/core.dart';\n
+/// ### `className`
+///
+/// `Description`:
+///
+/// `Example`:
+// TODO: Implement the className
+class className extends StatelessWidget {
+  const className({Key? key}) : super(key: key);
+
+  static const Key widgetKey = ValueKey("className");
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => classNameState(),
+      child: AdaptivePlatformWidget(child: Container()),
     );
   }
 }
@@ -667,7 +790,8 @@ class classNameState extends ChangeNotifier {}
 ///
 /// will be used when create a new layout
 /// and its test file
-const String layoutStatefulTemplate = """
+const String layoutStatefulTemplate =
+    """import 'package:projectName/core.dart';\n
 /// ### `className`
 /// 
 /// `Description`:
@@ -675,8 +799,8 @@ const String layoutStatefulTemplate = """
 /// `Example`:
 // TODO: Implement the className
 class className extends StatefulWidget {
-  final Widget child;
-  const className({Key? key, required this.child}) : super(key: key);
+  final Widget? child;
+  const className({Key? key, this.child}) : super(key: key);
 
   @override
   State<className> createState() => _classNameState();
@@ -686,7 +810,57 @@ class _classNameState extends State<className> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return AdaptivePlatformWidget(child: widget.child);
+    return AdaptivePlatformWidget(child: widget.child ?? Container() );
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // TODO: implement didChangeAppLifecycleState
+    super.didChangeAppLifecycleState(state);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+}
+""";
+
+const String layoutStatefulNoChildTemplate =
+    """import 'package:projectName/core.dart';\n
+/// ### `className`
+/// 
+/// `Description`:
+/// 
+/// `Example`:
+// TODO: Implement the className
+class className extends StatefulWidget {
+  const className({Key? key}) : super(key: key);
+
+  static const Key widgetKey = ValueKey("className");
+
+  @override
+  State<className> createState() => _classNameState();
+}
+
+class _classNameState extends State<className> with WidgetsBindingObserver {
+
+  @override
+  Widget build(BuildContext context) {
+    return AdaptivePlatformWidget(child: Container() );
   }
 
   @override
@@ -761,7 +935,8 @@ void main() {
 
 /// `screenControllerLayout`
 ///
-const String screenControllerTemplate = """
+const String screenControllerTemplate =
+    """import 'package:projectName/core.dart';\nimport 'package:flutter/foundation.dart';\n
 /// ### `className`
 /// 
 /// `Description`:
@@ -798,7 +973,7 @@ class classNameController extends ChangeNotifier with DiagnosticableTreeMixin im
 
 /// `screenLayout`
 ///
-const String screenTemplate = """
+const String screenTemplate = """import 'package:projectName/core.dart';
 /// ### `className`
 ///
 /// `Description`:
@@ -836,4 +1011,347 @@ const String screenCoreTemplate = """
 export 'fileName_service.dart';
 export 'fileName_controller.dart';
 export 'fileName.dart';
+""";
+
+/// application_controller template
+///
+///
+const String applicationControllerTemplate = """
+import 'package:flutter/foundation.dart';
+import 'package:projectName/core.dart';
+
+/// ### `ApplicationController`
+///
+/// `Description`: this application controller will take controll of theme, language, global configuration and other app sharedable state
+///
+/// `Example`:
+class ApplicationController extends ChangeNotifier
+    with DiagnosticableTreeMixin
+    implements ReassembleHandler {
+  late ApplicationService service;
+
+  /// current application locale
+  late Locale locale;
+
+  /// current application theme mode
+  late ThemeMode themeMode;
+
+  /// application title
+  late String generatedTitle;
+
+  ApplicationController([ApplicationService? applicationService]) {
+    service = applicationService ?? ApplicationService();
+    themeMode = service.currentTheme;
+    locale = service.currentLocale;
+    generatedTitle = appTitle;
+  }
+
+  /// `changeThemeMode`
+  ///
+  /// change the thememode in controller then update shared key to remember the choice
+  changeThemeMode(String value) {
+    themeMode = value.toThemeMode;
+    notifyListeners();
+
+    /// then update in shared key
+    service.saveTheme(value);
+  }
+
+  /// `changeLanguage`
+  ///
+  /// change the language in controller then update shared key to remember the choice
+  changeLocale(Locale value) {
+    locale = value;
+
+    notifyListeners();
+
+    /// then update in shared key
+    service.saveLanguage(value.toStringWithSeparator(separator: "_"));
+  }
+
+  /// `changeTitle`
+  ///
+  /// might not work or use application service instead of, to change browser title
+  changeTitle(String value) {
+    generatedTitle = value;
+
+    notifyListeners();
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+
+    /// list all the properties of your class here.
+    /// See the documentation of debugFillProperties for more information.
+    /// TODO: implement add
+    properties.add(StringProperty('ApplicationController', null));
+  }
+
+  @override
+  void reassemble() {
+    print('Did hot-reload ApplicationController');
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+}
+""";
+
+/// application_service template
+///
+///
+const String applicationServiceTemplate = """
+import 'package:flutter/services.dart';
+import 'package:projectName/core.dart';
+
+/// ### `ApplicationService`
+///
+/// `Description`: this class will be use with other application controller to handle global service for application
+///
+/// `Example`:
+class ApplicationService {
+  /// shared preference must be initialized before use
+  static SharedPreferences? preferences;
+
+  ///
+  static ensureInitialized() async {
+    // ensure preference
+    preferences ??= await SharedPreferences.getInstance();
+  }
+
+  /// `setTitle`
+  ///
+  /// allow every page or screen to change current display title
+  static setTitle(BuildContext context, String title) {
+    SystemChrome.setApplicationSwitcherDescription(
+        ApplicationSwitcherDescription(
+      label: title,
+      primaryColor: Theme.of(context).primaryColor.value,
+    ));
+  }
+
+  /// save then current theme into the preference key
+  Future<bool> saveTheme(String value) async {
+    return await preferences!.setString(themeKey, value);
+  }
+
+  /// save the current lang into the preference key
+  Future<bool> saveLanguage(String value) async {
+    return await preferences!.setString(localeKey, value);
+  }
+
+  ThemeMode get currentTheme => preferences!.getString(themeKey).toThemeMode;
+
+  Locale get currentLocale => preferences!.getString(localeKey).toLocale;
+}
+
+/// private extension for application service class on string
+extension ApplicationServiceStringExt on String? {
+  ThemeMode get toThemeMode {
+    switch (this) {
+      case "light":
+        return ThemeMode.light;
+      case "dark":
+        return ThemeMode.dark;
+      default:
+        return ThemeMode.system;
+    }
+  }
+
+  Locale get toLocale {
+    if (this != null) {
+      return Locale(this!.split("_").first, this!.split("_").last);
+    }
+    return fallbackLocale;
+  }
+}
+""";
+
+/// `authenticationControllerTemplate`
+///
+///
+const String authenticationControllerTemplate = """
+import 'package:flutter/foundation.dart';
+import 'package:projectName/core.dart';
+
+/// ### `AuthenticationController`
+///
+/// `Description`: this controller will handle the login/logout/register/profile state for the entire app
+///
+/// `Example`:
+class AuthenticationController extends ChangeNotifier
+    with DiagnosticableTreeMixin
+    implements ReassembleHandler {
+  late String? _name;
+  String? get name => _name;
+
+  late String? _token;
+  String? get token => _token;
+
+  late bool _isLoggedIn;
+  bool get isLoggedIn => _isLoggedIn;
+
+  late AuthenticationService _authenticationService;
+
+  AuthenticationController([AuthenticationService? authenticationService]) {
+    _authenticationService = authenticationService ?? AuthenticationService();
+
+    _name = _authenticationService.getName;
+    _token = _authenticationService.getToken;
+    _isLoggedIn = _authenticationService.getName.isNotEmpty &&
+        _authenticationService.getToken.isNotEmpty;
+  }
+
+  /// `login`
+  ///
+  /// if user logged in correctly then update the current state,
+  /// else do something to notify
+  login({required String name, required String token}) async {
+    /// assum if always true
+    var isLoggedIn =
+        await _authenticationService.login(name: name, token: token);
+    if (isLoggedIn) {
+      _name = name;
+      _token = token;
+      _isLoggedIn = true;
+      notifyListeners();
+    } else {
+      /// TODO: do something
+    }
+  }
+
+  /// `register`
+  ///
+  /// if user registered in correctly then update the current state,
+  /// else do something to notify
+  register({required String name, required String token}) async {
+    /// assum if always true
+    var isLoggedIn =
+        await _authenticationService.register(name: name, token: token);
+    if (isLoggedIn) {
+      _name = name;
+      _token = token;
+      _isLoggedIn = true;
+      notifyListeners();
+    } else {
+      /// TODO: do something
+    }
+  }
+
+  /// `logout`
+  ///
+  /// if user loggout correctly then update the current state,
+  /// else do something to notify
+  logout() async {
+    var isLoggedOut = await _authenticationService.logout();
+    if (isLoggedOut) {
+      _name = "";
+      _token = "";
+      _isLoggedIn = false;
+      notifyListeners();
+    } else {
+      /// TODO: do something
+    }
+  }
+
+  /// `profile`
+  ///
+  /// load the current profile for cache or server
+  /// else do something
+  profile() async {
+    var result = await _authenticationService.profile();
+    if (result != null) {
+      _name = result['name'];
+      _token = result['token'];
+      printGreen("loadProfile name \$_name and token \$_token");
+      notifyListeners();
+    } else {
+      /// TODO: do something
+    }
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+
+    /// list all the properties of your class here.
+    /// See the documentation of debugFillProperties for more information.
+    /// TODO: implement add
+    properties.add(StringProperty('name', _name));
+    properties.add(StringProperty('token', _token));
+  }
+
+  @override
+  void reassemble() {
+    print('Did hot-reload AuthenticationController');
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+}
+
+""";
+
+/// `authenticationServiceTemplate`
+///
+///
+const String authenticationServiceTemplate = """
+import 'package:projectName/core.dart';
+
+/// ### `AuthenticationService`
+///
+/// `Description`: this service class handle any authenticate method either with server api or cache
+///
+/// `Example`:
+class AuthenticationService {
+  AuthenticationService();
+
+  Future<bool> login({required String name, required String token}) async {
+    final prefs = ApplicationService.preferences!;
+    await Future.delayed(const Duration(milliseconds: 300));
+    await prefs.setString(userNameKey, name);
+    await prefs.setString(userTokenKey, token);
+    return true;
+  }
+
+  Future<bool> register({required String name, required String token}) async {
+    final prefs = ApplicationService.preferences!;
+    await Future.delayed(const Duration(milliseconds: 300));
+    await prefs.setString(userNameKey, name);
+    await prefs.setString(userTokenKey, token);
+    return true;
+  }
+
+  Future<bool> logout() async {
+    final prefs = ApplicationService.preferences!;
+    await Future.delayed(const Duration(milliseconds: 300));
+    await prefs.remove(userNameKey);
+    await prefs.remove(userTokenKey);
+    return true;
+  }
+
+  Future<Map<String, dynamic>?> profile() async {
+    final prefs = ApplicationService.preferences!;
+    await Future.delayed(const Duration(milliseconds: 300));
+
+    var name = prefs.getString(userNameKey);
+    var token = prefs.getString(userTokenKey);
+    return {"name": name, "token": token};
+  }
+
+  String get getToken {
+    final prefs = ApplicationService.preferences!;
+    return prefs.getString(userTokenKey) ?? "";
+  }
+
+  String get getName {
+    final prefs = ApplicationService.preferences!;
+    return prefs.getString(userNameKey) ?? "";
+  }
+}
 """;
