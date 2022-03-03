@@ -15,9 +15,11 @@ const String mystYamlTemplate = """configs:
   layout:
     rewrite: false
     included: [".*._core.dart"]
+    template: "mvc"
   screen:
     rewrite: false
     included: [".*._core.dart"]
+    template: "mvc"
   service:
     rewrite: false
     included: [".*."]
