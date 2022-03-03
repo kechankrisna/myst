@@ -22,7 +22,7 @@ class SwitchLanguageButton extends StatelessWidget {
             .toList(),
         onChanged: (val) {
           context.setLocale(val!);
-          context.read<ApplicationController>().changeLanguage(val);
+          context.read<ApplicationController>().changeLocale(val);
         },
       ),
     );

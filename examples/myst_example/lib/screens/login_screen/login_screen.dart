@@ -4,7 +4,7 @@ import 'widgets/login_screen_scaffold.dart';
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
-  static const Key screenKey = ValueKey("LoginScreen");
+  static const Key pageKey = ValueKey("LoginScreen");
 
   static const String title = "login";
 

@@ -33,7 +33,7 @@ class MyRouter {
         path: loginRoutePath,
         pageBuilder: (_, state) => NoTransitionPage(
             key: state.pageKey,
-            child: const LoginScreen(key: LoginScreen.screenKey)),
+            child: const LoginScreen(key: LoginScreen.pageKey)),
         routes: [
           /// nested routes
         ],
@@ -47,7 +47,7 @@ class MyRouter {
         path: registerRoutePath,
         pageBuilder: (_, state) => NoTransitionPage(
             key: state.pageKey,
-            child: const RegisterScreen(key: RegisterScreen.screenKey)),
+            child: const RegisterScreen(key: RegisterScreen.pageKey)),
         routes: [
           /// nested routes
         ],
@@ -80,7 +80,7 @@ class MyRouter {
             name: dashboardRouteName,
             path: dashboardRoutePath,
             pageBuilder: (_, state) => const NoTransitionPage(
-                child: DashboardScreen(key: DashboardScreen.screenKey)),
+                child: DashboardScreen(key: DashboardScreen.pageKey)),
             routes: [
               /// nested routes
             ],
@@ -96,7 +96,7 @@ class MyRouter {
                   : null;
               return NoTransitionPage(
                   child: RoadMapScreen(
-                key: RoadMapScreen.screenKey,
+                key: RoadMapScreen.pageKey,
                 index: index,
               ));
             },

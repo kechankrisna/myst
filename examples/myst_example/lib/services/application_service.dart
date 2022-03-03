@@ -1,16 +1,16 @@
 import 'package:flutter/services.dart';
 import 'package:myst_example/core.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 /// ### `ApplicationService`
 ///
-/// `Description`:
+/// `Description`: this class will be use with other application controller to handle global service for application
 ///
 /// `Example`:
-// TODO: Implement service
 class ApplicationService {
+  /// shared preference must be initialized before use
   static SharedPreferences? preferences;
 
+  ///
   static ensureInitialized() async {
     // ensure preference
     preferences ??= await SharedPreferences.getInstance();
@@ -34,15 +34,15 @@ class ApplicationService {
 
   /// save the current lang into the preference key
   Future<bool> saveLanguage(String value) async {
-    return await preferences!.setString(languageKey, value);
+    return await preferences!.setString(localeKey, value);
   }
 
   ThemeMode get currentTheme => preferences!.getString(themeKey).toThemeMode;
 
-  Locale get currentLocale => preferences!.getString(languageKey).toLocale;
-  
+  Locale get currentLocale => preferences!.getString(localeKey).toLocale;
 }
 
+/// private extension for application service class on string
 extension ApplicationServiceStringExt on String? {
   ThemeMode get toThemeMode {
     switch (this) {

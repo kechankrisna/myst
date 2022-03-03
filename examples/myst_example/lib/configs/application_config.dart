@@ -15,7 +15,7 @@ final ThemeData darkTheme = ThemeData.dark();
 /// `languageKey`
 ///
 /// use this key into shared preference to save or get lang cache
-const String languageKey = "lang";
+const String localeKey = "lang";
 
 /// `themeKey`
 ///

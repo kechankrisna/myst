@@ -81,17 +81,17 @@ class DashboardLayoutDrawer extends StatelessWidget {
                   onTap: null,
                 ),
                 constraints: BoxConstraints(
-                  maxWidth: context.deviceWidth - kDrawerWidth,
+                  maxWidth: context.deviceWidth - kDrawerLeftWidth,
                   maxHeight: context.deviceHeight - kToolbarHeight,
                 ),
-                offset: Offset(kDrawerWidth, kToolbarHeight),
+                offset: Offset(kDrawerLeftWidth, kToolbarHeight),
                 padding: EdgeInsets.zero,
                 itemBuilder: (_) => [
                   PopupMenuItem(
                     padding: EdgeInsets.zero,
                     enabled: false,
                     child: Container(
-                      width: context.deviceWidth - kDrawerWidth,
+                      width: context.deviceWidth - kDrawerLeftWidth,
                       height: context.deviceHeight - kToolbarHeight,
                       child: MarketDrawerContainer(),
                     ),

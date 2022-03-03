@@ -3,6 +3,10 @@ import 'package:myst_example/core.dart';
 class RegisterScreenScaffold extends StatelessWidget {
   const RegisterScreenScaffold({Key? key}) : super(key: key);
 
+  static const String title = "register";
+
+  static const String logginButtonText = "back to loggin";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +20,7 @@ class RegisterScreenScaffold extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ListTile(
-                  title: Text("register"),
+                  title: Text(title),
                 ),
                 Divider(),
                 Container(
@@ -28,10 +32,26 @@ class RegisterScreenScaffold extends StatelessWidget {
                   child: TextField(),
                 ),
                 Expanded(child: SizedBox()),
-                TextButton(
-                  onPressed: () {},
-                  child: Text("register"),
-                ),
+                Container(
+                    padding: EdgeInsets.all(12),
+                    child: Row(
+                      children: [
+                        TextButton(
+                            onPressed: () {
+                              context.goNamed(loginRouteName);
+                            },
+                            child: Text(logginButtonText)),
+                        Spacer(),
+                        TextButton(
+                          onPressed: () {
+                            context
+                                .read<AuthenticationController>()
+                                .register(name: "name", token: "token");
+                          },
+                          child: Text("register"),
+                        ),
+                      ],
+                    )),
                 SizedBox(height: 20)
               ],
             ),

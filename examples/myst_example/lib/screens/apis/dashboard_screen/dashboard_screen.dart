@@ -6,8 +6,7 @@ import 'widgets/dashboard_traffic_report_card.dart';
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({Key? key}) : super(key: key);
 
-  ///
-  static const Key screenKey = ValueKey("DashboardScreen");
+  static const Key pageKey = ValueKey("DashboardScreen");
 
   static const String title = "dashboard";
 

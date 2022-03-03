@@ -3,45 +3,98 @@ import 'package:myst_example/core.dart';
 
 /// ### `AuthenticationController`
 ///
-/// `Description`:
+/// `Description`: this controller will handle the login/logout/register/profile state for the entire app
 ///
 /// `Example`:
-// TODO: Implement controller
 class AuthenticationController extends ChangeNotifier
     with DiagnosticableTreeMixin
     implements ReassembleHandler {
-  final pref = ApplicationService.preferences!;
-  late String? name;
-  late String? token;
+  late String? _name;
+  String? get name => _name;
 
-  bool get isLoggedIn => _authenticationService.isLoggedIn;
+  late String? _token;
+  String? get token => _token;
+
+  late bool _isLoggedIn;
+  bool get isLoggedIn => _isLoggedIn;
+
   late AuthenticationService _authenticationService;
 
   AuthenticationController([AuthenticationService? authenticationService]) {
     _authenticationService = authenticationService ?? AuthenticationService();
-    name = "";
-    token = "";
+
+    _name = _authenticationService.getName;
+    _token = _authenticationService.getToken;
+    _isLoggedIn = _authenticationService.getName.isNotEmpty &&
+        _authenticationService.getToken.isNotEmpty;
   }
 
+  /// `login`
+  ///
+  /// if user logged in correctly then update the current state,
+  /// else do something to notify
   login({required String name, required String token}) async {
     /// assum if always true
-    await AuthenticationService.login(name: name, token: token);
-    name = name;
-    token = token;
-    notifyListeners();
+    var isLoggedIn =
+        await _authenticationService.login(name: name, token: token);
+    if (isLoggedIn) {
+      _name = name;
+      _token = token;
+      _isLoggedIn = true;
+      notifyListeners();
+    } else {
+      /// TODO: do something
+    }
   }
 
+  /// `register`
+  ///
+  /// if user registered in correctly then update the current state,
+  /// else do something to notify
+  register({required String name, required String token}) async {
+    /// assum if always true
+    var isLoggedIn =
+        await _authenticationService.register(name: name, token: token);
+    if (isLoggedIn) {
+      _name = name;
+      _token = token;
+      _isLoggedIn = true;
+      notifyListeners();
+    } else {
+      /// TODO: do something
+    }
+  }
+
+  /// `logout`
+  ///
+  /// if user loggout correctly then update the current state,
+  /// else do something to notify
   logout() async {
-    await AuthenticationService.logout();
-    notifyListeners();
+    var isLoggedOut = await _authenticationService.logout();
+    if (isLoggedOut) {
+      _name = "";
+      _token = "";
+      _isLoggedIn = false;
+      notifyListeners();
+    } else {
+      /// TODO: do something
+    }
   }
 
-  loadProfile() async {
-    var result = await AuthenticationService.profile();
-    name = result['name'];
-    token = result['token'];
-    printGreen("loadProfile name $name and token $token");
-    notifyListeners();
+  /// `profile`
+  ///
+  /// load the current profile for cache or server
+  /// else do something
+  profile() async {
+    var result = await _authenticationService.profile();
+    if (result != null) {
+      _name = result['name'];
+      _token = result['token'];
+      printGreen("loadProfile name $_name and token $_token");
+      notifyListeners();
+    } else {
+      /// TODO: do something
+    }
   }
 
   @override
@@ -51,8 +104,8 @@ class AuthenticationController extends ChangeNotifier
     /// list all the properties of your class here.
     /// See the documentation of debugFillProperties for more information.
     /// TODO: implement add
-    properties.add(StringProperty('name', name));
-    properties.add(StringProperty('token', token));
+    properties.add(StringProperty('name', _name));
+    properties.add(StringProperty('token', _token));
   }
 
   @override

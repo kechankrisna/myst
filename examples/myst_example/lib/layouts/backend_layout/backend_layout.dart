@@ -41,7 +41,7 @@ class BackendLayout extends StatefulWidget {
 class _BackendLayoutState extends State<BackendLayout> {
   @override
   void initState() {
-    context.read<AuthenticationController>().loadProfile();
+    context.read<AuthenticationController>().profile();
 
     super.initState();
   }
@@ -60,12 +60,12 @@ class _BackendLayoutState extends State<BackendLayout> {
             builder: (_) => DashboardLayoutDrawer(),
             xlBuilder: (_) => Container(
               padding: EdgeInsets.only(top: statusBarHeight + appBarHeight + 1),
-              width: kDrawerWidth,
+              width: kDrawerLeftWidth,
               child: DashboardLayoutDrawer(),
             ),
             lgBuilder: (_) => Container(
               padding: EdgeInsets.only(top: statusBarHeight + appBarHeight + 1),
-              width: kDrawerWidth,
+              width: kDrawerLeftWidth,
               child: DashboardLayoutDrawer(),
             ),
           ),

@@ -7,7 +7,7 @@ class RoadMapScreen extends StatelessWidget {
   final String? index;
   const RoadMapScreen({Key? key, this.index}) : super(key: key);
 
-  static const Key screenKey = ValueKey("RoadMapScreen");
+  static const Key pageKey = ValueKey("RoadMapScreen");
 
   static const String title = "RoadMap";
 
@@ -59,7 +59,7 @@ class RoadMapScreenScaffold extends StatelessWidget {
         ApiLayoutSideBar(),
         VerticalDivider(width: 1),
         SizedBox(
-          width: kDrawerWidth,
+          width: kDrawerLeftWidth,
           child: RoadMapScreenSidebar(),
         ),
         Expanded(

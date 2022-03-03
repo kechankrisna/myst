@@ -161,8 +161,10 @@ class ApiLayoutMiniSidebar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 65,
+      width: kMiniLeftDrawerWidth,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ListTile(
               leading: ApiLayoutSideBar.header.leading,

@@ -21,4 +21,5 @@ export 'package:adaptivex/adaptivex.dart';
 export 'package:printx/printx.dart';
 export 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 export 'package:flutter_localizations/flutter_localizations.dart';
+export 'package:shared_preferences/shared_preferences.dart';
 export 'package:easy_localization/easy_localization.dart' hide TextDirection;

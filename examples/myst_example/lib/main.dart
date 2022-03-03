@@ -16,7 +16,7 @@ void main() async {
       path: translationsPath,
       supportedLocales: supportedLocales,
       fallbackLocale: fallbackLocale,
-      startLocale:startLocale,
+      startLocale: startLocale,
       saveLocale: true,
       child: MyApp(authenticationController: authenticationController)));
 }

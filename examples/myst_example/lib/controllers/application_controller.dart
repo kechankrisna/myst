@@ -3,19 +3,21 @@ import 'package:myst_example/core.dart';
 
 /// ### `ApplicationController`
 ///
-/// `Description`:
+/// `Description`: this application controller will take controll of theme, language, global configuration and other app sharedable state
 ///
 /// `Example`:
-// TODO: Implement controller
 class ApplicationController extends ChangeNotifier
     with DiagnosticableTreeMixin
     implements ReassembleHandler {
   late ApplicationService service;
 
+  /// current application locale
   late Locale locale;
 
+  /// current application theme mode
   late ThemeMode themeMode;
 
+  /// application title
   late String generatedTitle;
 
   ApplicationController([ApplicationService? applicationService]) {
@@ -25,6 +27,9 @@ class ApplicationController extends ChangeNotifier
     generatedTitle = appTitle;
   }
 
+  /// `changeThemeMode`
+  ///
+  /// change the thememode in controller then update shared key to remember the choice
   changeThemeMode(String value) {
     themeMode = value.toThemeMode;
     notifyListeners();
@@ -33,7 +38,10 @@ class ApplicationController extends ChangeNotifier
     service.saveTheme(value);
   }
 
-  changeLanguage(Locale value) {
+  /// `changeLanguage`
+  ///
+  /// change the language in controller then update shared key to remember the choice
+  changeLocale(Locale value) {
     locale = value;
 
     notifyListeners();
@@ -42,6 +50,9 @@ class ApplicationController extends ChangeNotifier
     service.saveLanguage(value.toStringWithSeparator(separator: "_"));
   }
 
+  /// `changeTitle`
+  ///
+  /// might not work or use application service instead of, to change browser title
   changeTitle(String value) {
     generatedTitle = value;
 
