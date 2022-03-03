@@ -1,11 +1,22 @@
 import 'package:myst_example/core.dart';
 
 void main() async {
+  // flutter binding
   WidgetsFlutterBinding.ensureInitialized();
 
-  await ApplicationService.ensureSharedPreferences();
+  /// easy localization
+  await EasyLocalization.ensureInitialized();
 
-  var authenticationController = AuthenticationController();
+  /// shared preference
+  await ApplicationService.ensureInitialized();
 
-  runApp(MyApp(authenticationController: authenticationController));
+  final authenticationController = AuthenticationController();
+
+  runApp(EasyLocalization(
+      path: translationsPath,
+      supportedLocales: supportedLocales,
+      fallbackLocale: fallbackLocale,
+      startLocale:startLocale,
+      saveLocale: true,
+      child: MyApp(authenticationController: authenticationController)));
 }

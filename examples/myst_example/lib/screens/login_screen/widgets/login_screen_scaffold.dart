@@ -16,7 +16,8 @@ class LoginScreenScaffold extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ListTile(
-                  title: Text("login"),
+                  title: Text("login").tr(),
+                  trailing: SwitchThemeButton(),
                 ),
                 Divider(),
                 Container(
@@ -58,7 +59,8 @@ class LoginScreenScaffold extends StatelessWidget {
                   },
                   child: Text("reset"),
                 ),
-                SizedBox(height: 20)
+                SizedBox(height: 20),
+                SwitchLanguageButton(),
               ],
             ),
           ),

@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:myst_example/core.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 /// ### `AuthenticationController`
 ///
@@ -11,13 +10,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthenticationController extends ChangeNotifier
     with DiagnosticableTreeMixin
     implements ReassembleHandler {
-  final SharedPreferences pref = ApplicationService.preferences!;
+  final pref = ApplicationService.preferences!;
   late String? name;
   late String? token;
 
-  bool get isLoggedIn => AuthenticationService.isLoggedIn;
+  bool get isLoggedIn => _authenticationService.isLoggedIn;
+  late AuthenticationService _authenticationService;
 
-  AuthenticationController() {
+  AuthenticationController([AuthenticationService? authenticationService]) {
+    _authenticationService = authenticationService ?? AuthenticationService();
     name = "";
     token = "";
   }

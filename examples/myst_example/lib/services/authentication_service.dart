@@ -35,6 +35,6 @@ class AuthenticationService {
     return {"name": name, "token": token};
   }
 
-  static get isLoggedIn =>
+  bool get isLoggedIn =>
       ApplicationService.preferences!.getString(userNameKey) != null;
 }
