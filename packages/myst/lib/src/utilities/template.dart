@@ -760,7 +760,6 @@ class className extends StatelessWidget {
 class classNameState extends ChangeNotifier {}
 """;
 
-
 const String layoutStatelessNotifierNoChildTemplate =
     """import 'package:projectName/core.dart';\n
 /// ### `className`
@@ -889,6 +888,81 @@ class _classNameState extends State<className> with WidgetsBindingObserver {
 }
 """;
 
+const String screenStatefulNoChildTemplate =
+    """import 'package:projectName/core.dart';\n
+/// ### `className`
+/// 
+/// `Description`:
+/// 
+/// `Example`:
+// TODO: Implement the className
+class className extends StatefulWidget {
+  const className({Key? key}) : super(key: key);
+
+  static const Key widgetKey = ValueKey("className");
+
+  @override
+  State<className> createState() => _classNameState();
+}
+
+class _classNameState extends State<className> with WidgetsBindingObserver {
+
+  @override
+  Widget build(BuildContext context) {
+    return AdaptivePlatformWidget(child: Scaffold(body: Center(child:Text("ReportScreen"))));
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // TODO: implement didChangeAppLifecycleState
+    super.didChangeAppLifecycleState(state);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+}
+""";
+
+const String screenStatelessNotifierNoChildTemplate =
+    """import 'package:projectName/core.dart';\n
+/// ### `className`
+///
+/// `Description`:
+///
+/// `Example`:
+// TODO: Implement the className
+class className extends StatelessWidget {
+  const className({Key? key}) : super(key: key);
+
+  static const Key widgetKey = ValueKey("className");
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => classNameState(),
+      child: AdaptivePlatformWidget(child: Scaffold(body: Center(child:Text("ReportScreen")))),
+    );
+  }
+}
+
+class classNameState extends ChangeNotifier {}
+""";
+
 const String layoutTestTemplate = """import 'package:test/test.dart';
 /// gestures handler
 import 'package:flutter/gestures.dart';
@@ -904,6 +978,48 @@ void main() {
         home: className(
           child: const Text("sample"),
         ),
+      );
+    });
+
+    tearDown(() {
+      ///
+    });
+
+    testWidgets("start a screen to pump widget and test", (tester) async {
+      await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
+
+      /// TODO: implement find
+      /// final titleFinder = find.text("sample");
+      /// final incrementFinder = find.byKey(CounterScreen.incrementkey);
+      /// await tester.pumpAndSettle();
+      
+      /// TODO: guester
+      /// await tester.tap(incrementFinder);
+      /// await tester.pumpAndSettle();
+      
+      /// TODO: expected
+      /// expect(titleFinder, findsWidgets);
+      /// expect(incrementFinder, findsOneWidget);
+
+    });
+  });
+}
+""";
+
+const String screenTestTemplate = """import 'package:test/test.dart';
+/// gestures handler
+import 'package:flutter/gestures.dart';
+
+
+void main() {
+  group("test controller className", () {
+    TestWidgetsFlutterBinding.ensureInitialized();
+    
+    late Widget app;
+    setUp(() {
+      app = MaterialApp(
+        home: className(),
       );
     });
 
@@ -971,9 +1087,9 @@ class classNameController extends ChangeNotifier with DiagnosticableTreeMixin im
   }
 }""";
 
-/// `screenLayout`
+/// `layoutTemplate`
 ///
-const String screenTemplate = """import 'package:projectName/core.dart';
+const String layoutTemplate = """import 'package:projectName/core.dart';
 /// ### `className`
 ///
 /// `Description`:
@@ -991,6 +1107,68 @@ class className extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => classNameController(),
       child: AdaptivePlatformWidget(child: child ?? Scaffold(body: Center(child:Text("className")))),
+    );
+  }
+}""";
+
+/// `screenTemplate`
+///
+const String screenTemplate = """import 'package:projectName/core.dart';
+/// ### `className`
+///
+/// `Description`:
+///
+/// `Example`:
+// TODO: Implement the className
+class className extends StatelessWidget {
+  const className({Key? key}) : super(key: key);
+
+  static const Key pageKey = ValueKey("className");
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => classNameController(),
+      child: AdaptivePlatformWidget(child: Scaffold(body: Center(child:Text("className")))),
+    );
+  }
+}""";
+
+const String screenNoChildTemplate = """import 'package:projectName/core.dart';
+/// ### `className`
+///
+/// `Description`:
+///
+/// `Example`:
+// TODO: Implement the className
+class className extends StatelessWidget {
+  const className({Key? key}) : super(key: key);
+
+  static const Key pageKey = ValueKey("className");
+
+  @override
+  Widget build(BuildContext context) {
+    return AdaptivePlatformWidget(child: Scaffold(body: Center(child:Text("className"))));
+  }
+}""";
+
+const String screenNotifierNoChildTemplate = """import 'package:projectName/core.dart';
+/// ### `className`
+///
+/// `Description`:
+///
+/// `Example`:
+// TODO: Implement the className
+class className extends StatelessWidget {
+  const className({Key? key}) : super(key: key);
+
+  static const Key pageKey = ValueKey("className");
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => classNameController(),
+      child: AdaptivePlatformWidget(child: Scaffold(body: Center(child:Text("className")))),
     );
   }
 }""";

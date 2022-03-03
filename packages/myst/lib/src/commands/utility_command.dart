@@ -99,26 +99,33 @@ class UtilityCommand extends Command
       className: className!,
       projectName: projectName!,
     )
+
+      /// file_name.dart
       ..generateLib(
-        /// template: utilityTemplate,
         template: """export 'src/${fileName}_none.dart'
     if (dart.library.io) 'src/${fileName}_io.dart'
     if (dart.library.html) 'src/${fileName}_html.dart';""",
         fileName: fileName!,
         dirNames: [...dirNames, fileName!],
       )
+
+      /// src/file_name_none.dart
       ..generateLib(
         template: utilityTemplate,
         dirNames: [...dirNames, fileName!, "src"],
         fileName: "${fileName!}_none",
         shouldExport: false,
       )
+
+      /// src/file_name_io.dart
       ..generateLib(
         template: utilityTemplate,
         dirNames: [...dirNames, fileName!, "src"],
         fileName: "${fileName!}_io",
         shouldExport: false,
       )
+
+      /// src/file_name_html.dart
       ..generateLib(
         template: utilityTemplate,
         dirNames: [...dirNames, fileName!, "src"],

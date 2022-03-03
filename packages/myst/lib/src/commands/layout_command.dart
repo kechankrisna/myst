@@ -24,7 +24,7 @@ class LayoutCommand extends Command
   /// directory from user and print help if null
   late String? dirName;
 
-   /// split the dirname input into list of parts
+  /// split the dirname input into list of parts
   List<String> get dirNames =>
       dirName != null ? [...dirName!.split(RegExp(r"(\\|\/)"))] : [];
 
@@ -146,7 +146,7 @@ class LayoutCommand extends Command
 
       /// file_name.dart
       ..generateLib(
-        template: screenTemplate,
+        template: layoutTemplate,
         fileName: fileName!,
         dirNames: [...dirNames, fileName!],
         shouldExport: false,

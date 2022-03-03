@@ -2,8 +2,6 @@ import 'package:args/command_runner.dart';
 import 'package:recase/recase.dart';
 import 'package:myst/myst.dart';
 import 'package:printx/printx.dart';
-import 'dart:io' as io;
-import 'package:path/path.dart' as path;
 
 class ScreenCommand extends Command
     with YamlInformation
@@ -25,6 +23,10 @@ class ScreenCommand extends Command
 
   /// directory from user and print help if null
   late String? dirName;
+
+  /// split the dirname input into list of parts
+  List<String> get dirNames =>
+      dirName != null ? [...dirName!.split(RegExp(r"(\\|\/)"))] : [];
 
   /// template from user and print help if null
   late String? templateName;
@@ -123,239 +125,119 @@ class ScreenCommand extends Command
   String getTemplate() {
     switch (templateName) {
       case "stl":
-        return layoutStatelessTemplate;
+        return screenNoChildTemplate;
       case "sstl":
-        return layoutStatelessNotifierTemplate;
+        return screenStatelessNotifierNoChildTemplate;
       case "stf":
-        return layoutStatefulTemplate;
+        return screenStatefulNoChildTemplate;
       default:
-        return layoutStatelessTemplate;
+        return screenNoChildTemplate;
     }
   }
 
   /// gererate multiple file for template
   void generateScreenLibFiles() async {
-    String screenContents = "import 'package:$projectName/core.dart';\n" +
-        screenTemplate.replaceAll(RegExp(r"className"), className!);
-    String screenControllerContents =
-        "import 'package:$projectName/core.dart';\nimport 'package:flutter/foundation.dart';\n" +
-            screenControllerTemplate.replaceAll(
-                RegExp(r"className"), className!);
-    String screenServiceContents =
-        screenServiceTemplate.replaceAll(RegExp(r"className"), className!);
-    String screenCoreContents =
-        screenCoreTemplate.replaceAll(RegExp(r"fileName"), fileName!);
+    /// final _dirName = fileName!;
+    GenerateFileHelper(
+      parentDir: parentDir,
+      className: className!,
+      projectName: projectName!,
+    )
 
-    /// if user input directory name,
-    /// then create the new sub directory if not exists
-    if (dirName != null) {
-      DirectoryCreator(path.join(libraryPath, parentDir, dirName)).run();
-      DirectoryCreator(path.join(libraryPath, parentDir, dirName, fileName))
-          .run();
-      DirectoryCreator(
-              path.join(libraryPath, parentDir, dirName, fileName, "widgets"))
-          .run();
-    } else {
-      DirectoryCreator(path.join(libraryPath, parentDir, fileName)).run();
-      DirectoryCreator(path.join(libraryPath, parentDir, fileName, "widgets"))
-          .run();
-    }
+      /// file_name.dart
+      ..generateLib(
+        template: screenTemplate,
+        fileName: fileName!,
+        dirNames: [...dirNames, fileName!],
+        shouldExport: false,
+      )
 
-    /// current file parent path
-    final _parentLibPath = path.join(libraryPath, parentDir, "$parentDir.dart");
+      /// file_name_controller.dart
+      ..generateLib(
+        template: screenControllerTemplate,
+        fileName: "${fileName!}_controller",
+        dirNames: [...dirNames, fileName!],
+        shouldExport: false,
+      )
 
-    /// current new file paths
-    final _screenfilePath = dirName != null
-        ? path.join(libraryPath, parentDir, dirName, fileName, "$fileName.dart")
-        : path.join(libraryPath, parentDir, fileName, "$fileName.dart");
-    final _servicefilePath = dirName != null
-        ? path.join(libraryPath, parentDir, dirName, fileName,
-            "${fileName}_service.dart")
-        : path.join(
-            libraryPath, parentDir, fileName, "${fileName}_service.dart");
-    final _controllerfilePath = dirName != null
-        ? path.join(libraryPath, parentDir, dirName, fileName,
-            "${fileName}_controller.dart")
-        : path.join(
-            libraryPath, parentDir, fileName, "${fileName}_controller.dart");
-    final _corefilePath = dirName != null
-        ? path.join(
-            libraryPath, parentDir, dirName, fileName, "${fileName}_core.dart")
-        : path.join(libraryPath, parentDir, fileName, "${fileName}_core.dart");
+      /// file_name_service.dart
+      ..generateLib(
+        template: screenServiceTemplate,
+        fileName: "${fileName!}_service",
+        dirNames: [...dirNames, fileName!],
+        shouldExport: false,
+      )
 
-    /// write content
-    ///
-    FileCreator(_screenfilePath, contents: screenContents, rewrite: rewrite)
-        .run();
-    FileCreator(_servicefilePath,
-            contents: screenServiceContents, rewrite: rewrite)
-        .run();
-    FileCreator(_controllerfilePath,
-            contents: screenControllerContents, rewrite: rewrite)
-        .run();
-    FileCreator(_corefilePath, contents: screenCoreContents, rewrite: rewrite)
-        .run();
+      /// file_name_core.dart
+      ..generateLib(
+        template:
+            "export '${fileName!}_service.dart';\nexport '${fileName!}_controller.dart';\nexport '${fileName!}.dart';",
+        fileName: "${fileName!}_core.dart",
+        dirNames: [...dirNames, fileName!],
+        shouldExport: true,
+      )
 
-    /// add to its parent lib if none exist
-    var content = io.File(_parentLibPath).readAsStringSync();
-    var exist = content.contains(RegExp("${fileName}_core.dart"));
-    if (!exist) {
-      content += dirName == null
-          ? "\nexport '$fileName/${fileName}_core.dart';"
-          : "\nexport '$dirName/$fileName/${fileName}_core.dart';";
-
-      /// force to rewrite
-      FileCreator(_parentLibPath, contents: content, rewrite: true).run();
-    }
+      /// file_name/widgets
+      ..generateLibDir(name: "widgets", dirNames: [...dirNames, fileName!]);
   }
 
   /// generate multi files
   void generateScreenTestFiles() {
-    /// load content and repllace
-    var screenContents = layoutTestTemplate
-        .replaceAll(RegExp(r"className"), className!)
-        .replaceAll(RegExp(r"objectName"), className!.camelCase);
-    var screenControllerContents = controllerTestTemplate
-        .replaceAll(RegExp(r"className"), "${className!}Controller")
-        .replaceAll(RegExp(r"objectName"), className!.camelCase);
-    var screenServiceContents = serviceTestTemplate
-        .replaceAll(RegExp(r"className"), "${className!}Service")
-        .replaceAll(RegExp(r"objectName"), className!.camelCase);
+    /// final _dirName = fileName!;
+    GenerateFileHelper(
+      parentDir: parentDir,
+      className: className!,
+      projectName: projectName!,
+    )
 
-    if (flutter) {
-      screenContents = screenContents.replaceAll(
-          RegExp(r'package:test/test.dart'),
-          'package:flutter_test/flutter_test.dart');
-      screenControllerContents = screenControllerContents.replaceAll(
-          RegExp(r'package:test/test.dart'),
-          'package:flutter_test/flutter_test.dart');
-      screenServiceContents = screenServiceContents.replaceAll(
-          RegExp(r'package:test/test.dart'),
-          'package:flutter_test/flutter_test.dart');
-    }
+      /// file_name_test.dart
+      ..generateTest(
+        template: screenTestTemplate,
+        fileName: fileName!,
+        dirNames: [...dirNames, fileName!],
+      )
 
-    /// add import
-    screenContents = screenContents.replaceAll(RegExp(r"_test.dart';"),
-        "_test.dart'; \nimport 'package:$projectName/core.dart';\n");
-    screenServiceContents = screenServiceContents.replaceAll(
-        RegExp(r"_test.dart';"),
-        "_test.dart'; \nimport 'package:$projectName/core.dart';\n");
-    screenControllerContents = screenControllerContents.replaceAll(
-        RegExp(r"_test.dart';"),
-        "_test.dart'; \nimport 'package:$projectName/core.dart';\n");
+      /// file_name_controller_test.dart
+      ..generateTest(
+        template: controllerTestTemplate.replaceAll(
+            RegExp(r"className"), "${className!}Controller"),
+        fileName: "${fileName!}_controller",
+        dirNames: [...dirNames, fileName!],
+      )
 
-    /// printCyan(contents);
+      /// file_name_service_test.dart
+      ..generateTest(
+        template: serviceTestTemplate.replaceAll(
+            RegExp(r"className"), "${className!}Service"),
+        fileName: "${fileName!}_service",
+        dirNames: [...dirNames, fileName!],
+      )
 
-    /// if user input directory name,
-    /// then create the new sub directory if not exists
-    if (dirName != null) {
-      DirectoryCreator(path.join(testPath, parentDir, dirName)).run();
-      DirectoryCreator(path.join(testPath, parentDir, dirName, fileName)).run();
-      DirectoryCreator(
-              path.join(testPath, parentDir, dirName, fileName, "widgets"))
-          .run();
-    } else {
-      DirectoryCreator(path.join(testPath, parentDir, fileName)).run();
-      DirectoryCreator(path.join(testPath, parentDir, fileName, "widgets"))
-          .run();
-    }
-
-    /// current new file path
-    final _screenFilePath = dirName != null
-        ? path.join(
-            testPath, parentDir, dirName, fileName, "${fileName}_test.dart")
-        : path.join(testPath, parentDir, fileName, "${fileName}_test.dart");
-    final _servicefilePath = dirName != null
-        ? path.join(testPath, parentDir, dirName, fileName,
-            "${fileName}_service_test.dart")
-        : path.join(
-            testPath, parentDir, fileName, "${fileName}_service_test.dart");
-    final _controllerfilePath = dirName != null
-        ? path.join(testPath, parentDir, dirName, fileName,
-            "${fileName}_controller_test.dart")
-        : path.join(
-            testPath, parentDir, fileName, "${fileName}_controller_test.dart");
-
-    /// write content
-    FileCreator(_screenFilePath, contents: screenContents, rewrite: rewrite)
-        .run();
-    FileCreator(_servicefilePath,
-            contents: screenServiceContents, rewrite: rewrite)
-        .run();
-    FileCreator(_controllerfilePath,
-            contents: screenControllerContents, rewrite: rewrite)
-        .run();
+      /// file_name/widgets
+      ..generateTestDir(name: "widgets", dirNames: [...dirNames, fileName!]);
   }
 
   @override
-  void generateLib() async {
-    String contents = "import 'package:$projectName/core.dart';\n" +
-        getTemplate().replaceAll(RegExp(r"className"), className!);
-
-    /// if user input directory name,
-    /// then create the new sub directory if not exists
-    if (dirName != null) {
-      DirectoryCreator(path.join(libraryPath, parentDir, dirName)).run();
-    }
-
-    /// current file parent path
-    final _parentLibPath = path.join(libraryPath, parentDir, "$parentDir.dart");
-
-    /// current new file path
-    final _filePath = dirName != null
-        ? path.join(libraryPath, parentDir, dirName, "$fileName.dart")
-        : path.join(libraryPath, parentDir, "$fileName.dart");
-
-    FileCreator(_filePath, contents: contents, rewrite: rewrite);
-
-    /// write content
-    FileCreator(_filePath, contents: contents, rewrite: rewrite).run();
-
-    /// printCyan(content);
-
-    /// add to its parent lib if none exist
-    var content = io.File(_parentLibPath).readAsStringSync();
-    var exist = content.contains(RegExp("$fileName.dart"));
-    if (!exist) {
-      content += dirName == null
-          ? "\nexport '$fileName.dart';"
-          : "\nexport '$dirName/$fileName.dart';";
-
-      /// force to rewrite
-      FileCreator(_parentLibPath, contents: content, rewrite: true).run();
-    }
+  void generateLib() {
+    final template = getTemplate();
+    GenerateFileHelper(
+      parentDir: parentDir,
+      className: className!,
+      projectName: projectName!,
+    ).generateLib(
+      template: template,
+      fileName: fileName!,
+      dirNames: dirNames,
+    );
   }
 
   @override
   void generateTest() {
-    /// load content and repllace
-    var contents = layoutTestTemplate
-        .replaceAll(RegExp(r"className"), className!)
-        .replaceAll(RegExp(r"objectName"), className!.camelCase);
-
-    if (flutter) {
-      contents = contents.replaceAll(RegExp(r'package:test/test.dart'),
-          'package:flutter_test/flutter_test.dart');
-    }
-
-    /// add import
-    contents = contents.replaceAll(RegExp(r"_test.dart';"),
-        "_test.dart'; \nimport 'package:$projectName/core.dart';\n");
-
-    /// printCyan(contents);
-
-    /// if user input directory name,
-    /// then create the new sub directory if not exists
-    if (dirName != null) {
-      DirectoryCreator(path.join(testPath, parentDir, dirName)).run();
-    }
-
-    /// current new file path
-    final _filePath = dirName != null
-        ? path.join(testPath, parentDir, dirName, "${fileName}_test.dart")
-        : path.join(testPath, parentDir, "${fileName}_test.dart");
-
-    /// write content
-    FileCreator(_filePath, contents: contents, rewrite: rewrite).run();
+    GenerateFileHelper(
+      parentDir: parentDir,
+      className: className!,
+      projectName: projectName!,
+    ).generateTest(
+        template: screenTestTemplate, fileName: fileName!, dirNames: dirNames);
   }
 }
