@@ -90,7 +90,7 @@ mixin YamlInformation {
 
   // if current project using easy_localization
   late bool easy_localization;
-  
+
   // if current project using shared_preferences
   late bool sharedpref;
 
@@ -111,6 +111,7 @@ mixin YamlInformation {
       "screens": screenConfig,
       "extensions": extensionConfig,
       "layouts": layoutConfig,
+
       /// "route": routeConfig,
       /// "provider": providerConfig,
     };

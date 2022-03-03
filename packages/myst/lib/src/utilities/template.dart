@@ -1154,7 +1154,8 @@ class className extends StatelessWidget {
   }
 }""";
 
-const String screenNotifierNoChildTemplate = """import 'package:projectName/core.dart';
+const String screenNotifierNoChildTemplate =
+    """import 'package:projectName/core.dart';
 /// ### `className`
 ///
 /// `Description`:

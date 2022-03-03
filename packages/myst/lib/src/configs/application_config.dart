@@ -4,9 +4,10 @@ class ApplicationConfig {
   /// router.dart handler
   static FileCreator get router =>
       FileCreator("router.dart", contents: routerTemplate);
-  
+
   /// main.dart handler
-  static FileCreator get main => FileCreator("main.dart", contents: mainTemplate);
+  static FileCreator get main =>
+      FileCreator("main.dart", contents: mainTemplate);
 
   /// app.dart handler
   static FileCreator get app => FileCreator("app.dart", contents: appTemplate);
