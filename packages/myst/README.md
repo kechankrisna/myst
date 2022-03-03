@@ -2,7 +2,18 @@ Welcome to Myst
 
 please check out the packages directory to see the available dart package in myst cli package.
 
+[sample web](https://mystcloud-79762.web.app/login)
+
 ### screenshots
+
+* screenshot1
+  * ![./screenshots/screenshot1.png](https://github.com/kechankrisna/myst/blob/main/packages/myst/screenshots/screenshot1.png?raw=true)
+  
+* screenshot2
+  * ![./screenshots/screenshot2.png](https://github.com/kechankrisna/myst/blob/main/packages/myst/screenshots/screenshot2.png?raw=true)
+
+* screenshot3
+  * ![./screenshots/screenshot3.png](https://github.com/kechankrisna/myst/blob/main/packages/myst/screenshots/screenshot3.png?raw=true)
 
 * lib directory
   * ![./screenshots/lib.png](https://github.com/kechankrisna/myst/blob/main/packages/myst/screenshots/lib.png?raw=true)
