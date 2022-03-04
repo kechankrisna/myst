@@ -1193,7 +1193,7 @@ void main() {
 ///
 const String screenControllerTemplate =
     """import 'package:projectName/core.dart';\nimport 'package:flutter/foundation.dart';\n
-/// ### `className`
+/// ### `classNameController`
 /// 
 /// `Description`:
 /// 
@@ -1215,13 +1215,13 @@ class classNameController extends ChangeNotifier with DiagnosticableTreeMixin im
     /// list all the properties of your class here.
     /// See the documentation of debugFillProperties for more information.
     /// TODO: implement add
-    properties.add(StringProperty('className', null));
+    properties.add(StringProperty('classNameController', null));
   }
 
   @override
   void reassemble() {
      /// TODO: reassemble
-    print('Did hot-reload className');
+    print('Did hot-reload classNameController');
   }
 
   @override
@@ -1347,6 +1347,12 @@ class className extends StatelessWidget {
 ///
 ///
 const String screenServiceTemplate = """
+/// ### `classNameService`
+///
+/// `Description`:
+///
+/// `Example`:
+// TODO: Implement the className
 class classNameService {
 
 }

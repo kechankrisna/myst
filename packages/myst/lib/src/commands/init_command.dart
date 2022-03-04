@@ -74,6 +74,7 @@ class InitCommand extends Command with YamlInformation {
 
   /// generate asset directory
   Future<void> generateAssetsDirectory() async {
+    /// create assets / fonts images
     String _assetsPath = path.join(currentPath, 'assets');
     String _fontsPath = path.join(_assetsPath, "fonts");
     String _imagesPath = path.join(_assetsPath, "images");
@@ -84,6 +85,9 @@ class InitCommand extends Command with YamlInformation {
         DirectoryCreator(p).run();
       }
     }
+    /// create en-US.json and km-KH.json inside of translations
+    FileCreator(path.join(_translationsPath, "en-US.json")).run();
+    FileCreator(path.join(_translationsPath, "km-KH.json")).run();
   }
 
   /// generate asset directory
