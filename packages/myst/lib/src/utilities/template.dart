@@ -588,6 +588,11 @@ const String controllerTemplate =
 // TODO: Implement controller
 class className extends ChangeNotifier with DiagnosticableTreeMixin implements ReassembleHandler{
   
+  /// check if current controller is dispose
+  bool isDisposed = false;
+
+  bool get mounted => !isDisposed;
+
   className(){
     
   }
@@ -607,7 +612,16 @@ class className extends ChangeNotifier with DiagnosticableTreeMixin implements R
   }
 
   @override
+  void notifyListeners() {
+    if (!isDisposed) {
+      super.notifyListeners();
+    }
+  }
+
+  @override
   void dispose() {
+    /// TODO: dispose
+    isDisposed = true;
     super.dispose();
   }
 }
@@ -742,7 +756,7 @@ class className extends StatelessWidget {
 /// will be used when create a new layout
 /// and its test file
 const String layoutStatelessNotifierTemplate =
-    """import 'package:projectName/core.dart';\n
+    """import 'package:projectName/core.dart';\nimport 'package:flutter/foundation.dart';\n
 /// ### `className`
 ///
 /// `Description`:
@@ -762,11 +776,52 @@ class className extends StatelessWidget {
   }
 }
 
-class classNameState extends ChangeNotifier {}
+class classNameState extends ChangeNotifier with DiagnosticableTreeMixin
+    implements ReassembleHandler {
+
+  bool isDisposed = false;
+
+  bool get mounted => !isDisposed;
+
+  classNameState(){
+    
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+
+    /// list all the properties of your class here.
+    /// See the documentation of debugFillProperties for more information.
+    /// TODO: implement add
+    properties.add(StringProperty('className', null));
+  }
+
+  @override
+  void reassemble() {
+    /// TODO: reassemble
+    print('Did hot-reload className');
+  }
+
+  @override
+  void notifyListeners() {
+    if (!isDisposed) {
+      super.notifyListeners();
+    }
+  }
+
+  @override
+  void dispose() {
+    /// TODO: dispose
+    isDisposed = true;
+    super.dispose();
+  }
+
+}
 """;
 
 const String layoutStatelessNotifierNoChildTemplate =
-    """import 'package:projectName/core.dart';\n
+    """import 'package:projectName/core.dart';\nimport 'package:flutter/foundation.dart';\n
 /// ### `className`
 ///
 /// `Description`:
@@ -787,7 +842,46 @@ class className extends StatelessWidget {
   }
 }
 
-class classNameState extends ChangeNotifier {}
+class classNameState extends ChangeNotifier with DiagnosticableTreeMixin
+    implements ReassembleHandler {
+      bool isDisposed = false;
+
+  bool get mounted => !isDisposed;
+
+  classNameState(){
+    
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+
+    /// list all the properties of your class here.
+    /// See the documentation of debugFillProperties for more information.
+    /// TODO: implement add
+    properties.add(StringProperty('className', null));
+  }
+
+  @override
+  void reassemble() {
+    /// TODO: reassemble
+    print('Did hot-reload className');
+  }
+
+  @override
+  void notifyListeners() {
+    if (!isDisposed) {
+      super.notifyListeners();
+    }
+  }
+
+  @override
+  void dispose() {
+    /// TODO: dispose
+    isDisposed = true;
+    super.dispose();
+  }
+}
 """;
 
 /// ### `layoutStatefullTemplate`
@@ -944,7 +1038,7 @@ class _classNameState extends State<className> with WidgetsBindingObserver {
 """;
 
 const String screenStatelessNotifierNoChildTemplate =
-    """import 'package:projectName/core.dart';\n
+    """import 'package:projectName/core.dart';\nimport 'package:flutter/foundation.dart';\n
 /// ### `className`
 ///
 /// `Description`:
@@ -965,7 +1059,48 @@ class className extends StatelessWidget {
   }
 }
 
-class classNameState extends ChangeNotifier {}
+class classNameState extends ChangeNotifier with DiagnosticableTreeMixin
+    implements ReassembleHandler {
+
+  bool isDisposed = false;
+
+  bool get mounted => !isDisposed;
+
+  classNameState(){
+    
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+
+    /// list all the properties of your class here.
+    /// See the documentation of debugFillProperties for more information.
+    /// TODO: implement add
+    properties.add(StringProperty('className', null));
+  }
+
+  @override
+  void reassemble() {
+    /// TODO: reassemble
+    print('Did hot-reload className');
+  }
+
+  @override
+  void notifyListeners() {
+    if (!isDisposed) {
+      super.notifyListeners();
+    }
+  }
+
+  @override
+  void dispose() {
+    /// TODO: dispose
+    isDisposed = true;
+    super.dispose();
+  }
+
+}
 """;
 
 const String layoutTestTemplate = """import 'package:test/test.dart';
@@ -1066,6 +1201,10 @@ const String screenControllerTemplate =
 // TODO: Implement controller
 class classNameController extends ChangeNotifier with DiagnosticableTreeMixin implements ReassembleHandler{
   
+  bool isDisposed = false;
+
+  bool get mounted => !isDisposed;
+
   classNameController(){
     
   }
@@ -1086,8 +1225,16 @@ class classNameController extends ChangeNotifier with DiagnosticableTreeMixin im
   }
 
   @override
+  void notifyListeners() {
+    if (!isDisposed) {
+      super.notifyListeners();
+    }
+  }
+
+  @override
   void dispose() {
     /// TODO: dispose
+    isDisposed = true;
     super.dispose();
   }
 }""";
@@ -1130,8 +1277,14 @@ class className extends StatelessWidget {
 
   static const Key pageKey = ValueKey("className");
 
+  static const String title = "className";
+
   @override
   Widget build(BuildContext context) {
+
+    /// set the current browser title
+    ApplicationService.setTitle(context, title);
+
     return ChangeNotifierProvider(
       create: (_) => classNameController(),
       child: AdaptivePlatformWidget(child: Scaffold(body: Center(child:Text("className")))),
@@ -1151,8 +1304,13 @@ class className extends StatelessWidget {
 
   static const Key pageKey = ValueKey("className");
 
+  static const String title = "className";
+
   @override
   Widget build(BuildContext context) {
+    /// set the current browser title
+    ApplicationService.setTitle(context, title);
+
     return AdaptivePlatformWidget(child: Scaffold(body: Center(child:Text("className"))));
   }
 }""";
@@ -1170,8 +1328,14 @@ class className extends StatelessWidget {
 
   static const Key pageKey = ValueKey("className");
 
+  static const String title = "className";
+
   @override
   Widget build(BuildContext context) {
+    
+    /// set the current browser title
+    ApplicationService.setTitle(context, title);
+
     return ChangeNotifierProvider(
       create: (_) => classNameController(),
       child: AdaptivePlatformWidget(child: Scaffold(body: Center(child:Text("className")))),
@@ -1212,6 +1376,12 @@ import 'package:projectName/core.dart';
 class ApplicationController extends ChangeNotifier
     with DiagnosticableTreeMixin
     implements ReassembleHandler {
+  
+  /// check if current controller is dispose
+  bool isDisposed = false;
+
+  bool get mounted => !isDisposed;
+
   late ApplicationService service;
 
   /// current application locale
@@ -1278,7 +1448,16 @@ class ApplicationController extends ChangeNotifier
   }
 
   @override
+  void notifyListeners() {
+    if (!isDisposed) {
+      super.notifyListeners();
+    }
+  }
+
+  @override
   void dispose() {
+    /// TODO: dispose
+    isDisposed = true;
     super.dispose();
   }
 }
@@ -1369,6 +1548,12 @@ import 'package:projectName/core.dart';
 class AuthenticationController extends ChangeNotifier
     with DiagnosticableTreeMixin
     implements ReassembleHandler {
+  
+  /// check if current controller is dispose
+  bool isDisposed = false;
+
+  bool get mounted => !isDisposed;
+
   late String? _name;
   String? get name => _name;
 
@@ -1474,7 +1659,16 @@ class AuthenticationController extends ChangeNotifier
   }
 
   @override
+  void notifyListeners() {
+    if (!isDisposed) {
+      super.notifyListeners();
+    }
+  }
+
+  @override
   void dispose() {
+    /// TODO: dispose
+    isDisposed = true;
     super.dispose();
   }
 }
