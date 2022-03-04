@@ -85,6 +85,7 @@ class InitCommand extends Command with YamlInformation {
         DirectoryCreator(p).run();
       }
     }
+
     /// create en-US.json and km-KH.json inside of translations
     FileCreator(path.join(_translationsPath, "en-US.json")).run();
     FileCreator(path.join(_translationsPath, "km-KH.json")).run();

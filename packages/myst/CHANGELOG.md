@@ -1,3 +1,7 @@
+## 0.0.1+7
+
+- hotfix screen template
+
 ## 0.0.1+6
 
 - add myst layout and screen for mvc pattern
