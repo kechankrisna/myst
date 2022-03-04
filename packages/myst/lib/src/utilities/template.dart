@@ -93,6 +93,9 @@ class MyApp extends StatelessWidget {
         
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
           title: MyApp.title,
           theme: ThemeData(primarySwatch: Colors.blue),
           routeInformationParser: router.routeInformationParser,
@@ -279,7 +282,7 @@ const String userTokenTypeKey = "token_type";
 
 """;
 
-/// ### `applicationConfigTemplate`
+/// ### [applicationConfigTemplate]
 ///
 /// Application configuration including themes or constants
 const String applicationConfigTemplate =
@@ -337,7 +340,7 @@ const restorationScopeId = "app";
 /// `appTitle`
 /// 
 /// 
-const appTitle = "Myst Example";
+const appTitle = "projectName";
 
 """;
 
