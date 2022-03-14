@@ -186,27 +186,39 @@ class InitCommand extends Command with YamlInformation {
 
   /// generate the router.dart in lib and router_test.dart in test
   Future<void> generateRouterLib() async {
-    final _routePath =
-        path.join(libraryPath, ApplicationStructorConfig.router.path);
-    final _testFileName = ApplicationStructorConfig.router.path
-        .replaceAll(RegExp(r'.dart'), '_test.dart');
-    final _routeTestFilePath = path.join(testPath, _testFileName);
-    String fileHeadContent =
-        """/// Application route handler\nimport 'package:$projectName/core.dart';\n\n""";
-    var created = FileCreator(_routePath,
-            contents:
-                fileHeadContent + ApplicationStructorConfig.router.contents!,
-            rewrite: rewrite)
-        .run();
-    if (created) {
-      /// then create a test for route
-      var contents = flutter
-          ? testTemplate.replaceAll(RegExp(r'package:test/test.dart'),
-              'package:flutter_test/flutter_test.dart')
-          : testTemplate;
-      FileCreator(_routeTestFilePath, contents: contents, rewrite: rewrite)
-          .run();
-    }
+    GenerateFileHelper(
+      parentDir: null,
+      className: "router",
+      projectName: projectName!,
+    )
+      ..generateLib(
+          template:
+              """/// Application route handler\nimport 'package:$projectName/core.dart';\n\n""" +
+                  ApplicationStructorConfig.router.contents!,
+          fileName: "router")
+      ..generateTest(template: testTemplate, fileName: "router");
+    return;
+    /// final _routePath =
+    ///     path.join(libraryPath, ApplicationStructorConfig.router.path);
+    /// final _testFileName = ApplicationStructorConfig.router.path
+    ///     .replaceAll(RegExp(r'.dart'), '_test.dart');
+    /// final _routeTestFilePath = path.join(testPath, _testFileName);
+    /// String fileHeadContent =
+    ///     """/// Application route handler\nimport 'package:$projectName/core.dart';\n\n""";
+    /// var created = FileCreator(_routePath,
+    ///         contents:
+    ///             fileHeadContent + ApplicationStructorConfig.router.contents!,
+    ///         rewrite: rewrite)
+    ///     .run();
+    /// if (created) {
+    ///   /// then create a test for route
+    ///   var contents = flutter
+    ///       ? testTemplate.replaceAll(RegExp(r'package:test/test.dart'),
+    ///           'package:flutter_test/flutter_test.dart')
+    ///       : testTemplate;
+    ///   FileCreator(_routeTestFilePath, contents: contents, rewrite: rewrite)
+    ///       .run();
+    /// }
   }
 
   /// generate the main.dart in lib and app_test.dart in test
@@ -220,25 +232,27 @@ class InitCommand extends Command with YamlInformation {
           template: ApplicationStructorConfig.main.contents!, fileName: "main")
       ..generateTest(template: testTemplate, fileName: "main");
     return;
-    final _mainPath =
-        path.join(libraryPath, ApplicationStructorConfig.main.path);
-    final _testFileName = ApplicationStructorConfig.main.path
-        .replaceAll(RegExp(r'.dart'), '_test.dart');
-    final _mainTestFilePath = path.join(testPath, _testFileName);
 
-    var created = FileCreator(_mainPath,
-            contents: ApplicationStructorConfig.main.contents!
-                .replaceAll(RegExp(r"projectName"), projectName!),
-            rewrite: rewrite)
-        .run();
-    if (created) {
-      var contents = flutter
-          ? testTemplate.replaceAll(RegExp(r'package:test/test.dart'),
-              'package:flutter_test/flutter_test.dart')
-          : testTemplate;
-      FileCreator(_mainTestFilePath, contents: contents, rewrite: rewrite)
-          .run();
-    }
+    /// TODO: old
+    /// final _mainPath =
+    ///     path.join(libraryPath, ApplicationStructorConfig.main.path);
+    /// final _testFileName = ApplicationStructorConfig.main.path
+    ///     .replaceAll(RegExp(r'.dart'), '_test.dart');
+    /// final _mainTestFilePath = path.join(testPath, _testFileName);
+
+    /// var created = FileCreator(_mainPath,
+    ///         contents: ApplicationStructorConfig.main.contents!
+    ///             .replaceAll(RegExp(r"projectName"), projectName!),
+    ///         rewrite: rewrite)
+    ///     .run();
+    /// if (created) {
+    ///   var contents = flutter
+    ///       ? testTemplate.replaceAll(RegExp(r'package:test/test.dart'),
+    ///           'package:flutter_test/flutter_test.dart')
+    ///       : testTemplate;
+    ///   FileCreator(_mainTestFilePath, contents: contents, rewrite: rewrite)
+    ///       .run();
+    /// }
   }
 
   /// generate the app.dart in lib and app_test.dart in test
