@@ -94,8 +94,8 @@ class InitCommand extends Command with YamlInformation {
   /// generate asset directory
   Future<void> generateLibDirectory() async {
     final skelentons = [
-      ...ApplicationConfig.skeleton,
-      if (flutter) ...[ApplicationConfig.widgets, ApplicationConfig.providers]
+      ...ApplicationStructorConfig.skeleton,
+      if (flutter) ...[ApplicationStructorConfig.widgets, ApplicationStructorConfig.providers]
     ];
     for (var directory in skelentons) {
       final _innerLibPath = path.join(libraryPath, directory.path);
@@ -113,7 +113,7 @@ class InitCommand extends Command with YamlInformation {
           }
         }
 
-        /// create its tests
+        /// create its tests directory
         DirectoryCreator(_innerTestPath).run();
 
         /// lib file
@@ -128,19 +128,21 @@ class InitCommand extends Command with YamlInformation {
           var createdFile = FileCreator(_currentLibFilePath,
                   contents: innerFileContent, rewrite: rewrite)
               .run();
-          if (createdFile) {
-            final _testFileName =
-                innerFile.path.replaceAll(RegExp(r'.dart'), '_test.dart');
-            final _currentTestFilePath =
-                path.join(_innerTestPath, _testFileName);
-            var contents = flutter
-                ? testTemplate.replaceAll(RegExp(r'package:test/test.dart'),
-                    'package:flutter_test/flutter_test.dart')
-                : testTemplate;
-            FileCreator(_currentTestFilePath,
-                    contents: contents, rewrite: rewrite)
-                .run();
-          }
+          /// [disabled]
+          /// create test file
+          /// if (createdFile) {
+          ///   final _testFileName =
+          ///       innerFile.path.replaceAll(RegExp(r'.dart'), '_test.dart');
+          ///   final _currentTestFilePath =
+          ///       path.join(_innerTestPath, _testFileName);
+          ///   var contents = flutter
+          ///       ? testTemplate.replaceAll(RegExp(r'package:test/test.dart'),
+          ///           'package:flutter_test/flutter_test.dart')
+          ///       : testTemplate;
+          ///   FileCreator(_currentTestFilePath,
+          ///           contents: contents, rewrite: rewrite)
+          ///       .run();
+          /// }
         }
       }
     }
@@ -180,14 +182,14 @@ class InitCommand extends Command with YamlInformation {
 
   /// generate the router.dart in lib and router_test.dart in test
   Future<void> generateRouterLib() async {
-    final _routePath = path.join(libraryPath, ApplicationConfig.router.path);
-    final _testFileName = ApplicationConfig.router.path
+    final _routePath = path.join(libraryPath, ApplicationStructorConfig.router.path);
+    final _testFileName = ApplicationStructorConfig.router.path
         .replaceAll(RegExp(r'.dart'), '_test.dart');
     final _routeTestFilePath = path.join(testPath, _testFileName);
     String fileHeadContent =
         """/// Application route handler\nimport 'package:$projectName/core.dart';\n\n""";
     var created = FileCreator(_routePath,
-            contents: fileHeadContent + ApplicationConfig.router.contents!,
+            contents: fileHeadContent + ApplicationStructorConfig.router.contents!,
             rewrite: rewrite)
         .run();
     if (created) {
@@ -203,13 +205,13 @@ class InitCommand extends Command with YamlInformation {
 
   /// generate the main.dart in lib and app_test.dart in test
   Future<void> generateMainLib() async {
-    final _mainPath = path.join(libraryPath, ApplicationConfig.main.path);
+    final _mainPath = path.join(libraryPath, ApplicationStructorConfig.main.path);
     final _testFileName =
-        ApplicationConfig.main.path.replaceAll(RegExp(r'.dart'), '_test.dart');
+        ApplicationStructorConfig.main.path.replaceAll(RegExp(r'.dart'), '_test.dart');
     final _mainTestFilePath = path.join(testPath, _testFileName);
 
     var created = FileCreator(_mainPath,
-            contents: ApplicationConfig.main.contents!
+            contents: ApplicationStructorConfig.main.contents!
                 .replaceAll(RegExp(r"projectName"), projectName!),
             rewrite: rewrite)
         .run();
@@ -225,12 +227,12 @@ class InitCommand extends Command with YamlInformation {
 
   /// generate the app.dart in lib and app_test.dart in test
   Future<void> generateAppLib() async {
-    final _appPath = path.join(libraryPath, ApplicationConfig.app.path);
+    final _appPath = path.join(libraryPath, ApplicationStructorConfig.app.path);
     final _testFileName =
-        ApplicationConfig.app.path.replaceAll(RegExp(r'.dart'), '_test.dart');
+        ApplicationStructorConfig.app.path.replaceAll(RegExp(r'.dart'), '_test.dart');
     final _appTestFilePath = path.join(testPath, _testFileName);
     var created = FileCreator(_appPath,
-            contents: ApplicationConfig.app.contents, rewrite: rewrite)
+            contents: ApplicationStructorConfig.app.contents, rewrite: rewrite)
         .run();
     if (created) {
       var contents = flutter
@@ -243,8 +245,8 @@ class InitCommand extends Command with YamlInformation {
 
   /// generate the core in lib directory
   Future<void> generateCoreLib() async {
-    final _corePath = path.join(libraryPath, ApplicationConfig.core.path);
-    var contents = ApplicationConfig.core.contents!;
+    final _corePath = path.join(libraryPath, ApplicationStructorConfig.core.path);
+    var contents = ApplicationStructorConfig.core.contents!;
     if (flutter) {
       contents += "\nexport 'package:flutter/material.dart';";
     }
@@ -410,7 +412,7 @@ class InitCommand extends Command with YamlInformation {
       ..generateLib(
           template: applicationServiceTemplate, fileName: "application_service")
       ..generateTest(
-          template: serviceTemplate, fileName: "application_service");
+          template: serviceTestTemplate, fileName: "application_service");
 
     /// authentication_service.dart
     GenerateFileHelper(
@@ -421,7 +423,7 @@ class InitCommand extends Command with YamlInformation {
           template: authenticationServiceTemplate,
           fileName: "authentication_service")
       ..generateTest(
-          template: serviceTemplate, fileName: "authentication_service");
+          template: serviceTestTemplate, fileName: "authentication_service");
 
     /// await Shell().run("flutter pub run myst service application_service");
     /// await Shell().run("flutter pub run myst service authentication_service");
