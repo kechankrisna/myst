@@ -116,6 +116,8 @@ class MyApp extends StatelessWidget {
 
 /// this will be use in order to create router.dart for export and import
 const String routerTemplate = """
+/// Application route handler\nimport 'package:projectName/core.dart';
+/// 
 class MyRouter {
   
   late AuthenticationController authenticationController;

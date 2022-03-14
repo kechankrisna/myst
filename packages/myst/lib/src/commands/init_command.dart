@@ -192,12 +192,12 @@ class InitCommand extends Command with YamlInformation {
       projectName: projectName!,
     )
       ..generateLib(
-          template:
-              """/// Application route handler\nimport 'package:$projectName/core.dart';\n\n""" +
-                  ApplicationStructorConfig.router.contents!,
+          template: ApplicationStructorConfig.router.contents!,
           fileName: "router")
       ..generateTest(template: testTemplate, fileName: "router");
     return;
+
+    /// TODO: old
     /// final _routePath =
     ///     path.join(libraryPath, ApplicationStructorConfig.router.path);
     /// final _testFileName = ApplicationStructorConfig.router.path
