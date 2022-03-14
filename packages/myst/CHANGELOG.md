@@ -1,3 +1,9 @@
+## 0.0.1+8
+
+- hotfix comment doc in template
+- add en-US.json and km-KH.json for translation in assets
+- add more option to app.dart file
+
 ## 0.0.1+7
 
 - hotfix screen template

@@ -63,6 +63,7 @@ class GenerateFileHelper {
       libraryPath,
       if (parentDir != null) ...[parentDir!, "${parentDir!}.dart"]
     ]);
+
     /// printRed("_parentLibPath $_parentLibPath");
 
     /// current new file path

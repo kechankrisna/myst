@@ -55,7 +55,10 @@ class RepairCommand extends Command with YamlInformation {
     /// if none dir name specify, then repair for all
     var structures = [
       ...ApplicationStructorConfig.skeleton,
-      if (flutter) ...[ApplicationStructorConfig.widgets, ApplicationStructorConfig.providers]
+      if (flutter) ...[
+        ApplicationStructorConfig.widgets,
+        ApplicationStructorConfig.providers
+      ]
     ];
     List<String> _paths = (structures.map((e) => e.path).toList());
 

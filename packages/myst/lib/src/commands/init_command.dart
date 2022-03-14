@@ -87,9 +87,12 @@ class InitCommand extends Command with YamlInformation {
     }
 
     /// create en-US.json and km-KH.json inside of translations
-    FileCreator(path.join(_translationsPath, "en-US.json"), contents: translationEnTemplate)
+    FileCreator(path.join(_translationsPath, "en-US.json"),
+            contents: translationEnTemplate)
         .run();
-    FileCreator(path.join(_translationsPath, "km-KH.json"), contents: translationKhTemplate).run();
+    FileCreator(path.join(_translationsPath, "km-KH.json"),
+            contents: translationKhTemplate)
+        .run();
   }
 
   /// generate asset directory
