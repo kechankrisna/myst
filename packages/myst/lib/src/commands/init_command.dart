@@ -95,7 +95,10 @@ class InitCommand extends Command with YamlInformation {
   Future<void> generateLibDirectory() async {
     final skelentons = [
       ...ApplicationStructorConfig.skeleton,
-      if (flutter) ...[ApplicationStructorConfig.widgets, ApplicationStructorConfig.providers]
+      if (flutter) ...[
+        ApplicationStructorConfig.widgets,
+        ApplicationStructorConfig.providers
+      ]
     ];
     for (var directory in skelentons) {
       final _innerLibPath = path.join(libraryPath, directory.path);
@@ -128,6 +131,7 @@ class InitCommand extends Command with YamlInformation {
           var createdFile = FileCreator(_currentLibFilePath,
                   contents: innerFileContent, rewrite: rewrite)
               .run();
+
           /// [disabled]
           /// create test file
           /// if (createdFile) {
@@ -182,14 +186,16 @@ class InitCommand extends Command with YamlInformation {
 
   /// generate the router.dart in lib and router_test.dart in test
   Future<void> generateRouterLib() async {
-    final _routePath = path.join(libraryPath, ApplicationStructorConfig.router.path);
+    final _routePath =
+        path.join(libraryPath, ApplicationStructorConfig.router.path);
     final _testFileName = ApplicationStructorConfig.router.path
         .replaceAll(RegExp(r'.dart'), '_test.dart');
     final _routeTestFilePath = path.join(testPath, _testFileName);
     String fileHeadContent =
         """/// Application route handler\nimport 'package:$projectName/core.dart';\n\n""";
     var created = FileCreator(_routePath,
-            contents: fileHeadContent + ApplicationStructorConfig.router.contents!,
+            contents:
+                fileHeadContent + ApplicationStructorConfig.router.contents!,
             rewrite: rewrite)
         .run();
     if (created) {
@@ -205,9 +211,19 @@ class InitCommand extends Command with YamlInformation {
 
   /// generate the main.dart in lib and app_test.dart in test
   Future<void> generateMainLib() async {
-    final _mainPath = path.join(libraryPath, ApplicationStructorConfig.main.path);
-    final _testFileName =
-        ApplicationStructorConfig.main.path.replaceAll(RegExp(r'.dart'), '_test.dart');
+    GenerateFileHelper(
+      parentDir: null,
+      className: "main",
+      projectName: projectName!,
+    )
+      ..generateLib(
+          template: ApplicationStructorConfig.main.contents!, fileName: "main")
+      ..generateTest(template: testTemplate, fileName: "main");
+    return;
+    final _mainPath =
+        path.join(libraryPath, ApplicationStructorConfig.main.path);
+    final _testFileName = ApplicationStructorConfig.main.path
+        .replaceAll(RegExp(r'.dart'), '_test.dart');
     final _mainTestFilePath = path.join(testPath, _testFileName);
 
     var created = FileCreator(_mainPath,
@@ -227,25 +243,36 @@ class InitCommand extends Command with YamlInformation {
 
   /// generate the app.dart in lib and app_test.dart in test
   Future<void> generateAppLib() async {
-    final _appPath = path.join(libraryPath, ApplicationStructorConfig.app.path);
-    final _testFileName =
-        ApplicationStructorConfig.app.path.replaceAll(RegExp(r'.dart'), '_test.dart');
-    final _appTestFilePath = path.join(testPath, _testFileName);
-    var created = FileCreator(_appPath,
-            contents: ApplicationStructorConfig.app.contents, rewrite: rewrite)
-        .run();
-    if (created) {
-      var contents = flutter
-          ? testTemplate.replaceAll(RegExp(r'package:test/test.dart'),
-              'package:flutter_test/flutter_test.dart')
-          : testTemplate;
-      FileCreator(_appTestFilePath, contents: contents, rewrite: rewrite).run();
-    }
+    GenerateFileHelper(
+      parentDir: null,
+      className: "app",
+      projectName: projectName!,
+    )
+      ..generateLib(
+          template: ApplicationStructorConfig.app.contents!, fileName: "app")
+      ..generateTest(template: testTemplate, fileName: "app");
+
+    /// TODO: old
+    /// final _appPath = path.join(libraryPath, ApplicationStructorConfig.app.path);
+    /// final _testFileName = ApplicationStructorConfig.app.path
+    ///     .replaceAll(RegExp(r'.dart'), '_test.dart');
+    /// final _appTestFilePath = path.join(testPath, _testFileName);
+    /// var created = FileCreator(_appPath,
+    ///         contents: ApplicationStructorConfig.app.contents, rewrite: rewrite)
+    ///     .run();
+    /// if (created) {
+    ///   var contents = flutter
+    ///       ? testTemplate.replaceAll(RegExp(r'package:test/test.dart'),
+    ///           'package:flutter_test/flutter_test.dart')
+    ///       : testTemplate;
+    ///   FileCreator(_appTestFilePath, contents: contents, rewrite: rewrite).run();
+    /// }
   }
 
   /// generate the core in lib directory
   Future<void> generateCoreLib() async {
-    final _corePath = path.join(libraryPath, ApplicationStructorConfig.core.path);
+    final _corePath =
+        path.join(libraryPath, ApplicationStructorConfig.core.path);
     var contents = ApplicationStructorConfig.core.contents!;
     if (flutter) {
       contents += "\nexport 'package:flutter/material.dart';";

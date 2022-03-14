@@ -80,6 +80,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider<ApplicationController>(
+          create: (_) => ApplicationController()
+        ),
         ChangeNotifierProvider<AuthenticationController>(
           create: (_) => authenticationController,
         ),
@@ -97,7 +100,9 @@ class MyApp extends StatelessWidget {
           supportedLocales: context.supportedLocales,
           locale: context.locale,
           title: MyApp.title,
-          theme: ThemeData(primarySwatch: Colors.blue),
+          theme: lightTheme,
+          darkTheme: darkTheme,
+          themeMode: context.select<ApplicationController, ThemeMode>((ctrl) => ctrl.themeMode) ,
           routeInformationParser: router.routeInformationParser,
           routerDelegate: router.routerDelegate,
         );
@@ -402,10 +407,19 @@ export 'router_config.dart';""";
 const String testTemplate = """import 'package:test/test.dart';
 
 void main() {
-  setUp(() {
+  group("className", () {
+    setUp(() {
+      ///
+    });
 
+    tearDown(() {
+      ///
+    });
+
+    test("sample", () {
+      expect(true, true);
+    });
   });
-
 }
 """;
 
@@ -1118,6 +1132,48 @@ void main() {
         home: className(
           child: const Text("sample"),
         ),
+      );
+    });
+
+    tearDown(() {
+      ///
+    });
+
+    testWidgets("start a screen to pump widget and test", (tester) async {
+      await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
+
+      /// TODO: implement find
+      /// final titleFinder = find.text("sample");
+      /// final incrementFinder = find.byKey(CounterScreen.incrementkey);
+      /// await tester.pumpAndSettle();
+      
+      /// TODO: guester
+      /// await tester.tap(incrementFinder);
+      /// await tester.pumpAndSettle();
+      
+      /// TODO: expected
+      /// expect(titleFinder, findsWidgets);
+      /// expect(incrementFinder, findsOneWidget);
+
+    });
+  });
+}
+""";
+
+const String layoutNoChildTestTemplate = """import 'package:test/test.dart';
+/// gestures handler
+import 'package:flutter/gestures.dart';
+
+
+void main() {
+  group("test controller className", () {
+    TestWidgetsFlutterBinding.ensureInitialized();
+    
+    late Widget app;
+    setUp(() {
+      app = MaterialApp(
+        home: className(),
       );
     });
 

@@ -1,12 +1,13 @@
 import 'package:myst/myst.dart';
 import 'dart:io' as io;
 import 'package:path/path.dart' as path;
+import 'package:printx/printx.dart';
 import 'package:recase/recase.dart';
 
 class GenerateFileHelper {
   late String className;
   late String projectName;
-  late String parentDir;
+  late String? parentDir;
 
   ///
   late String currentPath;
@@ -16,7 +17,7 @@ class GenerateFileHelper {
   GenerateFileHelper({
     required this.className,
     required this.projectName,
-    required this.parentDir,
+    this.parentDir,
   }) {
     /// current project path
     currentPath = io.Directory.current.path;
@@ -54,18 +55,23 @@ class GenerateFileHelper {
     ///   DirectoryCreator(path.join(libraryPath, parentDir, dirName)).run();
     /// }
 
-    DirectoryCreator(path.joinAll([libraryPath, parentDir, ...dirNames])).run();
+    DirectoryCreator(path.joinAll(
+        [libraryPath, if (parentDir != null) parentDir!, ...dirNames])).run();
 
     /// current file parent path
-    final _parentLibPath = path.join(libraryPath, parentDir, "$parentDir.dart");
+    final _parentLibPath = path.joinAll([
+      libraryPath,
+      if (parentDir != null) ...[parentDir!, "${parentDir!}.dart"]
+    ]);
+    /// printRed("_parentLibPath $_parentLibPath");
 
     /// current new file path
-    /// TODO: old
-    /// final _filePath = dirName != null
-    ///     ? path.joinAll([libraryPath, parentDir, ...dirNames, "$fileName.dart"])
-    ///     : path.join(libraryPath, parentDir, "$fileName.dart");
-    final _filePath =
-        path.joinAll([libraryPath, parentDir, ...dirNames, "$fileName.dart"]);
+    final _filePath = path.joinAll([
+      libraryPath,
+      if (parentDir != null) parentDir!,
+      ...dirNames,
+      "$fileName.dart"
+    ]);
 
     FileCreator(_filePath, contents: contents, rewrite: rewrite);
 
@@ -75,19 +81,18 @@ class GenerateFileHelper {
     /// printCyan(content);
 
     /// add to its parent lib if none exist
-    var content = io.File(_parentLibPath).readAsStringSync();
-    var exist = content.contains(RegExp("$fileName.dart"));
-    if (!exist && shouldExport) {
-      /// TODO: old
-      /// content += dirName == null
-      ///     ? "\nexport '$fileName.dart';"
-      ///     : "\nexport '$dirName/$fileName.dart';";
-      content +=
-          "\nexport '${dirNames.isNotEmpty ? (dirNames.join("/") + "/") : ""}$fileName.dart';";
+    if (_parentLibPath != libraryPath) {
+      var content = io.File(_parentLibPath).readAsStringSync();
+      var exist = content.contains(RegExp("$fileName.dart"));
+      if (!exist && shouldExport) {
+        content +=
+            "\nexport '${dirNames.isNotEmpty ? (dirNames.join("/") + "/") : ""}$fileName.dart';";
 
-      /// force to rewrite
-      FileCreator(_parentLibPath, contents: content, rewrite: true).run();
+        /// force to rewrite
+        FileCreator(_parentLibPath, contents: content, rewrite: true).run();
+      }
     }
+
     return _filePath;
   }
 
@@ -124,7 +129,8 @@ class GenerateFileHelper {
     /// if (dirName != null) {
     ///   DirectoryCreator(path.join(testPath, parentDir, dirName)).run();
     /// }
-    DirectoryCreator(path.joinAll([testPath, parentDir, ...dirNames])).run();
+    DirectoryCreator(path.joinAll(
+        [testPath, if (parentDir != null) parentDir!, ...dirNames])).run();
 
     /// current new file path
     /// TODO: old
@@ -132,8 +138,12 @@ class GenerateFileHelper {
     ///     ? path.join(testPath, parentDir, dirName, "${fileName}_test.dart")
     ///     : path.join(testPath, parentDir, "${fileName}_test.dart");
 
-    final _filePath = path
-        .joinAll([testPath, parentDir, ...dirNames, "${fileName}_test.dart"]);
+    final _filePath = path.joinAll([
+      testPath,
+      if (parentDir != null) parentDir!,
+      ...dirNames,
+      "${fileName}_test.dart"
+    ]);
 
     /// write content
     FileCreator(_filePath, contents: contents, rewrite: rewrite).run();
@@ -145,7 +155,8 @@ class GenerateFileHelper {
     required String name,
     List<String> dirNames = const [],
   }) {
-    String dirPath = path.joinAll([libraryPath, parentDir, ...dirNames, name]);
+    String dirPath = path.joinAll(
+        [libraryPath, if (parentDir != null) parentDir!, ...dirNames, name]);
     DirectoryCreator(dirPath).run();
     return dirPath;
   }
@@ -154,7 +165,8 @@ class GenerateFileHelper {
     required String name,
     List<String> dirNames = const [],
   }) {
-    String dirPath = path.joinAll([testPath, parentDir, ...dirNames, name]);
+    String dirPath = path.joinAll(
+        [testPath, if (parentDir != null) parentDir!, ...dirNames, name]);
     DirectoryCreator(dirPath).run();
     return dirPath;
   }

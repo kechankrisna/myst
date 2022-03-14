@@ -139,6 +139,6 @@ class WidgetCommand extends Command
       className: className!,
       projectName: projectName!,
     ).generateTest(
-        template: layoutTestTemplate, fileName: fileName!, dirNames: dirNames);
+        template: layoutNoChildTestTemplate, fileName: fileName!, dirNames: dirNames);
   }
 }
