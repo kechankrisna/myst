@@ -54,8 +54,8 @@ class RepairCommand extends Command with YamlInformation {
   Future<void> repairExport() async {
     /// if none dir name specify, then repair for all
     var structures = [
-      ...ApplicationConfig.skeleton,
-      if (flutter) ...[ApplicationConfig.widgets, ApplicationConfig.providers]
+      ...ApplicationStructorConfig.skeleton,
+      if (flutter) ...[ApplicationStructorConfig.widgets, ApplicationStructorConfig.providers]
     ];
     List<String> _paths = (structures.map((e) => e.path).toList());
 

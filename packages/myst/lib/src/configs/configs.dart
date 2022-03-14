@@ -1,3 +1,3 @@
 library configs;
 
-export 'application_config.dart';
+export 'application_structure_config.dart';

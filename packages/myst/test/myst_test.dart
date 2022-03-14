@@ -24,9 +24,9 @@ void main() {
   });
 
   test("print app config", () {
-    printGreen(ApplicationConfig.keyDirectories);
-    printGreen(ApplicationConfig.keyPaths);
-    expect(ApplicationConfig.keyDirectories.length,
-        ApplicationConfig.keyPaths.length);
+    printGreen(ApplicationStructorConfig.keyDirectories);
+    printGreen(ApplicationStructorConfig.keyPaths);
+    expect(ApplicationStructorConfig.keyDirectories.length,
+        ApplicationStructorConfig.keyPaths.length);
   });
 }

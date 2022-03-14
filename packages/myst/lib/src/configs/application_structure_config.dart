@@ -1,6 +1,6 @@
 import 'package:myst/myst.dart';
 
-class ApplicationConfig {
+class ApplicationStructorConfig {
   /// router.dart handler
   static FileCreator get router =>
       FileCreator("router.dart", contents: routerTemplate);
