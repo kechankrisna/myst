@@ -31,12 +31,25 @@ const String mystYamlTemplate = """configs:
     rewrite: false
     included: [".*."]""";
 
+String translationEnTemplate = """{
+  "login": "login",
+  "logout": "logout",
+  "register": "register",
+  "reset": "reset",
+  "welcome": "welcome"
+}""";
+String translationKhTemplate = """{
+  "login": "ចុះឈ្មោះ",
+  "logout": "ចាកចេញ",
+  "register": "បង្កើតគណនី",
+  "reset": "ផ្លាស់ប្តូរលេខសំងាត់",
+  "welcome": "ស្វាគមន៍"
+}""";
+
 /// `mainTemplate`
 ///
 /// this will be used to create or override main.dart content
-const String mainTemplate = """
-import 'package:projectName/core.dart';
-
+const String mainTemplate = """import 'package:projectName/core.dart';\n
 void main() async {
   // flutter binding
   WidgetsFlutterBinding.ensureInitialized();
@@ -60,11 +73,22 @@ void main() async {
 """;
 
 /// `appTemplate`
-
+///
 /// this will be use in order to create app.dart for export and import
-const String appTemplate = """
-import 'core.dart';
-
+const String appTemplate = """import 'core.dart';\n
+/// ### `MyApp`
+///
+/// `Description`: the main application wrapper
+///
+/// Example:
+/// ```dart
+/// void main() async {
+///
+/// WidgetsFlutterBinding.ensureInitialized();
+///   var authenticationController = AuthenticationController();
+///   runApp(MyApp(authenticationController: authenticationController)));
+/// }
+/// ```
 class MyApp extends StatelessWidget {
   
   final AuthenticationController authenticationController;
@@ -113,10 +137,12 @@ class MyApp extends StatelessWidget {
 """;
 
 /// `routerTemplate`
-
+///
 /// this will be use in order to create router.dart for export and import
-const String routerTemplate = """
-/// Application route handler\nimport 'package:projectName/core.dart';
+const String routerTemplate = """import 'package:projectName/core.dart';\n
+/// ### `MyRouter`
+/// 
+/// `Description`: the main class for route management
 /// 
 class MyRouter {
   
@@ -266,7 +292,7 @@ class MyRouter {
 ///
 /// Authentication configuration or constants\n
 const String authenticationConfigTemplate =
-    """/// Authentication configuration or constants\n
+    """/// Authentication configuration or constants\n\n
 /// `userNameKey`
 ///
 /// ### Used to store the user name in cache eg: shared pref or hive
@@ -596,12 +622,6 @@ void main() {
 /// and its test file
 const String controllerTemplate =
     """import 'package:projectName/core.dart';\nimport 'package:flutter/foundation.dart';\n
-/// ### `className`
-/// 
-/// `Description`:
-/// 
-/// `Example`:
-// TODO: Implement controller
 class className extends ChangeNotifier with DiagnosticableTreeMixin implements ReassembleHandler{
   
   /// check if current controller is dispose
@@ -609,6 +629,12 @@ class className extends ChangeNotifier with DiagnosticableTreeMixin implements R
 
   bool get mounted => !isDisposed;
 
+  /// ### `className`
+  /// 
+  /// `Description`:
+  /// 
+  /// `Example`:
+  // TODO: Implement controller
   className(){
     
   }
@@ -646,7 +672,6 @@ class className extends ChangeNotifier with DiagnosticableTreeMixin implements R
 const String controllerTestTemplate = """import 'package:test/test.dart';
 /// gestures handler
 import 'package:flutter/gestures.dart';
-
 
 void main() {
   group("test controller className", () {
@@ -728,15 +753,16 @@ void main() {
 /// and its test file
 const String layoutStatelessTemplate =
     """import 'package:projectName/core.dart';\n
-
-/// ### `className`
-/// 
-/// `Description`:
-/// 
-/// `Example`:
-// TODO: Implement the className
 class className extends StatelessWidget {
+  /// `child`: optional widget
   final Widget? child;
+
+  /// ### `className`
+  /// 
+  /// `Description`:
+  /// 
+  /// `Example`:
+  // TODO: Implement the className
   const className({Key? key, this.child}) : super(key: key);
 
   @override
@@ -749,13 +775,14 @@ class className extends StatelessWidget {
 const String layoutStatelessNoChildTemplate =
     """import 'package:projectName/core.dart';\n
 
-/// ### `className`
-/// 
-/// `Description`:
-/// 
-/// `Example`:
-// TODO: Implement the className
 class className extends StatelessWidget {
+
+  /// ### `className`
+  /// 
+  /// `Description`:
+  /// 
+  /// `Example`:
+  // TODO: Implement the className
   const className({Key? key}) : super(key: key);
 
   static const Key widgetKey = ValueKey("className");
@@ -773,14 +800,16 @@ class className extends StatelessWidget {
 /// and its test file
 const String layoutStatelessNotifierTemplate =
     """import 'package:projectName/core.dart';\nimport 'package:flutter/foundation.dart';\n
-/// ### `className`
-///
-/// `Description`:
-///
-/// `Example`:
-// TODO: Implement the className
 class className extends StatelessWidget {
+  /// `child`: optional widget
   final Widget? child;
+
+  /// ### `className`
+  ///
+  /// `Description`:
+  ///
+  /// `Example`:
+  // TODO: Implement the className
   const className({Key? key, this.child}) : super(key: key);
 
   @override
@@ -838,15 +867,18 @@ class classNameState extends ChangeNotifier with DiagnosticableTreeMixin
 
 const String layoutStatelessNotifierNoChildTemplate =
     """import 'package:projectName/core.dart';\nimport 'package:flutter/foundation.dart';\n
-/// ### `className`
-///
-/// `Description`:
-///
-/// `Example`:
-// TODO: Implement the className
+
 class className extends StatelessWidget {
+
+  /// ### `className`
+  ///
+  /// `Description`:
+  ///
+  /// `Example`:
+  // TODO: Implement the className
   const className({Key? key}) : super(key: key);
 
+  /// `widgetKey`: current widget key which will be important when testing widget
   static const Key widgetKey = ValueKey("className");
 
   @override
@@ -906,14 +938,16 @@ class classNameState extends ChangeNotifier with DiagnosticableTreeMixin
 /// and its test file
 const String layoutStatefulTemplate =
     """import 'package:projectName/core.dart';\n
-/// ### `className`
-/// 
-/// `Description`:
-/// 
-/// `Example`:
-// TODO: Implement the className
+
 class className extends StatefulWidget {
   final Widget? child;
+
+  /// ### `className`
+  /// 
+  /// `Description`:
+  /// 
+  /// `Example`:
+  // TODO: Implement the className
   const className({Key? key, this.child}) : super(key: key);
 
   @override
@@ -955,14 +989,15 @@ class _classNameState extends State<className> with WidgetsBindingObserver {
 
 const String layoutStatefulNoChildTemplate =
     """import 'package:projectName/core.dart';\n
-/// ### `className`
-/// 
-/// `Description`:
-/// 
-/// `Example`:
-// TODO: Implement the className
 class className extends StatefulWidget {
+  /// ### `className`
+  /// 
+  /// `Description`:
+  /// 
+  /// `Example`:
+  // TODO: Implement the className
   const className({Key? key}) : super(key: key);
+
 
   static const Key widgetKey = ValueKey("className");
 
@@ -1055,15 +1090,16 @@ class _classNameState extends State<className> with WidgetsBindingObserver {
 
 const String screenStatelessNotifierNoChildTemplate =
     """import 'package:projectName/core.dart';\nimport 'package:flutter/foundation.dart';\n
-/// ### `className`
-///
-/// `Description`:
-///
-/// `Example`:
-// TODO: Implement the className
 class className extends StatelessWidget {
+  /// ### `className`
+  ///
+  /// `Description`:
+  ///
+  /// `Example`:
+  // TODO: Implement the className
   const className({Key? key}) : super(key: key);
 
+  /// `widgetKey`: current widget key which will be important when testing widget
   static const Key widgetKey = ValueKey("className");
 
   @override
@@ -1082,6 +1118,12 @@ class classNameState extends ChangeNotifier with DiagnosticableTreeMixin
 
   bool get mounted => !isDisposed;
 
+  /// ### `classNameState`
+  ///
+  /// `Description`:
+  ///
+  /// `Example`:
+  // TODO: Implement the classNameState
   classNameState(){
     
   }
@@ -1122,7 +1164,6 @@ class classNameState extends ChangeNotifier with DiagnosticableTreeMixin
 const String layoutTestTemplate = """import 'package:test/test.dart';
 /// gestures handler
 import 'package:flutter/gestures.dart';
-
 
 void main() {
   group("test controller className", () {
@@ -1167,7 +1208,6 @@ const String layoutNoChildTestTemplate = """import 'package:test/test.dart';
 /// gestures handler
 import 'package:flutter/gestures.dart';
 
-
 void main() {
   group("test controller className", () {
     TestWidgetsFlutterBinding.ensureInitialized();
@@ -1208,7 +1248,6 @@ void main() {
 const String screenTestTemplate = """import 'package:test/test.dart';
 /// gestures handler
 import 'package:flutter/gestures.dart';
-
 
 void main() {
   group("test controller className", () {
@@ -1251,18 +1290,18 @@ void main() {
 ///
 const String screenControllerTemplate =
     """import 'package:projectName/core.dart';\nimport 'package:flutter/foundation.dart';\n
-/// ### `classNameController`
-/// 
-/// `Description`:
-/// 
-/// `Example`:
-// TODO: Implement controller
 class classNameController extends ChangeNotifier with DiagnosticableTreeMixin implements ReassembleHandler{
   
   bool isDisposed = false;
 
   bool get mounted => !isDisposed;
 
+  /// ### `classNameController`
+  /// 
+  /// `Description`:
+  /// 
+  /// `Example`:
+  // TODO: Implement controller
   classNameController(){
     
   }
@@ -1299,17 +1338,21 @@ class classNameController extends ChangeNotifier with DiagnosticableTreeMixin im
 
 /// `layoutTemplate`
 ///
-const String layoutTemplate = """import 'package:projectName/core.dart';
-/// ### `className`
-///
-/// `Description`:
-///
-/// `Example`:
-// TODO: Implement the className
+const String layoutTemplate = """import 'package:projectName/core.dart';\n
 class className extends StatelessWidget {
+
+  /// `child`: optional child widget
   final Widget? child;
+
+  /// ### `className`
+  ///
+  /// `Description`:
+  ///
+  /// `Example`:
+  // TODO: Implement the className
   const className({Key? key, this.child}) : super(key: key);
 
+  /// `widgetKey`: current widget key which will be important when testing widget
   static const Key pageKey = ValueKey("className");
 
   @override
@@ -1323,16 +1366,17 @@ class className extends StatelessWidget {
 
 /// `screenTemplate`
 ///
-const String screenTemplate = """import 'package:projectName/core.dart';
-/// ### `className`
-///
-/// `Description`:
-///
-/// `Example`:
-// TODO: Implement the className
+const String screenTemplate = """import 'package:projectName/core.dart';\n
 class className extends StatelessWidget {
+  /// ### `className`
+  ///
+  /// `Description`:
+  ///
+  /// `Example`:
+  // TODO: Implement the className
   const className({Key? key}) : super(key: key);
 
+  /// `pageKey`: current widget key which will be important when testing widget
   static const Key pageKey = ValueKey("className");
 
   static const String title = "className";
@@ -1351,15 +1395,17 @@ class className extends StatelessWidget {
 }""";
 
 const String screenNoChildTemplate = """import 'package:projectName/core.dart';
-/// ### `className`
-///
-/// `Description`:
-///
-/// `Example`:
-// TODO: Implement the className
 class className extends StatelessWidget {
+
+  /// ### `className`
+  ///
+  /// `Description`:
+  ///
+  /// `Example`:
+  // TODO: Implement the className
   const className({Key? key}) : super(key: key);
 
+  /// `pageKey`: current widget key which will be important when testing widget
   static const Key pageKey = ValueKey("className");
 
   static const String title = "className";
@@ -1374,16 +1420,18 @@ class className extends StatelessWidget {
 }""";
 
 const String screenNotifierNoChildTemplate =
-    """import 'package:projectName/core.dart';
-/// ### `className`
-///
-/// `Description`:
-///
-/// `Example`:
-// TODO: Implement the className
+    """import 'package:projectName/core.dart';\n
 class className extends StatelessWidget {
+
+  /// ### `className`
+  ///
+  /// `Description`:
+  ///
+  /// `Example`:
+  // TODO: Implement the className
   const className({Key? key}) : super(key: key);
 
+  /// `pageKey`: current widget key which will be important when testing widget
   static const Key pageKey = ValueKey("className");
 
   static const String title = "className";
@@ -1432,11 +1480,6 @@ const String applicationControllerTemplate = """
 import 'package:flutter/foundation.dart';
 import 'package:projectName/core.dart';
 
-/// ### `ApplicationController`
-///
-/// `Description`: this application controller will take controll of theme, language, global configuration and other app sharedable state
-///
-/// `Example`:
 class ApplicationController extends ChangeNotifier
     with DiagnosticableTreeMixin
     implements ReassembleHandler {
@@ -1457,6 +1500,13 @@ class ApplicationController extends ChangeNotifier
   /// application title
   late String generatedTitle;
 
+  /// ### `ApplicationController`
+  ///
+  /// `Description`: this application controller will take controll of theme, language, global configuration and other app sharedable state
+  ///
+  /// `Example`:
+  /// ```dart
+  /// ```
   ApplicationController([ApplicationService? applicationService]) {
     service = applicationService ?? ApplicationService();
     themeMode = service.currentTheme;
@@ -1534,14 +1584,20 @@ const String applicationServiceTemplate = """
 import 'package:flutter/services.dart';
 import 'package:projectName/core.dart';
 
-/// ### `ApplicationService`
-///
-/// `Description`: this class will be use with other application controller to handle global service for application
-///
-/// `Example`:
 class ApplicationService {
   /// shared preference must be initialized before use
   static SharedPreferences? preferences;
+
+  /// ### `ApplicationService`
+  ///
+  /// `Description`: this class will be use with other application controller to handle global service for application
+  ///
+  /// `Example`:
+  /// ```dart
+  /// ```
+  ApplicationService() {
+    ///
+  }
 
   ///
   static ensureInitialized() async {
@@ -1604,11 +1660,6 @@ const String authenticationControllerTemplate = """
 import 'package:flutter/foundation.dart';
 import 'package:projectName/core.dart';
 
-/// ### `AuthenticationController`
-///
-/// `Description`: this controller will handle the login/logout/register/profile state for the entire app
-///
-/// `Example`:
 class AuthenticationController extends ChangeNotifier
     with DiagnosticableTreeMixin
     implements ReassembleHandler {
@@ -1629,6 +1680,13 @@ class AuthenticationController extends ChangeNotifier
 
   late AuthenticationService _authenticationService;
 
+  /// ### `AuthenticationController`
+  ///
+  /// `Description`: this controller will handle the login/logout/register/profile state for the entire app
+  ///
+  /// `Example`:
+  /// ```dart
+  /// ```
   AuthenticationController([AuthenticationService? authenticationService]) {
     _authenticationService = authenticationService ?? AuthenticationService();
 
@@ -1745,13 +1803,18 @@ class AuthenticationController extends ChangeNotifier
 const String authenticationServiceTemplate = """
 import 'package:projectName/core.dart';
 
-/// ### `AuthenticationService`
-///
-/// `Description`: this service class handle any authenticate method either with server api or cache
-///
-/// `Example`:
 class AuthenticationService {
-  AuthenticationService();
+
+  /// ### `AuthenticationService`
+  ///
+  /// `Description`: this service class handle any authenticate method either with server api or cache
+  ///
+  /// `Example`:
+  /// ```dart
+  /// ```
+  AuthenticationService(){
+    ///
+  }
 
   Future<bool> login({required String name, required String token}) async {
     final prefs = ApplicationService.preferences!;
