@@ -1,3 +1,7 @@
+## 0.0.1+4
+
+- add .isXSS, .isXSM, .isXs, .isSm, .isXL, .isXLL, .isXLM to context
+
 ## 0.0.1+3
 
 - update comment doc
