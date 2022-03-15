@@ -20,7 +20,7 @@ class HomeLayout extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => HomeLayoutContoller(),
       child: Scaffold(
-        appBar: context.isXSD && appBar != null ? appBar : null,
+        appBar: context.isXSM && appBar != null ? appBar : null,
         drawer: AdaptiveBuilder(
           lgBuilder: (_) => empty,
           xlBuilder: (_) => empty,

@@ -81,7 +81,7 @@ class _DashboardLayoutAppbar extends StatelessWidget
     implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
-    if (context.isXSD) {
+    if (context.isXSM) {
       return AppBar(
         leading: DashboardLeadingIcon(),
         title: DashboardTitle(),

@@ -186,7 +186,7 @@ extension AdaptiveXBuildContextParsing on BuildContext {
   bool get isMd => deviceSize == DeviceSize.md;
 
   /// name convention to check if xsmall or small screen or medium screen
-  bool get isXSD =>
+  bool get isXSM =>
       deviceSize == DeviceSize.xs ||
       deviceSize == DeviceSize.sm ||
       deviceSize == DeviceSize.md;
@@ -198,6 +198,11 @@ extension AdaptiveXBuildContextParsing on BuildContext {
   bool get isXl => deviceSize == DeviceSize.xl;
 
   bool get isXLL => deviceSize == DeviceSize.lg || deviceSize == DeviceSize.xl;
+
+  bool get isXLM =>
+      deviceSize == DeviceSize.lg ||
+      deviceSize == DeviceSize.xl ||
+      deviceSize == DeviceSize.md;
 
   /// `screenSize`
   ///
