@@ -35,8 +35,9 @@ class _WindowsAdaptiveScreenState extends State<WindowsAdaptiveScreen> {
             size: 100,
           ),
         ),
-        indicatorBuilder: () {
-          return NavigationIndicator.sticky;
+
+        indicator: () {
+          return StickyNavigationIndicator();
         }(),
         items: [
           // It doesn't look good when resizing from compact to open

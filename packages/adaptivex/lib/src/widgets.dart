@@ -72,13 +72,32 @@ class AdaptiveBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (context.deviceSize) {
       case DeviceSize.xl:
-        return xlBuilder?.call(context) ?? builder.call(context);
+        // extra large builder or large builder or medium builder or small builder or extra small builder or default builder
+        return xlBuilder?.call(context) ??
+            lgBuilder?.call(context) ??
+            mdBuilder?.call(context) ??
+            smBuilder?.call(context) ??
+            xsBuilder?.call(context) ??
+            builder.call(context);
       case DeviceSize.lg:
-        return lgBuilder?.call(context) ?? builder.call(context);
+        // large builder or medium builder or small builder or extra small builder or default builder
+        return lgBuilder?.call(context) ??
+            mdBuilder?.call(context) ??
+            smBuilder?.call(context) ??
+            xsBuilder?.call(context) ??
+            builder.call(context);
       case DeviceSize.md:
-        return mdBuilder?.call(context) ?? builder.call(context);
+        // medium builder or small builder or extra small builder or default builder
+        return mdBuilder?.call(context) ??
+            smBuilder?.call(context) ??
+            xsBuilder?.call(context) ??
+            builder.call(context);
       case DeviceSize.sm:
-        return smBuilder?.call(context) ?? builder.call(context);
+        // small builder or extra small builder or default builder
+        return smBuilder?.call(context) ??
+            xsBuilder?.call(context) ??
+            builder.call(context);
+        // extra small builder or default
       case DeviceSize.xs:
         return xsBuilder?.call(context) ?? builder.call(context);
       default:

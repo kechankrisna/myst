@@ -31,8 +31,8 @@ dependencies:
     sdk: flutter
   adaptivex:
     path: ./../../adaptivex
-  macos_ui: ^0.10.0+1  
-  fluent_ui: ^3.9.0
+  macos_ui: ^1.7.1
+  fluent_ui: ^4.0.0-pre.2
 
 
   # The following adds the Cupertino Icons font to your application.

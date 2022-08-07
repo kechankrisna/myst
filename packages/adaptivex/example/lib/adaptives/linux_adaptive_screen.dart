@@ -27,6 +27,12 @@ class _LinuxAdaptiveScreenState extends State<LinuxAdaptiveScreen> {
           mainAxisSize: MainAxisSize.max,
           children: [
             AdaptiveBuilder(
+              lgBuilder: (_) => Text("lgGuilder"),
+              smBuilder: (_) => Text("smBuilder"),
+              xsBuilder: (_) => Text("xsBuilder"),
+              builder: (_) => Text("builder"),
+            ),
+            AdaptiveBuilder(
               xlBuilder: (_) => const Text("xlBuilder"),
               lgBuilder: (_) => const Text("lgBuilder"),
               mdBuilder: (_) => const Text("mdBuilder"),

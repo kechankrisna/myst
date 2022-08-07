@@ -72,8 +72,8 @@ class _MacosAdaptiveScreenState extends State<MacosAdaptiveScreen> {
         children: [
           CupertinoTabView(
             builder: (_) => MacosScaffold(
-              titleBar:
-                  const TitleBar(title: Text("adaptive builder on macos")),
+              toolBar: 
+                   ToolBar(title: Text("adaptive builder on macos")),
               children: [
                 ResizablePane(
                   minWidth: 180,

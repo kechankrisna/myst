@@ -1,3 +1,7 @@
+## 0.0.1+5
+
+- flexible AdaptiveBuilder by checking from extra small to extra large before use builder
+
 ## 0.0.1+4
 
 - add .isXSS, .isXSM, .isXs, .isSm, .isXL, .isXLL, .isXLM to context
