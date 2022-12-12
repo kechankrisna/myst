@@ -1,3 +1,7 @@
+## 0.0.1+6
+
+- add gl for grand large and rl for retina size
+
 ## 0.0.1+5
 
 - flexible AdaptiveBuilder by checking from extra small to extra large before use builder

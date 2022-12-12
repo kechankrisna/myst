@@ -19,3 +19,9 @@
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 /// @media only screen and (min-width: 1200px) {...}
+
+/* Grand large devices (large laptops and desktops, 1824px and up) */
+/// @media only screen and (min-width: 1824px) {...}
+
+/* retina 4K large devices (large laptops and desktops, 3810px and up) */
+/// @media only screen and (min-width: 3810px) {...}

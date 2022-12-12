@@ -45,8 +45,18 @@ extension AdaptiveXBoxConstraintsParsing on BoxConstraints {
       return BoxSize.lg;
 
       /// else the size must be extremly large
-    } else {
+    } else if (LayoutBreakPoint.kLgBreakPoint <= width &&
+        width < LayoutBreakPoint.kGlBreakPoint) {
       return BoxSize.xl;
+
+      /// else the size must be grand large
+    } else if (LayoutBreakPoint.kGlBreakPoint <= width &&
+        width < LayoutBreakPoint.kRlBreakPoint) {
+      return BoxSize.gl;
+
+      /// else the size must be 4k large
+    } else {
+      return BoxSize.rl;
     }
   }
 }
@@ -168,8 +178,14 @@ extension AdaptiveXBuildContextParsing on BuildContext {
     } else if (LayoutBreakPoint.kMdBreakPoint <= deviceWidth &&
         deviceWidth < LayoutBreakPoint.kLgBreakPoint) {
       return DeviceSize.lg;
-    } else {
+    } else if (LayoutBreakPoint.kLgBreakPoint <= deviceWidth &&
+        deviceWidth < LayoutBreakPoint.kGlBreakPoint) {
       return DeviceSize.xl;
+    } else if (LayoutBreakPoint.kGlBreakPoint <= deviceWidth &&
+        deviceWidth < LayoutBreakPoint.kRlBreakPoint) {
+      return DeviceSize.gl;
+    } else {
+      return DeviceSize.rl;
     }
   }
 
@@ -197,6 +213,23 @@ extension AdaptiveXBuildContextParsing on BuildContext {
   /// name convention to check if xlarge screen
   bool get isXl => deviceSize == DeviceSize.xl;
 
+  /// name convention to check if grand large screen
+  bool get isGl => deviceSize == DeviceSize.gl;
+
+  /// name convention to check if 4k large screen
+  bool get isRl => deviceSize == DeviceSize.rl;
+
+  bool get isRGXLL =>
+      deviceSize == DeviceSize.rl ||
+      deviceSize == DeviceSize.gl ||
+      deviceSize == DeviceSize.lg ||
+      deviceSize == DeviceSize.xl;
+
+  bool get isGXLL =>
+      deviceSize == DeviceSize.gl ||
+      deviceSize == DeviceSize.lg ||
+      deviceSize == DeviceSize.xl;
+
   bool get isXLL => deviceSize == DeviceSize.lg || deviceSize == DeviceSize.xl;
 
   bool get isXLM =>
@@ -223,8 +256,14 @@ extension AdaptiveXBuildContextParsing on BuildContext {
     } else if (LayoutBreakPoint.kMdBreakPoint <= width &&
         width < LayoutBreakPoint.kLgBreakPoint) {
       return ScreenSize.lg;
-    } else {
+    } else if (LayoutBreakPoint.kLgBreakPoint <= width &&
+        width < LayoutBreakPoint.kGlBreakPoint) {
       return ScreenSize.xl;
+    } else if (LayoutBreakPoint.kGlBreakPoint <= width &&
+        width < LayoutBreakPoint.kRlBreakPoint) {
+      return ScreenSize.gl;
+    } else {
+      return ScreenSize.rl;
     }
   }
 

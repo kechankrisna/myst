@@ -11,115 +11,146 @@ class LinuxAdaptiveScreen extends StatefulWidget {
 
 class _LinuxAdaptiveScreenState extends State<LinuxAdaptiveScreen> {
   bool _isPopped = true;
+  late Size? size = null;
+
+  final Map<String, Size> comonSizes = {
+    "retina_large": Size(2560, 1000),
+    "grand_large": Size(1440, 1000),
+    "extra_large": Size(1280, 1000),
+    "large": Size(1200, 1000),
+    "medium": Size(992, 800),
+    "small": Size(768, 600),
+    "extra_small": Size(600, 500),
+  };
 
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     final CardTheme cardTheme = CardTheme.of(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("adaptive builder on linux"),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            AdaptiveBuilder(
-              lgBuilder: (_) => Text("lgGuilder"),
-              smBuilder: (_) => Text("smBuilder"),
-              xsBuilder: (_) => Text("xsBuilder"),
-              builder: (_) => Text("builder"),
-            ),
-            AdaptiveBuilder(
-              xlBuilder: (_) => const Text("xlBuilder"),
-              lgBuilder: (_) => const Text("lgBuilder"),
-              mdBuilder: (_) => const Text("mdBuilder"),
-              smBuilder: (_) => const Text("smBuilder"),
+    return MediaQuery(
+      data: MediaQuery.of(context).copyWith(size: size),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("adaptive builder on linux"),
+          actions: [],
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              AdaptiveBuilder(
+                rlBuilder: (_) => Text("rlBuilder"),
+                glBuilder: (_) => Text("glBuilder"),
+                xlBuilder: (_) => Text("xlBuilder"),
+                lgBuilder: (_) => Text("lgBuilder"),
+                smBuilder: (_) => Text("smBuilder"),
+                xsBuilder: (_) => Text("xsBuilder"),
+                builder: (_) => Text("builder"),
+              ),
+              AdaptiveBuilder(
+                xlBuilder: (_) => const Text("xlBuilder"),
+                lgBuilder: (_) => const Text("lgBuilder"),
+                mdBuilder: (_) => const Text("mdBuilder"),
+                smBuilder: (_) => const Text("smBuilder"),
 
-              /// xsBuilder: (_) => const Text("xsBuilder"),
-              builder: (_) => const Text("xsBuilder"),
-            ),
-            SizedBox(
-              width: 500,
-              child: LayoutBuilder(
-                builder: (_, constraints) {
-                  return TextField(
-                    decoration: InputDecoration(
-                      prefixIcon: Container(
-                        padding: EdgeInsets.all(8),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              child: Icon(Icons.search_outlined),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 8,
-                              ),
-                            ),
-                            Container(
-                              child: Text("Search"),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 8,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      suffixIcon: AdaptivePopup(
-                        maxDropdownWidth: constraints.maxWidth,
-                        maxDropdownHeight: 300,
-                        position: PopupPosition.bottom,
-                        onPopup: (v) {
-                          setState(() {
-                            _isPopped = v;
-                          });
-                        },
-                        child: Icon(!_isPopped
-                            ? Icons.arrow_drop_down
-                            : Icons.arrow_drop_up),
-                        builder: (_) => Semantics(
-                          container: true,
-                          child: Material(
-                            type: MaterialType.card,
-                            shadowColor:
-                                cardTheme.shadowColor ?? theme.shadowColor,
-                            color: cardTheme.color ?? theme.cardColor,
-                            elevation: 2.0,
-                            shape: cardTheme.shape ??
-                                const RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(4.0)),
+                /// xsBuilder: (_) => const Text("xsBuilder"),
+                builder: (_) => const Text("xsBuilder"),
+              ),
+              SizedBox(
+                width: 500,
+                child: LayoutBuilder(
+                  builder: (_, constraints) {
+                    return TextField(
+                      decoration: InputDecoration(
+                        prefixIcon: Container(
+                          padding: EdgeInsets.all(8),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                child: Icon(Icons.search_outlined),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 8,
                                 ),
-                            borderOnForeground: true,
-                            child: CustomFilter(),
+                              ),
+                              Container(
+                                child: Text("Search"),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        suffixIcon: AdaptivePopup(
+                          maxDropdownWidth: constraints.maxWidth,
+                          maxDropdownHeight: 300,
+                          position: PopupPosition.bottom,
+                          onPopup: (v) {
+                            setState(() {
+                              _isPopped = v;
+                            });
+                          },
+                          child: Icon(!_isPopped
+                              ? Icons.arrow_drop_down
+                              : Icons.arrow_drop_up),
+                          builder: (_) => Semantics(
+                            container: true,
+                            child: Material(
+                              type: MaterialType.card,
+                              shadowColor:
+                                  cardTheme.shadowColor ?? theme.shadowColor,
+                              color: cardTheme.color ?? theme.cardColor,
+                              elevation: 2.0,
+                              shape: cardTheme.shape ??
+                                  const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(4.0)),
+                                  ),
+                              borderOnForeground: true,
+                              child: CustomFilter(),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
+              )
+            ],
+          ),
+        ),
+        drawer: Drawer(
+          child: ListView(
+            children: [
+              ListTile(
+                leading: const Icon(Icons.home),
+                title: const Text("home"),
+                onTap: () {},
               ),
-            )
-          ],
+              ListTile(
+                leading: const Icon(Icons.folder),
+                title: const Text("disk"),
+                onTap: () {},
+              )
+            ],
+          ),
         ),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text("home"),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: const Icon(Icons.folder),
-              title: const Text("disk"),
-              onTap: () {},
-            )
-          ],
-        ),
+        floatingActionButton: PopupMenuButton(
+            itemBuilder: (_) => comonSizes.entries
+                .map(
+                  (e) => PopupMenuItem(
+                    child: Text(e.key),
+                    onTap: () {
+                      setState(() {
+                        size = e.value;
+                      });
+                    },
+                  ),
+                )
+                .toList()),
       ),
     );
   }
